@@ -1,0 +1,150 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "@angular/material" as mat;
+@use "../../../../css/material/tailwind/shadows" as shadow;
+
+header {
+  margin-bottom: 16px;
+  #transaction-status {
+    margin-left: 8px;
+  }
+}
+
+#transaction-details {
+  #transaction-type-label {
+    font-weight: 500;
+  }
+}
+
+#transaction-items {
+  #transaction-items-list {
+    th {
+      text-align: left;
+    }
+    th,
+    td {
+      padding: 8px 12px;
+      &:first-child {
+        padding-left: 0px;
+      }
+      &:last-child {
+        padding-right: 0px;
+      }
+    }
+    .refunded {
+      margin-left: 4px;
+    }
+  }
+  #transaction-items-total {
+    margin-top: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-top: 1px solid
+      mat.get-theme-color(theme.$admin-panel-theme, accent, 300);
+    border-bottom: 1px solid
+      mat.get-theme-color(theme.$admin-panel-theme, accent, 300);
+    dt {
+      font: mat.get-theme-typography(theme.$admin-panel-theme, subtitle-1);
+    }
+    dd {
+      font: mat.get-theme-typography(theme.$admin-panel-theme, body-1);
+      text-align: right;
+      .ord-skeleton.ord-subtitle-1 {
+        margin-left: auto;
+        width: 75px;
+      }
+    }
+    .sub-item {
+      padding-left: 8px;
+    }
+    .total {
+      border-top: 1px solid
+        mat.get-theme-color(theme.$admin-panel-theme, accent, 300);
+      font-weight: 500;
+      padding-top: 8px;
+      margin-top: 8px;
+    }
+  }
+}
+
+#transaction-notes {
+  .no-notes {
+    color: mat.get-theme-color(theme.$admin-panel-theme, accent, 500);
+  }
+}
+
+.ord-skeleton.ord-h4 {
+  height: 32px;
+  width: 400px;
+}
+
+.ord-skeleton.ord-h5 {
+  height: 28px;
+  width: 150px;
+}
+
+.ord-skeleton.ord-body-1 {
+  height: 20px;
+}
+
+.ord-skeleton.ord-subtitle-1 {
+  height: 24px;
+  width: 225px;
+}
+
+.ord-skeleton.ord-badge {
+  height: 25px;
+  width: 100px;
+}
+
+.customer-detail {
+  font: mat.get-theme-typography(theme.$admin-panel-theme, body-1);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  &.ord-skeleton {
+    height: 24px;
+  }
+  &.ord-skeleton:nth-child(1) {
+    width: 150px;
+  }
+  &.ord-skeleton:nth-child(2) {
+    width: 125px;
+  }
+  &.ord-skeleton:nth-child(3) {
+    width: 160px;
+  }
+  &.ord-skeleton:nth-child(4) {
+    width: 200px;
+  }
+  &.ord-skeleton:nth-child(5) {
+    width: 130px;
+  }
+  &.ord-skeleton:nth-child(6) {
+    width: 150px;
+  }
+  &.ord-skeleton:nth-child(7) {
+    width: 100%;
+  }
+
+  .ord-icon {
+    flex-shrink: 0;
+  }
+
+  &:last-child {
+    flex-grow: 1;
+  }
+}
+
+a {
+  color: mat.get-theme-color(theme.$admin-panel-theme, primary, 500);
+  text-decoration: underline;
+  &:hover {
+    color: mat.get-theme-color(theme.$admin-panel-theme, primary, 600);
+  }
+}
+
+.w-1\/3 #customer-details-card {
+  position: sticky;
+  top: 0px;
+}

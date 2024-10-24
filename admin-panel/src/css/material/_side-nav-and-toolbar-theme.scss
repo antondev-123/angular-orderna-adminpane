@@ -1,0 +1,70 @@
+@use "@angular/material" as mat;
+@use "tailwind-theme" as tailwind;
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$side-nav-and-toolbar-primary: mat.define-palette(
+  (
+    50: #ffffff,
+    100: #334155,
+    200: #94a3b8,
+    300: #475569,
+    400: #6366f1,
+    500: #1e293b,
+    600: #64748b,
+    700: #0f172a,
+    800: #475569,
+    900: #1e293b,
+    contrast: (
+      50: #e2e8f0,
+      100: #4f46e5,
+      200: #a5b4fc,
+      300: #6366f1,
+      400: #e2e8f0,
+      500: #e2e8f0,
+      600: #e2e8f0,
+      700: #e2e8f0,
+      800: #e2e8f0,
+      900: #ffffff,
+    ),
+  )
+);
+$side-nav-and-toolbar-accent: mat.define-palette(
+  (
+    50: #e8eaf6,
+    100: #c5cae9,
+    200: #9fa8da,
+    300: #7986cb,
+    400: #5c6bc0,
+    500: #3f51b5,
+    600: #3949ab,
+    700: #303f9f,
+    800: #283593,
+    900: #1a237e,
+    A100: #8c9eff,
+    A200: #536dfe,
+    A400: #3d5afe,
+    A700: #304ffe,
+    contrast: (
+      100: rgba(black, 0.87),
+      200: rgba(black, 0.87),
+      400: white,
+    ),
+  )
+);
+
+// The warn palette is optional (defaults to red).
+$side-nav-and-toolbar-warn: mat.define-palette(tailwind.$rose-palette);
+
+$side-nav-and-toolbar-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $side-nav-and-toolbar-primary,
+      accent: $side-nav-and-toolbar-accent,
+      warn: $side-nav-and-toolbar-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);

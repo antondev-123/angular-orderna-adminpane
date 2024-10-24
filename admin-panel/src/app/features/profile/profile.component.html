@@ -1,0 +1,1336 @@
+<section class="section">
+  <!-- Page header -->
+  <div class="mb-8">
+    <!-- Title -->
+    <h1
+      class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold"
+    >
+      Account Settings
+    </h1>
+  </div>
+
+  @if (data$ | async; as data){
+  <div class="bg-white dark:bg-slate-800 shadow-xl rounded-sm mb-8">
+    <div class="flex flex-col md:flex-row md:-mr-px">
+      <!-- Sidebar -->
+      <div
+        class="flex flex-nowrap overflow-x-scroll no-scrollbar md:block md:overflow-auto px-3 py-6 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-700 min-w-60 md:space-y-3"
+      >
+        <!-- Group 1 -->
+        <div>
+          <div
+            class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-3"
+          >
+            Business settings
+          </div>
+          <ul class="flex flex-nowrap md:block mr-3 md:mr-0">
+            <li class="mr-0.5 md:mr-0 md:mb-0.5">
+              <button
+                (click)="changeTab('account')"
+                [ngClass]="
+                  currentTab === 'account'
+                    ? 'bg-indigo-50 dark:bg-indigo-500/30'
+                    : ''
+                "
+                class="flex items-center px-2.5 py-2 rounded whitespace-nowrap w-full"
+              >
+                <svg
+                  [ngClass]="
+                    currentTab === 'account'
+                      ? 'text-indigo-400'
+                      : 'text-slate-400 dark:text-slate-500'
+                  "
+                  class="w-4 h-4 shrink-0 fill-current mr-2"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M12.311 9.527c-1.161-.393-1.85-.825-2.143-1.175A3.991 3.991 0 0012 5V4c0-2.206-1.794-4-4-4S4 1.794 4 4v1c0 1.406.732 2.639 1.832 3.352-.292.35-.981.782-2.142 1.175A3.942 3.942 0 001 13.26V16h14v-2.74c0-1.69-1.081-3.19-2.689-3.733zM6 4c0-1.103.897-2 2-2s2 .897 2 2v1c0 1.103-.897 2-2 2s-2-.897-2-2V4zm7 10H3v-.74c0-.831.534-1.569 1.33-1.838 1.845-.624 3-1.436 3.452-2.422h.436c.452.986 1.607 1.798 3.453 2.422A1.943 1.943 0 0113 13.26V14z"
+                  />
+                </svg>
+                <span
+                  [ngClass]="
+                    currentTab === 'account'
+                      ? 'text-indigo-500 dark:text-indigo-400'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-700 dark:hover:text-slate-200'
+                  "
+                  class="text-sm font-medium"
+                  >My Account</span
+                >
+              </button>
+            </li>
+            <li class="mr-0.5 md:mr-0 md:mb-0.5">
+              <button
+                (click)="changeTab('printer')"
+                [ngClass]="
+                  currentTab === 'printer'
+                    ? 'bg-indigo-50 dark:bg-indigo-500/30'
+                    : ''
+                "
+                class="flex items-center px-2.5 py-2 rounded whitespace-nowrap w-full"
+              >
+                <svg
+                  [ngClass]="
+                    currentTab === 'printer'
+                      ? 'text-indigo-400'
+                      : 'text-slate-400 dark:text-slate-500'
+                  "
+                  class="w-4 h-4 shrink-0 fill-current mr-2"
+                  viewBox="0 0 24 24"
+                >
+                  <rect width="24" height="24" fill="white" />
+                  <path
+                    d="M18.75 17H20C20.5523 17 21 16.5523 21 16V8C21 7.44772 20.5523 7 20 7H4C3.44772 7 3 7.44772 3 8V16C3 16.5523 3.44772 17 4 17H5.25"
+                  />
+                  <path
+                    d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12V20C18 20.5523 17.5523 21 17 21H7C6.44772 21 6 20.5523 6 20V12Z"
+                  />
+                  <path
+                    d="M6 4C6 3.44772 6.44772 3 7 3H17C17.5523 3 18 3.44772 18 4V7H6V4Z"
+                  />
+                  <path
+                    d="M8.5 13.5H15.5"
+                    stroke="#000000"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path d="M8.5 18.5H15.5" />
+                  <path d="M8.5 16H15.5" />
+                </svg>
+                <span
+                  [ngClass]="
+                    currentTab === 'printer'
+                      ? 'text-indigo-500 dark:text-indigo-400'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-700 dark:hover:text-slate-200'
+                  "
+                  class="text-sm font-medium"
+                  >Printer Settings</span
+                >
+              </button>
+            </li>
+            <li class="mr-0.5 md:mr-0 md:mb-0.5">
+              <button
+                (click)="changeTab('plans')"
+                [ngClass]="
+                  currentTab === 'plans'
+                    ? 'bg-indigo-50 dark:bg-indigo-500/30'
+                    : ''
+                "
+                class="flex items-center px-2.5 py-2 rounded whitespace-nowrap w-full"
+              >
+                <svg
+                  [ngClass]="
+                    currentTab === 'plans'
+                      ? 'text-indigo-400'
+                      : 'text-slate-400 dark:text-slate-500'
+                  "
+                  class="w-4 h-4 shrink-0 fill-current mr-2"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M5 9h11v2H5V9zM0 9h3v2H0V9zm5 4h6v2H5v-2zm-5 0h3v2H0v-2zm5-8h7v2H5V5zM0 5h3v2H0V5zm5-4h11v2H5V1zM0 1h3v2H0V1z"
+                  />
+                </svg>
+                <span
+                  [ngClass]="
+                    currentTab === 'plans'
+                      ? 'text-indigo-500 dark:text-indigo-400'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-700 dark:hover:text-slate-200'
+                  "
+                  class="text-sm font-medium"
+                  >Plans</span
+                >
+              </button>
+            </li>
+            <li class="mr-0.5 md:mr-0 md:mb-0.5">
+              <button
+                (click)="changeTab('billing')"
+                [ngClass]="
+                  currentTab === 'billing'
+                    ? 'bg-indigo-50 dark:bg-indigo-500/30'
+                    : ''
+                "
+                class="flex items-center px-2.5 py-2 rounded whitespace-nowrap w-full"
+              >
+                <svg
+                  [ngClass]="
+                    currentTab === 'billing'
+                      ? 'text-indigo-400'
+                      : 'text-slate-400 dark:text-slate-500'
+                  "
+                  class="w-4 h-4 shrink-0 fill-current mr-2"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M15 4c.6 0 1 .4 1 1v10c0 .6-.4 1-1 1H3c-1.7 0-3-1.3-3-3V3c0-1.7 1.3-3 3-3h7c.6 0 1 .4 1 1v3h4zM2 3v1h7V2H3c-.6 0-1 .4-1 1zm12 11V6H2v7c0 .6.4 1 1 1h11zm-3-5h2v2h-2V9z"
+                  />
+                </svg>
+                <span
+                  [ngClass]="
+                    currentTab === 'billing'
+                      ? 'text-indigo-500 dark:text-indigo-400'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-700 dark:hover:text-slate-200'
+                  "
+                  class="text-sm font-medium"
+                  >Billing & Invoices</span
+                >
+              </button>
+            </li>
+          </ul>
+        </div>
+        <!-- Group 2 -->
+        <div>
+          <div
+            class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase mb-3"
+          >
+            Experience
+          </div>
+          <ul class="flex flex-nowrap md:block mr-3 md:mr-0">
+            <li class="mr-0.5 md:mr-0 md:mb-0.5">
+              <button
+                (click)="changeTab('feedback')"
+                [ngClass]="
+                  currentTab === 'feedback'
+                    ? 'bg-indigo-50 dark:bg-indigo-500/30'
+                    : ''
+                "
+                class="flex items-center px-2.5 py-2 rounded whitespace-nowrap w-full"
+              >
+                <svg
+                  [ngClass]="
+                    currentTab === 'feedback'
+                      ? 'text-indigo-400'
+                      : 'text-slate-400 dark:text-slate-500'
+                  "
+                  class="w-4 h-4 shrink-0 fill-current mr-2"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M7.001 3h2v4h-2V3zm1 7a1 1 0 110-2 1 1 0 010 2zM15 16a1 1 0 01-.6-.2L10.667 13H1a1 1 0 01-1-1V1a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1zM2 11h9a1 1 0 01.6.2L14 13V2H2v9z"
+                  />
+                </svg>
+                <span
+                  [ngClass]="
+                    currentTab === 'feedback'
+                      ? 'text-indigo-500 dark:text-indigo-400'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-700 dark:hover:text-slate-200'
+                  "
+                  class="text-sm font-medium"
+                  >Give Feedback</span
+                >
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Panel -->
+      <div class="grow">
+        <!-- Panel body -->
+        <div class="p-6 space-y-6">
+          @switch (currentTab) { @case ('account') {
+          <form [formGroup]="formGroup">
+            <h2
+              class="text-2xl text-slate-800 dark:text-slate-100 font-bold mb-5"
+            >
+              My Account
+            </h2>
+            <section>
+              <h3
+                class="text-xl leading-snug text-slate-800 dark:text-slate-100 font-bold mb-1"
+              >
+                Profile
+              </h3>
+              <div class="text-sm">
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                qui officia deserunt mollit.
+              </div>
+
+              <div
+                class="sm:flex sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-5"
+              >
+                <div class="sm:w-1/2 sm:w-1/3">
+                  <app-input-text
+                    id="accountName"
+                    label="Name"
+                    controlName="accountName"
+                    [value]="data.profile?.accountName"
+                    [validators]="[Validators.required]"
+                  />
+                </div>
+                <div class="sm:w-1/2 sm:w-1/3">
+                  <app-input-text
+                    id="affiliatedStores"
+                    label="Store"
+                    controlName="affiliatedStores"
+                    [value]="data.profile?.affiliatedStores"
+                    [validators]="[Validators.required]"
+                  />
+                </div>
+                <div class="sm:w-1/2 sm:w-1/3">
+                  <app-input-text
+                    id="userAddress"
+                    label="Location"
+                    controlName="userAddress"
+                    [value]="data.billingInvoice?.userAddress"
+                    [validators]="[Validators.required]"
+                  />
+                </div>
+              </div>
+            </section>
+
+            <!-- Email -->
+            <section>
+              <h3
+                class="text-xl leading-snug text-slate-800 dark:text-slate-100 font-bold mb-1"
+              >
+                Email
+              </h3>
+              <div class="text-sm">
+                Excepteur sint occaecat cupidatat non proident sunt in culpa qui
+                officia.
+              </div>
+              <div class="flex flex-wrap mt-5">
+                <app-input-email
+                  id="email"
+                  label="Email"
+                  controlName="email"
+                  [showLabel]="false"
+                  [value]="currentUser.email"
+                  [validators]="[Validators.required, Validators.email]"
+                  class="mr-2"
+                />
+                <app-button variant="outlined" (btnClick)="changeEmail()">
+                  <ng-template appButtonText> Change </ng-template>
+                </app-button>
+              </div>
+            </section>
+
+            <!-- Password -->
+            <section>
+              <h3
+                class="text-xl leading-snug text-slate-800 dark:text-slate-100 font-bold mb-1"
+              >
+                Password
+              </h3>
+              <div class="text-sm">
+                You can set a permanent password if you don't want to use
+                temporary login codes.
+              </div>
+              <div class="mt-5">
+                <app-button
+                  (btnClick)="changeProfileImage()"
+                  variant="outlined"
+                >
+                  <ng-template appButtonText> Set New Password </ng-template>
+                </app-button>
+              </div>
+            </section>
+          </form>
+          } @case ('printer') {
+          <h2
+            class="text-2xl text-slate-800 dark:text-slate-100 font-bold mb-5"
+          >
+            Printer Settings
+          </h2>
+          <section>
+            <form [formGroup]="formGroup">
+              <app-input-textarea
+                id="printerNote"
+                label="Note to Customer"
+                controlName="printerNote"
+                [value]="data.printerSetting?.printerNote"
+                [textAreaConfig]="{ minRows: 3, autoResize: true }"
+              />
+              <ul>
+                <li class="flex py-1">
+                  <!-- Left -->
+                  <div class="flex items-start mr-4 sm:w-1/3 mt-1">
+                    <app-slide-toggle
+                      id="showPhoneNumber"
+                      [checked]="showPhoneNumber"
+                      variant="primary"
+                      (btnToggle)="toggleShow($event)"
+                    >
+                      <ng-template appSlideToggleText>Show Phone</ng-template>
+                    </app-slide-toggle>
+                  </div>
+                  <!-- Right -->
+                  <div class="grow">
+                    <app-input-text
+                      id="showPhoneNumber"
+                      controlName="showPhoneNumber"
+                      [showLabel]="false"
+                    />
+                  </div>
+                </li>
+                <li class="flex py-1">
+                  <!-- Left -->
+                  <div class="flex items-start mr-4 sm:w-1/3 mt-1">
+                    <app-slide-toggle
+                      id="showCustomerName"
+                      [checked]="showCustomerName"
+                      variant="primary"
+                      (btnToggle)="toggleShow($event)"
+                    >
+                      <ng-template appSlideToggleText
+                        >Show Customer</ng-template
+                      >
+                    </app-slide-toggle>
+                  </div>
+                  <!-- Right -->
+                  <div class="grow">
+                    <app-input-text
+                      id="showCustomerName"
+                      controlName="showCustomerName"
+                      [showLabel]="false"
+                    />
+                  </div>
+                </li>
+                <li class="flex py-1">
+                  <!-- Left -->
+                  <div class="flex items-start mr-4 sm:w-1/3 mt-1">
+                    <app-slide-toggle
+                      id="showCustomerAddress"
+                      [checked]="showCustomerAddress"
+                      variant="primary"
+                      (btnToggle)="toggleShow($event)"
+                    >
+                      <ng-template appSlideToggleText
+                        >Show Customer Address</ng-template
+                      >
+                    </app-slide-toggle>
+                  </div>
+                  <!-- Right -->
+                  <div class="grow">
+                    <app-input-text
+                      id="showCustomerAddress"
+                      controlName="showCustomerAddress"
+                      [showLabel]="false"
+                    />
+                  </div>
+                </li>
+                <li class="flex py-1">
+                  <!-- Left -->
+                  <div class="flex items-start mr-4 sm:w-1/3 mt-1">
+                    <app-slide-toggle
+                      id="showStore"
+                      [checked]="showStore"
+                      (btnToggle)="toggleShow($event)"
+                    >
+                      <ng-template appSlideToggleText>Show Store</ng-template>
+                    </app-slide-toggle>
+                  </div>
+                  <!-- Right -->
+                  <div class="grow">
+                    <app-input-text
+                      id="showStore"
+                      controlName="showStore"
+                      [showLabel]="false"
+                    />
+                  </div>
+                </li>
+                <li class="flex py-1">
+                  <!-- Left -->
+                  <div class="flex items-start mr-4 sm:w-1/3 mt-1">
+                    <app-slide-toggle
+                      id="printInvoiceAutomatically"
+                      [checked]="printInvoiceAutomatically"
+                      variant="primary"
+                      (btnToggle)="toggleShow($event)"
+                    >
+                      <ng-template appSlideToggleText
+                        >Print invoice automatically</ng-template
+                      >
+                    </app-slide-toggle>
+                  </div>
+                  <!-- Right -->
+                  <div class="grow">
+                    <app-input-text
+                      id="printInvoiceAutomatically"
+                      controlName="printInvoiceAutomatically"
+                      [showLabel]="false"
+                    />
+                  </div>
+                </li>
+                <li class="flex py-1">
+                  <!-- Left -->
+                  <div class="flex items-start mr-4 sm:w-1/3 mt-1">
+                    <app-slide-toggle
+                      id="showEmailAddress"
+                      [checked]="showEmailAddress"
+                      variant="primary"
+                      (btnToggle)="toggleShow($event)"
+                    >
+                      <ng-template appSlideToggleText>Show Email</ng-template>
+                    </app-slide-toggle>
+                  </div>
+                  <!-- Right -->
+                  <div class="grow">
+                    <app-input-text
+                      id="showEmailAddress"
+                      controlName="showEmailAddress"
+                      [showLabel]="false"
+                    />
+                  </div>
+                </li>
+                <li class="flex py-1">
+                  <!-- Left -->
+                  <div class="flex items-start mr-4 sm:w-1/3 mt-1">
+                    <app-slide-toggle
+                      id="showTaxDiscountShipping"
+                      [checked]="showTaxDiscountShipping"
+                      variant="primary"
+                      (btnToggle)="toggleShow($event)"
+                    >
+                      <ng-template appSlideToggleText
+                        >Show Tax, Discount & Shipping</ng-template
+                      >
+                    </app-slide-toggle>
+                  </div>
+                  <!-- Right -->
+                  <div class="grow">
+                    <app-input-text
+                      id="tax"
+                      controlName="showTaxDiscountShipping"
+                      [showLabel]="false"
+                    />
+                  </div>
+                </li>
+              </ul>
+            </form>
+          </section>
+          } @case ('plans') {
+          <!-- Plans -->
+          <section>
+            <div class="mb-8">
+              <h2
+                class="text-2xl text-slate-800 dark:text-slate-100 font-bold mb-4"
+              >
+                Plans
+              </h2>
+              <div class="text-sm">
+                This workspace’s Basic Plan is set to
+                <strong class="font-medium">$34</strong> per month and will
+                renew on <strong class="font-medium">July 9, 2021</strong>.
+              </div>
+            </div>
+
+            <!-- Pricing -->
+            <div>
+              <!-- Toggle switch -->
+              <div class="flex items-center space-x-3 mb-6">
+                <div class="text-sm text-slate-500 font-medium">Monthly</div>
+                <app-slide-toggle
+                  [checked]="isPlanAnnually"
+                  (btnToggle)="isPlanAnnually = $event.checked"
+                />
+                <div class="text-sm text-slate-500 font-medium">
+                  Annually <span class="text-emerald-500">(-20%)</span>
+                </div>
+              </div>
+              <!-- Pricing tabs -->
+              <div class="grid grid-cols-12 gap-6">
+                <!-- Tab 1 -->
+                <div
+                  class="relative col-span-full xl:col-span-4 bg-white dark:bg-slate-800 shadow-md rounded-sm border border-slate-200 dark:border-slate-700"
+                >
+                  <div
+                    class="absolute top-0 left-0 right-0 h-0.5 bg-emerald-500"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    class="px-5 pt-5 pb-6 border-b border-slate-200 dark:border-slate-700"
+                  >
+                    <header class="flex items-center mb-2">
+                      <div
+                        class="w-6 h-6 rounded-full shrink-0 bg-gradient-to-tr from-emerald-500 to-emerald-300 mr-3"
+                      >
+                        <svg
+                          class="w-6 h-6 fill-current text-white"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 17a.833.833 0 01-.833-.833 3.333 3.333 0 00-3.334-3.334.833.833 0 110-1.666 3.333 3.333 0 003.334-3.334.833.833 0 111.666 0 3.333 3.333 0 003.334 3.334.833.833 0 110 1.666 3.333 3.333 0 00-3.334 3.334c0 .46-.373.833-.833.833z"
+                          />
+                        </svg>
+                      </div>
+                      <h3
+                        class="text-lg text-slate-800 dark:text-slate-100 font-semibold"
+                      >
+                        Basic
+                      </h3>
+                    </header>
+                    <div class="text-sm mb-2">
+                      Ideal for individuals that need a custom solution with
+                      custom tools.
+                    </div>
+                    <!-- Price -->
+                    <div
+                      class="text-slate-800 dark:text-slate-100 font-bold mb-4"
+                    >
+                      <span class="text-2xl">$</span
+                      ><span class="text-3xl">{{
+                        isPlanAnnually ? 14 : 19
+                      }}</span
+                      ><span class="text-slate-500 font-medium text-sm"
+                        >/mo</span
+                      >
+                    </div>
+                    <!-- CTA -->
+                    <app-button
+                      variant="subdued"
+                      textColor="gray"
+                      [fullWidth]="true"
+                      (btnClick)="changePlan('basic')"
+                      [disabled]="currentPlan === 'basic'"
+                      [svgIcon]="currentPlan === 'basic' ? 'check' : ''"
+                    >
+                      <ng-template appButtonText>
+                        {{
+                          currentPlan === "basic" ? "Current Plan" : "Downgrade"
+                        }}
+                      </ng-template>
+                    </app-button>
+                  </div>
+                  <div class="px-5 pt-4 pb-5">
+                    <div
+                      class="text-xs text-slate-800 dark:text-slate-100 font-semibold uppercase mb-4"
+                    >
+                      What's included
+                    </div>
+                    <!-- List -->
+                    <ul>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Lorem ipsum dolor sit amet</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Quis nostrud exercitation</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Lorem ipsum dolor sit amet</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Quis nostrud exercitation</div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- Tab 2 -->
+                <div
+                  class="relative col-span-full xl:col-span-4 bg-white dark:bg-slate-800 shadow-md rounded-sm border border-slate-200 dark:border-slate-700"
+                >
+                  <div
+                    class="absolute top-0 left-0 right-0 h-0.5 bg-sky-500"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    class="px-5 pt-5 pb-6 border-b border-slate-200 dark:border-slate-700"
+                  >
+                    <header class="flex items-center mb-2">
+                      <div
+                        class="w-6 h-6 rounded-full shrink-0 bg-gradient-to-tr from-sky-500 to-sky-300 mr-3"
+                      >
+                        <svg
+                          class="w-6 h-6 fill-current text-white"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 17a.833.833 0 01-.833-.833 3.333 3.333 0 00-3.334-3.334.833.833 0 110-1.666 3.333 3.333 0 003.334-3.334.833.833 0 111.666 0 3.333 3.333 0 003.334 3.334.833.833 0 110 1.666 3.333 3.333 0 00-3.334 3.334c0 .46-.373.833-.833.833z"
+                          />
+                        </svg>
+                      </div>
+                      <h3
+                        class="text-lg text-slate-800 dark:text-slate-100 font-semibold"
+                      >
+                        Standard
+                      </h3>
+                    </header>
+                    <div class="text-sm mb-2">
+                      Ideal for individuals that need a custom solution with
+                      custom tools.
+                    </div>
+                    <!-- Price -->
+                    <div
+                      class="text-slate-800 dark:text-slate-100 font-bold mb-4"
+                    >
+                      <span class="text-2xl">$</span
+                      ><span class="text-3xl">{{
+                        isPlanAnnually ? 34 : 39
+                      }}</span
+                      ><span class="text-slate-500 font-medium text-sm"
+                        >/mo</span
+                      >
+                    </div>
+                    <!-- CTA -->
+                    <app-button
+                      [variant]="
+                        currentPlan === 'basic' ? 'primary' : 'subdued'
+                      "
+                      [textColor]="currentPlan === 'basic' ? 'white' : 'gray'"
+                      [fullWidth]="true"
+                      [disabled]="currentPlan === 'standard'"
+                      (btnClick)="changePlan('standard')"
+                      [svgIcon]="currentPlan === 'standard' ? 'check' : ''"
+                    >
+                      <ng-template appButtonText>
+                        {{
+                          currentPlan === "standard"
+                            ? "Current Plan"
+                            : currentPlan === "plus"
+                            ? "Downgrade"
+                            : "Upgrade"
+                        }}
+                      </ng-template>
+                    </app-button>
+                  </div>
+                  <div class="px-5 pt-4 pb-5">
+                    <div
+                      class="text-xs text-slate-800 dark:text-slate-100 font-semibold uppercase mb-4"
+                    >
+                      What's included
+                    </div>
+                    <!-- List -->
+                    <ul>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Lorem ipsum dolor sit amet</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Quis nostrud exercitation</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Lorem ipsum dolor sit amet</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Quis nostrud exercitation</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Lorem ipsum dolor sit amet</div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- Tab 3 -->
+                <div
+                  class="relative col-span-full xl:col-span-4 bg-white dark:bg-slate-800 shadow-md rounded-sm border border-slate-200 dark:border-slate-700"
+                >
+                  <div
+                    class="absolute top-0 left-0 right-0 h-0.5 bg-indigo-500"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    class="px-5 pt-5 pb-6 border-b border-slate-200 dark:border-slate-700"
+                  >
+                    <header class="flex items-center mb-2">
+                      <div
+                        class="w-6 h-6 rounded-full shrink-0 bg-gradient-to-tr from-indigo-500 to-indigo-300 mr-3"
+                      >
+                        <svg
+                          class="w-6 h-6 fill-current text-white"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M12 17a.833.833 0 01-.833-.833 3.333 3.333 0 00-3.334-3.334.833.833 0 110-1.666 3.333 3.333 0 003.334-3.334.833.833 0 111.666 0 3.333 3.333 0 003.334 3.334.833.833 0 110 1.666 3.333 3.333 0 00-3.334 3.334c0 .46-.373.833-.833.833z"
+                          />
+                        </svg>
+                      </div>
+                      <h3
+                        class="text-lg text-slate-800 dark:text-slate-100 font-semibold"
+                      >
+                        Plus
+                      </h3>
+                    </header>
+                    <div class="text-sm mb-2">
+                      Ideal for individuals that need a custom solution with
+                      custom tools.
+                    </div>
+                    <!-- Price -->
+                    <div
+                      class="text-slate-800 dark:text-slate-100 font-bold mb-4"
+                    >
+                      <span class="text-2xl">$</span
+                      ><span class="text-3xl">{{
+                        isPlanAnnually ? 74 : 79
+                      }}</span
+                      ><span class="text-slate-500 font-medium text-sm"
+                        >/mo</span
+                      >
+                    </div>
+                    <!-- CTA -->
+                    <app-button
+                      [variant]="currentPlan === 'plus' ? 'subdued' : 'primary'"
+                      [textColor]="currentPlan === 'plus' ? 'gray' : 'white'"
+                      [fullWidth]="true"
+                      [disabled]="currentPlan === 'plus'"
+                      (btnClick)="changePlan('plus')"
+                      [svgIcon]="currentPlan === 'plus' ? 'check' : ''"
+                    >
+                      <ng-template appButtonText>
+                        {{
+                          currentPlan === "plus" ? "Current Plan" : "Upgrade"
+                        }}
+                      </ng-template>
+                    </app-button>
+                  </div>
+                  <div class="px-5 pt-4 pb-5">
+                    <div
+                      class="text-xs text-slate-800 dark:text-slate-100 font-semibold uppercase mb-4"
+                    >
+                      What's included
+                    </div>
+                    <!-- List -->
+                    <ul>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Lorem ipsum dolor sit amet</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Quis nostrud exercitation</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Lorem ipsum dolor sit amet</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Quis nostrud exercitation</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Lorem ipsum dolor sit amet</div>
+                      </li>
+                      <li class="flex items-center py-1">
+                        <svg
+                          class="w-3 h-3 shrink-0 fill-current text-emerald-500 mr-2"
+                          viewBox="0 0 12 12"
+                        >
+                          <path
+                            d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z"
+                          />
+                        </svg>
+                        <div class="text-sm">Quis nostrud exercitation</div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Contact Sales -->
+          <section>
+            <div
+              class="px-5 py-3 bg-indigo-50 dark:bg-indigo-500/30 border border-indigo-100 dark:border-transparent rounded-sm text-center xl:text-left xl:flex xl:flex-wrap xl:justify-between xl:items-center"
+            >
+              <div
+                class="text-slate-800 dark:text-slate-100 font-semibold mb-2 xl:mb-0"
+              >
+                Looking for different configurations?
+              </div>
+              <app-button variant="primary" [fullWidth]="true">
+                <ng-template appButtonText> Contact Sales </ng-template>
+              </app-button>
+            </div>
+          </section>
+
+          <!-- FAQs -->
+          <section>
+            <div class="my-8">
+              <h2 class="text-2xl text-slate-800 dark:text-slate-100 font-bold">
+                FAQs
+              </h2>
+            </div>
+            <ul class="space-y-5">
+              <li>
+                <div
+                  class="font-semibold text-slate-800 dark:text-slate-100 mb-1"
+                >
+                  What is the difference between the three versions?
+                </div>
+                <div class="text-sm">
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                  qui officia deserunt mollit.
+                </div>
+              </li>
+              <li>
+                <div
+                  class="font-semibold text-slate-800 dark:text-slate-100 mb-1"
+                >
+                  Is there any difference between Basic and Plus licenses?
+                </div>
+                <div class="text-sm">
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                  qui officia deserunt mollit anim id est laborum in voluptate
+                  velit esse cillum dolore eu fugiat nulla pariatur.
+                </div>
+              </li>
+              <li>
+                <div
+                  class="font-semibold text-slate-800 dark:text-slate-100 mb-1"
+                >
+                  Got more questions?
+                </div>
+                <div class="text-sm">
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                  qui officia deserunt mollit anim id est laborum in voluptate
+                  velit esse cillum dolore eu fugiat
+                  <a
+                    class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
+                    href="#0"
+                    >contact us</a
+                  >.
+                </div>
+              </li>
+            </ul>
+          </section>
+          } @case ('billing') {
+          <!-- Billing & Invoices -->
+          <section>
+            <div class="mb-8">
+              <h2
+                class="text-2xl text-slate-800 dark:text-slate-100 font-bold mb-4"
+              >
+                Billing & Invoices
+              </h2>
+              <div class="text-sm">
+                This workspace’s Basic Plan is set to
+                <strong class="font-medium">$34</strong> per month and will
+                renew on <strong class="font-medium">July 9, 2021</strong>.
+              </div>
+            </div>
+          </section>
+
+          <!-- Billing Information -->
+          <section>
+            <div class="mb-8">
+              <h3
+                class="text-xl leading-snug text-slate-800 dark:text-slate-100 font-bold mb-1"
+              >
+                Billing Information
+              </h3>
+
+              <ul>
+                <li
+                  class="md:flex md:justify-between md:items-center py-3 border-b border-slate-200 dark:border-slate-700"
+                >
+                  <!-- Left -->
+                  <div
+                    class="text-sm text-slate-800 dark:text-slate-100 font-medium"
+                  >
+                    Payment Method
+                  </div>
+                  <!-- Right -->
+                  <div class="text-sm text-slate-600 dark:text-slate-400 ml-4">
+                    <span class="mr-3">{{
+                      data.billingInvoice?.paymentMethod
+                    }}</span>
+                    <app-button variant="ghost" size="lg" textColor="indigo">
+                      <ng-template appButtonText> Edit </ng-template>
+                    </app-button>
+                  </div>
+                </li>
+                <li
+                  class="md:flex md:justify-between md:items-center py-3 border-b border-slate-200 dark:border-slate-700"
+                >
+                  <!-- Left -->
+                  <div
+                    class="text-sm text-slate-800 dark:text-slate-100 font-medium"
+                  >
+                    Billing Interval
+                  </div>
+                  <!-- Right -->
+                  <div class="text-sm text-slate-600 dark:text-slate-400 ml-4">
+                    <span class="mr-3">{{ billingInterval }}</span>
+                    <app-button variant="ghost" size="lg" textColor="indigo">
+                      <ng-template appButtonText> Edit </ng-template>
+                    </app-button>
+                  </div>
+                </li>
+                <li
+                  class="md:flex md:justify-between md:items-center py-3 border-b border-slate-200 dark:border-slate-700"
+                >
+                  <!-- Left -->
+                  <div
+                    class="text-sm text-slate-800 dark:text-slate-100 font-medium"
+                  >
+                    VAT/GST Number
+                  </div>
+                  <!-- Right -->
+                  <div class="text-sm text-slate-600 dark:text-slate-400 ml-4">
+                    <span class="mr-3">{{ data.billingInvoice?.vat }}</span>
+                    <app-button variant="ghost" size="lg" textColor="indigo">
+                      <ng-template appButtonText> Edit </ng-template>
+                    </app-button>
+                  </div>
+                </li>
+                <li
+                  class="md:flex md:justify-between md:items-center py-3 border-b border-slate-200 dark:border-slate-700"
+                >
+                  <!-- Left -->
+                  <div
+                    class="text-sm text-slate-800 dark:text-slate-100 font-medium"
+                  >
+                    Your Addres
+                  </div>
+                  <!-- Right -->
+                  <div class="text-sm text-slate-600 dark:text-slate-400 ml-4">
+                    <span class="mr-3">{{
+                      data.billingInvoice?.userAddress
+                    }}</span>
+                    <app-button variant="ghost" size="lg" textColor="indigo">
+                      <ng-template appButtonText> Edit </ng-template>
+                    </app-button>
+                  </div>
+                </li>
+                <li
+                  class="md:flex md:justify-between md:items-center py-3 border-b border-slate-200 dark:border-slate-700"
+                >
+                  <!-- Left -->
+                  <div
+                    class="text-sm text-slate-800 dark:text-slate-100 font-medium"
+                  >
+                    Billing Address
+                  </div>
+                  <!-- Right -->
+                  <div class="text-sm text-slate-600 dark:text-slate-400 ml-4">
+                    <span class="mr-3">{{
+                      data.billingInvoice?.billingAddress
+                    }}</span>
+                    <app-button variant="ghost" size="lg" textColor="indigo">
+                      <ng-template appButtonText> Edit </ng-template>
+                    </app-button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Invoices -->
+          <section>
+            <div class="mb-8">
+              <h3
+                class="text-xl leading-snug text-slate-800 dark:text-slate-100 font-bold mb-1"
+              >
+                Invoices
+              </h3>
+
+              <table class="table-auto w-full dark:text-slate-400">
+                <!-- Table header -->
+                <thead
+                  class="text-xs uppercase text-slate-400 dark:text-slate-500"
+                >
+                  <tr class="flex flex-wrap md:table-row md:flex-no-wrap">
+                    <th class="w-full block md:w-auto md:table-cell py-2">
+                      <div class="font-semibold text-left">Year</div>
+                    </th>
+                    <th class="w-full hidden md:w-auto md:table-cell py-2">
+                      <div class="font-semibold text-left">Plan</div>
+                    </th>
+                    <th class="w-full hidden md:w-auto md:table-cell py-2">
+                      <div class="font-semibold text-left">Amount</div>
+                    </th>
+                    <th class="w-full hidden md:w-auto md:table-cell py-2">
+                      <div class="font-semibold text-right"></div>
+                    </th>
+                  </tr>
+                </thead>
+                <!-- Table body -->
+                <tbody class="text-sm">
+                  <!-- Row -->
+                  <tr
+                    *ngFor="let row of data.invoices"
+                    class="flex flex-wrap md:table-row md:flex-no-wrap border-b border-slate-200 dark:border-slate-700 py-2 md:py-0"
+                  >
+                    <td
+                      class="w-full block md:w-auto md:table-cell py-0.5 md:py-2"
+                    >
+                      <div
+                        class="text-left font-medium text-slate-800 dark:text-slate-100"
+                      >
+                        {{ row.yearSubscribed }}
+                      </div>
+                    </td>
+                    <td
+                      class="w-full block md:w-auto md:table-cell py-0.5 md:py-2"
+                    >
+                      <div class="text-left">{{ row.planType }}</div>
+                    </td>
+                    <td
+                      class="w-full block md:w-auto md:table-cell py-0.5 md:py-2"
+                    >
+                      <div class="text-left font-medium">
+                        ${{ row.amountPaid }}
+                      </div>
+                    </td>
+                    <td
+                      class="w-full block md:w-auto md:table-cell py-0.5 md:py-2"
+                    >
+                      <div class="text-right flex items-center md:justify-end">
+                        <app-button
+                          variant="ghost"
+                          size="lg"
+                          textColor="indigo"
+                        >
+                          <ng-template appButtonText> CSV </ng-template>
+                        </app-button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          } @default {
+          <div>
+            <h2
+              class="text-2xl text-slate-800 dark:text-slate-100 font-bold mb-4"
+            >
+              Give Feedback
+            </h2>
+            <div class="text-sm">
+              Our product depends on customer feedback to improve the overall
+              experience!
+            </div>
+          </div>
+
+          <!-- Rate -->
+          <section>
+            <h3
+              class="text-xl leading-snug text-slate-800 dark:text-slate-100 font-bold mb-6"
+            >
+              How likely would you recommend us to a friend or colleague?
+            </h3>
+            <div class="w-full max-w-xl">
+              <div class="relative">
+                <div
+                  class="absolute left-0 top-1/2 -mt-px w-full h-0.5 bg-slate-200 dark:bg-slate-700"
+                  aria-hidden="true"
+                ></div>
+                <ul class="relative flex justify-between w-full">
+                  <li class="flex">
+                    <!-- w-3 h-3 rounded-full bg-indigo-500 border-2 border-indigo-500 -->
+                    <button
+                      (click)="feedbackRate = 1"
+                      [ngClass]="
+                        feedbackRate === 1
+                          ? 'w-3 h-3 rounded-full bg-indigo-500 border-2 border-indigo-500'
+                          : 'w-3 h-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-400 dark:border-slate-500'
+                      "
+                    >
+                      <span class="sr-only">1</span>
+                    </button>
+                  </li>
+                  <li class="flex">
+                    <button
+                      (click)="feedbackRate = 2"
+                      [ngClass]="
+                        feedbackRate === 2
+                          ? 'w-3 h-3 rounded-full bg-indigo-500 border-2 border-indigo-500'
+                          : 'w-3 h-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-400 dark:border-slate-500'
+                      "
+                    >
+                      <span class="sr-only">2</span>
+                    </button>
+                  </li>
+                  <li class="flex">
+                    <button
+                      (click)="feedbackRate = 3"
+                      [ngClass]="
+                        feedbackRate === 3
+                          ? 'w-3 h-3 rounded-full bg-indigo-500 border-2 border-indigo-500'
+                          : 'w-3 h-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-400 dark:border-slate-500'
+                      "
+                    >
+                      <span class="sr-only">3</span>
+                    </button>
+                  </li>
+                  <li class="flex">
+                    <button
+                      (click)="feedbackRate = 4"
+                      [ngClass]="
+                        feedbackRate === 4
+                          ? 'w-3 h-3 rounded-full bg-indigo-500 border-2 border-indigo-500'
+                          : 'w-3 h-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-400 dark:border-slate-500'
+                      "
+                    >
+                      <span class="sr-only">4</span>
+                    </button>
+                  </li>
+                  <li class="flex">
+                    <button
+                      (click)="feedbackRate = 5"
+                      [ngClass]="
+                        feedbackRate === 5
+                          ? 'w-3 h-3 rounded-full bg-indigo-500 border-2 border-indigo-500'
+                          : 'w-3 h-3 rounded-full bg-white dark:bg-slate-800 border-2 border-slate-400 dark:border-slate-500'
+                      "
+                    >
+                      <span class="sr-only">5</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="w-full flex justify-between text-sm text-slate-500 dark:text-slate-400 italic mt-3"
+              >
+                <div>Not at all</div>
+                <div>Extremely likely</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Tell us in words -->
+          <section>
+            <h3
+              class="text-xl leading-snug text-slate-800 dark:text-slate-100 font-bold mb-5"
+            >
+              Tell us in words
+            </h3>
+            <!-- Form -->
+
+            <form [formGroup]="formGroup">
+              <app-input-textarea
+                id="feedbackComment"
+                placeholder="I really enjoy..."
+                controlName="feedbackComment"
+                [value]="data.feedback?.feedbackComment"
+              />
+            </form>
+          </section>
+          } }
+        </div>
+
+        <!-- Panel footer -->
+        <footer>
+          <div
+            class="flex flex-col px-6 py-5 border-t border-slate-200 dark:border-slate-700"
+          >
+            <div class="flex self-end">
+              <app-button
+                variant="outlined"
+                textColor="gray"
+                (btnClick)="cancel()"
+              >
+                <ng-template appButtonText> Cancel</ng-template>
+              </app-button>
+              <app-button class="ml-3" (btnClick)="save()">
+                <ng-template appButtonText> Save </ng-template>
+              </app-button>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+  } @else {
+  <app-profile-skeleton />
+  }
+</section>

@@ -1,0 +1,5 @@
+:host {
+  div.mdc-tab-indicator--active {
+    border-bottom: 1px solid #6366f1 !important;
+  }
+}

@@ -1,0 +1,10 @@
+:host ::ng-deep {
+  app-timeline {
+    .ord-timeline-event-content {
+      margin-top: -2px !important;
+    }
+    .ord-timeline-event {
+      min-height: 50px !important;
+    }
+  }
+}

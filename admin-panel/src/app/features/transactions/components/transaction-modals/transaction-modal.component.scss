@@ -1,0 +1,41 @@
+@use "@angular/material" as mat;
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+
+.price-container {
+  color: mat.get-theme-color(theme.$admin-panel-theme, accent, 800);
+  font: mat.get-theme-typography(theme.$admin-panel-theme, body-1);
+  label {
+    font: mat.get-theme-typography(theme.$admin-panel-theme, subtitle-2);
+    margin-bottom: 4px;
+  }
+  .original-price {
+    text-decoration: line-through;
+  }
+}
+
+.invoice-breakdown-container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-top: 1px solid
+    mat.get-theme-color(theme.$admin-panel-theme, accent, 300);
+  border-bottom: 1px solid
+    mat.get-theme-color(theme.$admin-panel-theme, accent, 300);
+  dt {
+    font: mat.get-theme-typography(theme.$admin-panel-theme, subtitle-2);
+  }
+  dd {
+    font: mat.get-theme-typography(theme.$admin-panel-theme, body-2);
+    text-align: right;
+  }
+  .subtotal {
+    border-top: 1px solid
+      mat.get-theme-color(theme.$admin-panel-theme, accent, 300);
+    font-weight: 500;
+    padding-top: 8px;
+    margin-top: 8px;
+  }
+}
+
+.note-expansion-panel {
+  margin-top: 4px;
+}

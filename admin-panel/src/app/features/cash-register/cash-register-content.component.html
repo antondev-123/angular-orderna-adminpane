@@ -1,0 +1,57 @@
+<div
+  class="bg-slate-50 px-4 sm:px-6 lg:px-8 py-8 w-full h-full max-w-9xl mx-auto"
+>
+  @if (categories().length) {
+    <ul class="mb-5 flex flex-wrap -m-1">
+      <li class="m-1">
+        <button
+          class="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 duration-150 ease-in-out"
+          [class.select-category]="selectedCategory() === undefined"
+          (click)="onSelectCategory(undefined)"
+        >
+          View All
+        </button>
+      </li>
+
+      @for (category of categories(); track category.id) {
+        <li class="m-1">
+          <button
+            class="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 duration-150 ease-in-out"
+            [class.select-category]="selectedCategory() === category.id"
+            (click)="onSelectCategory(category.id)"
+          >
+            {{category.name}}
+          </button>
+        </li>
+      }
+    </ul>
+
+    <div class="grid grid-cols-12 gap-6">
+      @for (product of products(); track product.id) {
+        <div class="col-span-full sm:col-span-4 xl:col-span-2">
+          <div class="relative flex flex-col h-full">
+            <button
+              class="w-full h-full text-center py-3 px-4 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-lg duration-150 ease-in-out"
+              (click)="onProductSelect(product)"
+            >
+              <div class="font-semibold text-slate-800 dark:text-slate-100">
+                {{product.title}}
+              </div>
+              <div class="text-sm text-emerald-600">${{product.price}}</div>
+            </button>
+
+            @if (orderList().has(product.id)) {
+              <div class="flex flex-shrink-0 absolute -right-1.5 -top-1.5">
+                <span class="inline-flex items-center justify-center h-5 text-xs font-medium text-white bg-indigo-500 px-2 rounded">
+                  {{orderList().get(product.id)?.quantity}}
+                </span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    No products found!
+  }
+</div>

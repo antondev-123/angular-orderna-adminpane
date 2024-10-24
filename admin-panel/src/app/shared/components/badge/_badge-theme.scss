@@ -1,0 +1,62 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@use "../../../../css/material/tailwind/shadows" as shadow;
+@use "../../../../css/material/tailwind/colors" as colors;
+
+@mixin base($theme) {
+  .ord-badge {
+    border-radius: 9999px;
+    padding: 2px 10px;
+  }
+}
+
+@mixin color($theme) {
+  .ord-badge-yellow {
+    color: mat.get-color-from-palette(colors.$amber-palette, 600);
+    background-color: mat.get-color-from-palette(colors.$amber-palette, 100);
+  }
+  .ord-badge-green {
+    color: mat.get-color-from-palette(colors.$emerald-palette, 600);
+    background-color: mat.get-color-from-palette(colors.$emerald-palette, 100);
+  }
+  .ord-badge-red {
+    color: mat.get-color-from-palette(colors.$rose-palette, 600);
+    background-color: mat.get-color-from-palette(colors.$rose-palette, 100);
+  }
+  .ord-badge-gray {
+    color: mat.get-color-from-palette(colors.$slate-palette, 600);
+    background-color: mat.get-color-from-palette(colors.$slate-palette, 100);
+
+    // Add border, so badge will still be distinguishable in case background color of its container is gray
+    border: 1px solid mat.get-color-from-palette(colors.$slate-palette, 300);
+  }
+}
+
+@mixin typography($theme) {
+  .ord-badge {
+    font-weight: 500;
+    font-size: 14px;
+  }
+}
+
+@mixin density($theme) {
+}
+
+@mixin theme($theme) {
+  @if mat.theme-has($theme, base) {
+    @include base($theme);
+  }
+
+  @if mat.theme-has($theme, color) {
+    @include color($theme);
+  }
+
+  @if mat.theme-has($theme, typography) {
+    @include typography($theme);
+  }
+
+  @if mat.theme-has($theme, density) {
+    @include density($theme);
+  }
+}

@@ -1,0 +1,14 @@
+@use "@angular/material" as mat;
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+
+.ord-slide-toggle {
+  margin-bottom: 8px;
+}
+
+.calendar-icon {
+  cursor: pointer;
+  fill: mat.get-theme-color(theme.$admin-panel-theme, accent, 500);
+  &:hover {
+    fill: mat.get-theme-color(theme.$admin-panel-theme, accent, 700);
+  }
+}

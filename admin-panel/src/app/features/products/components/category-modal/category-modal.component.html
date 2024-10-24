@@ -1,0 +1,55 @@
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  [disabled]="loading"
+  (btnClick)="closeDialog()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">
+  {{ mode === "edit" ? "Edit" : "Add" }} Category
+</h2>
+<mat-dialog-content class="ord-modal-content">
+  <p class="ord-form-help-text">
+    {{ mode === "edit" ? "Edit" : "Add" }} Category details.
+  </p>
+
+  <form [formGroup]="formGroup" (ngSubmit)="handleSubmit()" class="w-100">
+    <app-input-text
+      id="name"
+      label="Name"
+      controlName="name"
+      [value]="category?.categoryName"
+      [validators]="[Validators.required]"
+    />
+    <app-input-textarea
+      id="description"
+      label="Description"
+      controlName="description"
+      [value]="category?.categoryDescription"
+    />
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="ord-modal-actions">
+  @if(errorMessage) {
+  <ul class="ord-modal-errors">
+    <li>{{ errorMessage }}</li>
+  </ul>
+  }
+  <app-button
+    variant="secondary"
+    (btnClick)="closeDialog()"
+    [disabled]="loading"
+  >
+    <ng-template appButtonText> Cancel </ng-template>
+  </app-button>
+  <app-button
+    (btnClick)="handleSubmit()"
+    [disabled]="formGroup.invalid || loading"
+    [svgIcon]="loading ? 'loading' : undefined"
+  >
+    <ng-template appButtonText>
+      {{ mode === "create" ? "Create" : "Save" }}
+    </ng-template>
+  </app-button>
+</mat-dialog-actions>

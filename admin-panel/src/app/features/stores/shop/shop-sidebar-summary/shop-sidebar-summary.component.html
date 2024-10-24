@@ -1,0 +1,87 @@
+<div
+  class="sm:ml-4 mt-4 lg:mt-0 bg-slate-50 dark:bg-slate-800/20 lg:overflow-x-hidden lg:overflow-y-auto no-scrollbar lg:shrink-0 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-700 lg:w-[320px] xl:w-[352px] 2xl:w-[calc(352px+80px)]"
+>
+  <div class="py-8 px-4 lg:px-8 2xl:px-12">
+    <div class="max-w-sm mx-auto lg:max-w-none">
+      <!-- Transaction Summary -->
+      <h2 class="text-2xl text-slate-800 dark:text-slate-100 font-bold mb-6">
+        Transaction Summary
+      </h2>
+      <div class="space-y-6">
+        <div>
+          <!-- Cart items -->
+          <app-shop-sidebar-cart-item
+            *ngFor="let item of items; let i = index"
+            [item]="item"
+            [editable]="editQuantity"
+          ></app-shop-sidebar-cart-item>
+          <!-- Fees, discount and total -->
+          <div *ngIf="placeOrder">
+            <div
+              class="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700"
+            >
+              <div class="text-sm">Subtotal</div>
+              <div
+                class="text-sm font-medium text-slate-800 dark:text-slate-100 ml-2"
+              >
+                ${{ subtotal }}
+              </div>
+            </div>
+            <div
+              class="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700"
+            >
+              <div class="text-sm">Taxes</div>
+              <div
+                class="text-sm font-medium text-slate-800 dark:text-slate-100 ml-2"
+              >
+                ${{ taxes }}
+              </div>
+            </div>
+            <div
+              class="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700"
+            >
+              <div class="flex items-center">
+                <span class="text-sm mr-2">Discount</span>
+                <span
+                  class="text-xs inline-flex whitespace-nowrap font-medium uppercase bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 rounded-full text-center px-2.5 py-1"
+                  >XMAS22</span
+                >
+              </div>
+              <div
+                class="text-sm font-medium text-slate-800 dark:text-slate-100 ml-2"
+              >
+                -${{ discount }}
+              </div>
+            </div>
+            <div
+              class="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700"
+            >
+              <div class="text-sm">Total</div>
+              <div class="text-sm font-medium text-emerald-600 ml-2">
+                ${{ total }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6">
+          <div class="mb-4">
+            <a
+              *ngIf="placeOrder"
+              (click)="onPlaceOrder()"
+              class="btn w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md transition duration-300"
+            >
+              Confirm Purchase
+            </a>
+            <a
+              *ngIf="!placeOrder"
+              [routerLink]="[currentRoute, checkoutRoute]"
+              class="btn w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md transition duration-300"
+            >
+              Checkout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

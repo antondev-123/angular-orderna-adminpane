@@ -1,0 +1,24 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin theme($config-or-theme) {
+  // retrieve variables from theme
+  // (all possible variables, use only what you really need)
+  $config: mat.get-color-config($config-or-theme);
+  $primary: map-get($config, primary);
+
+  .mat-toolbar.toolbar {
+    // let's take mat-toolbar's default theme
+    background-color: mat.get-color-from-palette($primary, 50);
+    color: mat.get-color-from-palette($primary, default-contrast);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: mat.get-color-from-palette($primary, 50-contrast);
+  }
+  .mat-toolbar.toolbar .mat-icon {
+    color: mat.get-color-from-palette($primary, 600);
+    &:hover {
+      color: mat.get-color-from-palette($primary, 800);
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<form [formGroup]="form()" class="flex flex-col md:flex-row gap-8">
+  <header class="w-full md:w-1/3">
+    <h3 class="ord-h5">Details</h3>
+    <p class="ord-body-1">Give your store a name and short description.</p>
+  </header>
+  <div class="w-full md:w-2/3">
+    <app-input-text
+      label="Store name"
+      controlName="name"
+      [validators]="[Validators.required, Validators.maxLength(50)]"
+    />
+    <app-input-textarea
+      label="About"
+      controlName="about"
+      hintText="(150-300 characters are recommended)"
+      [validators]="[Validators.maxLength(300)]"
+    />
+    <app-input-text
+      value="PHP"
+      label="Currency"
+      controlName="currency"
+      [disabled]="true"
+    />
+    <app-input-text label="VAT Number" controlName="VATNumber" />
+  </div>
+</form>

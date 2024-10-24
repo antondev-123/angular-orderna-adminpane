@@ -1,0 +1,50 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@use "../../../../../css/material/tailwind/shadows" as shadow;
+
+@mixin base($theme) {
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+  }
+  .ord-form-search .ord-button {
+    padding-right: 0px;
+  }
+}
+
+@mixin color($theme) {
+  .ord-form-search .ord-button {
+    color: mat.get-theme-color($theme, accent, 400);
+    &:hover {
+      color: mat.get-theme-color($theme, accent, 500);
+    }
+  }
+}
+
+@mixin typography($theme) {
+}
+
+@mixin density($theme) {
+  @include mat.icon-button-density(mat.get-theme-density($theme) - 3);
+}
+
+@mixin theme($theme) {
+  @if mat.theme-has($theme, base) {
+    @include base($theme);
+  }
+
+  @if mat.theme-has($theme, color) {
+    @include color($theme);
+  }
+
+  @if mat.theme-has($theme, typography) {
+    @include typography($theme);
+  }
+
+  @if mat.theme-has($theme, density) {
+    @include density($theme);
+  }
+}

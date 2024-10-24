@@ -1,0 +1,10 @@
+@if(series().length > 1 || labels().length > 1) {
+<div id="chart" class="flex justify-center">
+  <apx-chart
+    [chart]="chart"
+    [responsive]="responsive"
+    [series]="series()"
+    [labels]="labels()"
+  ></apx-chart>
+</div>
+}

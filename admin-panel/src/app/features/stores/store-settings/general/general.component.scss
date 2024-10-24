@@ -1,0 +1,84 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "@angular/material" as mat;
+
+form {
+  > header {
+    margin-bottom: 20px;
+  }
+
+  // Section styles
+  section {
+    display: grid;
+    margin-top: 16px;
+    .card {
+      display: flex;
+      flex-direction: column;
+      padding: 16px 20px;
+      margin-top: 20px;
+    }
+  }
+  @media (min-width: 768px) {
+    section {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px;
+      header {
+        grid-column: span 1 / span 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .card {
+        padding: 24px;
+        margin-top: 0;
+        grid-column: span 2 / span 2;
+      }
+    }
+  }
+
+  // Divider styles
+  .divider {
+    display: hidden;
+    margin: 20px 0;
+    border-top: 1px solid
+      mat.get-theme-color(theme.$admin-panel-theme, accent, 200);
+  }
+  @media (min-width: 640px) {
+    display: block;
+  }
+}
+
+#input-currency {
+  margin-top: 20px;
+}
+
+#input-is-permanently-closed {
+  margin-top: 20px;
+
+  // TODO: Move toggle to its own component so no need to do this
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ord-hint {
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 20px;
+}
+
+#close-store.card,
+#delete-store.card {
+  border: 2px dashed mat.get-theme-color(theme.$admin-panel-theme, warn, 400);
+  background-color: mat.get-theme-color(theme.$admin-panel-theme, warn, 50);
+}
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: white; /* Change color to indicate "On" state */
+}
+
+input:checked ~ .block {
+  background-color: rgb(
+    99 102 241 / var(--tw-bg-opacity)
+  ); /* Change background color to indicate "On" state */
+}

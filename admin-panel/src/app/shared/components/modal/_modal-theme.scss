@@ -1,0 +1,103 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@use "../../../../css/material/tailwind/shadows" as shadow;
+
+@mixin base($theme) {
+  .ord-form-help-text {
+    margin-bottom: 12px;
+  }
+  .ord-modal-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .ord-modal-backdrop {
+    opacity: 30% !important;
+  }
+  .ord-modal-panel {
+    box-shadow: shadow.get-shadow(shadow.$lg);
+    border-radius: 4px;
+  }
+  .ord-modal-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 24px;
+    &::before {
+      display: none;
+    }
+  }
+  .ord-modal-actions {
+    padding: 16px 20px;
+  }
+  .ord-modal-content {
+    border-top: 1px;
+    border-bottom: 1px;
+    border-style: solid;
+    padding: 16px 20px;
+    display: relative;
+  }
+  .ord-modal-content > :first-child {
+    padding-top: 16px;
+  }
+  .ord-modal-button-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    z-index: 1;
+  }
+  mat-tab-group.ord-modal-tab-group
+    mat-tab-header.mat-mdc-tab-header
+    .mat-mdc-tab-labels {
+    padding: 0 !important;
+  }
+  mat-tab-group.ord-modal-tab-group mat-tab-body .mat-mdc-tab-body-content {
+    padding-top: 16px;
+  }
+}
+
+@mixin color($theme) {
+  .ord-modal-errors {
+    color: mat.get-theme-color($theme, warn, 500);
+  }
+  .ord-form-help-text {
+    color: mat.get-theme-color($theme, accent, 800);
+  }
+  .ord-modal-backdrop {
+    background-color: mat.get-theme-color($theme, accent, 900);
+  }
+  .ord-modal-content {
+    border-color: mat.get-theme-color($theme, accent, 200);
+  }
+}
+
+@mixin typography($theme) {
+  .ord-form-help-text {
+    font: mat.get-theme-typography($theme, subtitle-2);
+  }
+  .ord-modal-errors {
+    font-size: 14px;
+  }
+}
+
+@mixin density($theme) {
+}
+
+@mixin theme($theme) {
+  @if mat.theme-has($theme, base) {
+    @include base($theme);
+  }
+
+  @if mat.theme-has($theme, color) {
+    @include color($theme);
+  }
+
+  @if mat.theme-has($theme, typography) {
+    @include typography($theme);
+  }
+
+  @if mat.theme-has($theme, density) {
+    @include density($theme);
+  }
+}

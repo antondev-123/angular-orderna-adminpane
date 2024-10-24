@@ -1,0 +1,59 @@
+<div class="flex flex-col">
+  <label [for]="id" class="ord-form-field-label"
+    >{{ label }}
+    @if (required) {
+    <span class="ord-form-field-required">*</span>
+    }
+  </label>
+  @if(toggleable) {
+  <mat-slide-toggle
+    class="ord-slide-toggle"
+    [checked]="toggleChecked"
+    (change)="handleToggle($event)"
+    hideIcon
+    >{{ toggleLabel }}</mat-slide-toggle
+  >
+  }
+  <mat-form-field
+    class="ord-form-field"
+    color="accent"
+    appearance="outline"
+    [class.invisible]="toggleable && !toggleChecked"
+  >
+    <input
+      #flatpickrInput
+      type="text"
+      matInput
+      mwlFlatpickr
+      [allowInput]="true"
+      [dateFormat]="dateFormat"
+      [altFormat]="dateFormat"
+      [altInput]="true"
+      [convertModelValue]="true"
+      [formControlName]="controlName"
+      [minDate]="minDate ?? ''"
+      [maxDate]="maxDate ?? ''"
+      [placeholder]="placeholder"
+      [enableTime]="enableTime"
+      [defaultHour]="12"
+      [defaultMinute]="0"
+      [time24hr]="true"
+      [mode]="mode ?? 'single'"
+      [ignoredFocusElements]="[calendarIcon._elementRef.nativeElement]"
+      (flatpickrOpen)="isCalendarVisible.set(true)"
+      (flatpickrClose)="isCalendarVisible.set(false)"
+      (flatpickrChange)="dateChange.emit($event)"
+    />
+    <mat-icon
+      #calendarIcon
+      svgIcon="calendar"
+      aria-hidden="false"
+      matIconSuffix
+      class="ord-icon calendar-icon"
+      (click)="handleToggleCalendar()"
+    ></mat-icon>
+    @if (date.hasError('required')) {
+    <mat-error class="ord-error">{{ label }} is required.</mat-error>
+    }
+  </mat-form-field>
+</div>

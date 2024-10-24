@@ -1,0 +1,20 @@
+<mat-form-field
+  class="ord-form-field ord-form-search w-full"
+  color="accent"
+  appearance="outline"
+>
+  <button mat-icon-button matPrefix class="ord-button">
+    <mat-icon
+      svgIcon="magnifying-glass"
+      aria-hidden="false"
+      class="ord-icon"
+    ></mat-icon>
+  </button>
+  <input
+    matInput
+    type="search"
+    [placeholder]="placeholder"
+    [(ngModel)]="searchTerm"
+    (keydown.enter)="onSearch($event)"
+  />
+</mat-form-field>

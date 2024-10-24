@@ -1,0 +1,39 @@
+@if(errorMessage) {
+<p>Error: {{ errorMessage }}</p>
+} @if(infoMessage) {
+<p>Info: {{ infoMessage }}</p>
+} @if (data$ | async; as data){
+<app-row-controls
+  class="w-full md:w-fit"
+  [numberOfSelectedRows]="getSelectedProductsCount(products.length)"
+  (delete)="
+    openProductConfirmBulkDeleteModal(getSelectedProductsCount(products.length))
+  "
+/>
+<div [hidden]="data.isLoading" class="mt-3">
+  <app-table
+    [columns]="columns"
+    [totalProducts]="products.length"
+    [dataSource]="dataSource"
+    (allRowsSelectedChange)="handleAllRowsSelectedChange($event)"
+    (rowsSelectedChange)="handleRowsSelectedChange($event)"
+    (delete)="openProductConfirmDeleteModal($event)"
+    (edit)="openProductModal($event)"
+  ></app-table>
+</div>
+<div [hidden]="!data.isLoading">
+  <app-table-skeleton />
+</div>
+
+<div class="my-5">
+  <button
+    dashedBorderAddButton
+    aria-controls="add-product"
+    (click)="openProductModal()"
+    class="flex"
+  >
+    Add Product
+  </button>
+</div>
+
+}

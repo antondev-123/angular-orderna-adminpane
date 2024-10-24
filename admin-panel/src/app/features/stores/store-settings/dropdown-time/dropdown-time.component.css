@@ -1,0 +1,33 @@
+.text-slate-500 {
+    --tw-text-opacity: 1;
+    color: rgb(100 116 139 / var(--tw-text-opacity));
+}
+
+
+button.time-picker-btn.btn {
+    border: 1px solid #e6ecf3;
+}
+
+.selected {
+    background-color: #4F46E5; /* Tailwind's indigo-500 */
+    color: white;
+  }
+  
+  .dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .tick-mark {
+    float: right;
+    font-size: 1rem;
+    line-height: 1rem;
+    color: white; /* Ensure the tick mark is visible on selected background */
+  }
+  
+  .item-text {
+    float: left;
+  }
+
+  

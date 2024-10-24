@@ -1,0 +1,169 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@use "../../../../css/material/tailwind/shadows" as shadow;
+
+@use "@material/switch/switch-theme" as mdc-switch-theme;
+@use "@angular/material/core/style/sass-utils";
+@use "@angular/material/core/theming/theming";
+@use "@angular/material/core/theming/inspection";
+@use "@angular/material/core/theming/validation";
+@use "@angular/material/core/tokens/token-utils";
+@use "@angular/material/core/typography/typography";
+@use "@angular/material/core/tokens/m2/mat/switch" as tokens-mat-switch;
+@use "@angular/material/core/tokens/m2/mdc/switch" as tokens-mdc-switch;
+
+@mixin base($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, base));
+  } @else {
+    @include sass-utils.current-selector-or-root() {
+      $mat-tokens: tokens-mat-switch.get-unthemable-tokens();
+      $mdc-tokens: tokens-mdc-switch.get-unthemable-tokens();
+      @include mdc-switch-theme.theme($mdc-tokens);
+
+      .mat-mdc-slide-toggle {
+        @include token-utils.create-token-values(
+          tokens-mat-switch.$prefix,
+          $mat-tokens
+        );
+      }
+    }
+  }
+}
+
+@mixin color($theme, $options...) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(
+      inspection.get-theme-tokens($theme, primary),
+      $options...
+    );
+  } @else {
+    $is-dark: inspection.get-theme-type($theme) == dark;
+    $mat-tokens: tokens-mat-switch.get-color-tokens($theme);
+    $mdc-tokens: tokens-mdc-switch.get-color-tokens($theme);
+
+    // Add values for MDC slide toggles tokens
+    @include sass-utils.current-selector-or-root() {
+      @include mdc-switch-theme.theme($mdc-tokens);
+
+      // TODO(wagnermaciel): Use our token system to define this css variable.
+      --mdc-switch-disabled-label-text-color: #{inspection.get-theme-color(
+          $theme,
+          foreground,
+          disabled-text
+        )};
+
+      .mat-mdc-slide-toggle {
+        @include token-utils.create-token-values(
+          tokens-mat-switch.$prefix,
+          $mat-tokens
+        );
+
+        > .mdc-switch .mdc-switch__track {
+          height: 24px !important;
+        }
+
+        // Change the color palette related tokens to accent or warn if applicable
+        &.mat-accent {
+          @include mdc-switch-theme.theme(
+            tokens-mdc-switch.private-get-color-palette-color-tokens(
+              $theme,
+              accent
+            )
+          );
+        }
+
+        &.mat-warn {
+          @include mdc-switch-theme.theme(
+            tokens-mdc-switch.private-get-color-palette-color-tokens(
+              $theme,
+              warn
+            )
+          );
+        }
+      }
+    }
+  }
+
+  --mdc-switch-track-height: 20px; // Adjust the height as needed
+  --mdc-switch-track-shape: 10px;
+  --mdc-switch-track-width: 38px;
+  --mdc-switch-handle-height: 12px;
+  --mdc-switch-handle-shape: 10px;
+  --mdc-switch-handle-width: 18px;
+  --mdc-switch-selected-icon-size: 12px;
+  --mdc-switch-state-layer-size: 18px;
+  --mdc-switch-selected-icon-color: white;
+  --mdc-switch-track-off-color: white;
+  --mdc-switch-unselected-handle-color: white;
+  --mdc-switch-unselected-focus-handle-color: white;
+  --mdc-switch-unselected-hover-handle-color: white;
+  --mdc-switch-unselected-pressed-handle-color: white;
+  --mdc-switch-selected-handle-color: white;
+  --mdc-switch-selected-focus-handle-color: white;
+  --mdc-switch-selected-hover-handle-color: white;
+  --mdc-switch-selected-pressed-handle-color: white;
+}
+
+@mixin typography($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(
+      inspection.get-theme-tokens($theme, typography)
+    );
+  } @else {
+    $mat-tokens: tokens-mat-switch.get-typography-tokens($theme);
+    $mdc-tokens: tokens-mdc-switch.get-typography-tokens($theme);
+
+    // Add values for MDC slide toggle tokens
+    @include sass-utils.current-selector-or-root() {
+      @include mdc-switch-theme.theme($mdc-tokens);
+
+      .mat-mdc-slide-toggle {
+        @include token-utils.create-token-values(
+          tokens-mat-switch.$prefix,
+          $mat-tokens
+        );
+      }
+    }
+  }
+}
+
+@mixin density($theme) {
+  @if inspection.get-theme-version($theme) == 1 {
+    @include _theme-from-tokens(inspection.get-theme-tokens($theme, density));
+  } @else {
+    @include sass-utils.current-selector-or-root() {
+      $mat-tokens: tokens-mat-switch.get-density-tokens($theme);
+      $mdc-tokens: tokens-mdc-switch.get-density-tokens($theme);
+      @include mdc-switch-theme.theme(
+        tokens-mdc-switch.get-density-tokens($theme)
+      );
+
+      .mat-mdc-slide-toggle {
+        @include token-utils.create-token-values(
+          tokens-mat-switch.$prefix,
+          $mat-tokens
+        );
+      }
+    }
+  }
+}
+
+@mixin theme($theme) {
+  @if mat.theme-has($theme, base) {
+    @include base($theme);
+  }
+
+  @if mat.theme-has($theme, color) {
+    @include color($theme);
+  }
+
+  @if mat.theme-has($theme, typography) {
+    @include typography($theme);
+  }
+
+  @if mat.theme-has($theme, density) {
+    @include density($theme);
+  }
+}

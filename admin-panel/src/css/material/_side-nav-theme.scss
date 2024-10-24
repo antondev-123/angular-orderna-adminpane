@@ -1,0 +1,120 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin theme($config-or-theme) {
+  // retrieve variables from theme
+  // (all possible variables, use only what you really need)
+  $config: mat.get-color-config($config-or-theme);
+  $primary: map-get($config, primary);
+  $accent: map-get($config, accent);
+  $warn: map-get($config, warn);
+  $foreground: map-get($config, foreground);
+  $background: map-get($config, background);
+
+  .mat-drawer.mat-sidenav {
+    // let's take mat-toolbar's default theme
+    --mdc-list-list-item-label-text-color: mat.get-color-from-palette(
+      $primary,
+      default-contrast
+    );
+    --mdc-list-list-item-hover-label-text-color: mat.get-color-from-palette(
+      $primary,
+      default-contrast
+    );
+    --mat-expansion-header-indicator-color: mat.get-color-from-palette(
+      $primary,
+      default-contrast
+    );
+    background-color: mat.get-color-from-palette($primary);
+    color: mat.get-color-from-palette($primary, default-contrast);
+
+    $color-list: (
+      "primary": $primary,
+      "accent": $accent,
+      "warn": $warn,
+    );
+    .separator {
+      color: mat.get-color-from-palette($primary, 600);
+      font-weight: normal;
+    }
+    .sub-menu:has(.active-link),
+    .active-link {
+      background-color: mat.get-color-from-palette($primary, 700);
+      .icon {
+        color: mat.get-color-from-palette($primary, 300-contrast);
+      }
+      .icon [fill="#475569"] {
+        fill: mat.get-color-from-palette($primary, 300-contrast);
+      }
+      .icon [fill="#334155"] {
+        fill: mat.get-color-from-palette($primary, 100-contrast);
+      }
+    }
+    .nav-text {
+      color: mat.get-color-from-palette($primary, default-contrast);
+      .menu-badge {
+        background-color: mat.get-color-from-palette($primary, 400);
+      }
+    }
+
+    .sub-menu,
+    .sub-menu-content {
+      a {
+        .mat-mdc-focus-indicator {
+          display: none;
+        }
+      }
+      .active-link {
+        .nav-text {
+          color: mat.get-color-from-palette($primary, 200-contrast);
+        }
+      }
+    }
+    // now, mat-toolbar's colored themes
+    @each $key, $val in $color-list {
+      &[color="#{$key}"] {
+        .mat-list-base {
+          .mat-list-item {
+            color: mat.get-color-from-palette($primary, default-contrast);
+          }
+        }
+      }
+    }
+
+    .icon {
+      color: mat.get-color-from-palette($primary, 300);
+    }
+
+    .mat-expansion-panel {
+      background-color: mat.get-color-from-palette($primary);
+      color: mat.get-color-from-palette($primary, default-contrast);
+      .mat-mdc-list-item {
+        color: mat.get-color-from-palette($primary, default-contrast);
+      }
+    }
+  }
+  .mat-mdc-menu-content {
+    .mat-mdc-menu-item {
+      min-height: 36px;
+      color: mat.get-color-from-palette($primary, 400);
+    }
+  }
+  .back-nav.mat-mdc-icon-button {
+    color: mat.get-color-from-palette($primary, 600);
+    &:hover {
+      color: mat.get-color-from-palette($primary, 200);
+    }
+
+    .mat-mdc-button-persistent-ripple::before {
+      opacity: 1;
+      background-color: transparent;
+    }
+  }
+
+  // When sidenav is minimized (only showing icons),
+  // remove extra margin from nav item with sub-items  (e.g. analytics)
+  // because it takes space from the icon
+  .nav-list-icon-only .sub-menu .mat-content.mat-content-hide-toggle {
+    margin-right: 0px; // was 8px
+  }
+}

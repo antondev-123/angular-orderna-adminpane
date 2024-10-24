@@ -1,0 +1,18 @@
+<h2 mat-dialog-title class="ord-modal-title">
+  <mat-icon
+    svgIcon="check-circle"
+    class="ord-icon ord-icon-lg ord-fill-green"
+  ></mat-icon>
+  <span>Store Successfully Created</span>
+</h2>
+<mat-dialog-content class="ord-modal-content">
+  <p>
+    Store
+    <span class="font-bold">{{ data.storeName }}</span> successfully created.
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="ord-modal-actions">
+  <app-button (btnClick)="handleContinueClicked()">
+    <ng-template appButtonText> Continue </ng-template>
+  </app-button>
+</mat-dialog-actions>

@@ -1,0 +1,17 @@
+<div class="my-2">
+  <div class="flex justify-between">
+    <div class="text-lg text-slate-500">{{ title }}</div>
+    <span class="flex align-middle percentage py-1 px-2 {{ percent > 0 ? 'percent-increase' : percent < 0 ? 'percent-decrease' : '' }}">
+      <mat-icon
+        svgIcon="{{ percent > 0 ? 'trending-up' : percent < 0 ? 'trending-down' : '' }}"
+        aria-hidden="false"
+        class="mr-3"
+      ></mat-icon>
+      {{ percent }}%
+    </span>
+  </div>
+  <div>
+    <div class="text-3xl font-extrabold">{{ value }} {{ valueIsCurrency ? '₱' : '' }}</div>
+    <div class="text-lg text-slate-500">from {{ from }}</div>
+  </div>
+</div>

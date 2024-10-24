@@ -1,0 +1,31 @@
+@tailwind components;
+
+@layer components {
+  .badge,
+  .badge-refunded,
+  .badge-approved,
+  .badge-active,
+  .badge-pending,
+  .badge-expired,
+  .badge-inactive {
+    @apply inline-flex font-medium rounded-full text-center px-2.5 py-0.5;
+  }
+
+  .badge-refunded {
+    @apply bg-semantic-yellow-100 dark:bg-semantic-yellow-400/30 text-semantic-yellow-600 dark:text-semantic-yellow-400;
+  }
+
+  .badge-approved,
+  .badge-active {
+    @apply bg-semantic-green-100 dark:bg-semantic-green-400/30 text-semantic-green-600 dark:text-semantic-green-400;
+  }
+
+  .badge-pending {
+    @apply bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400;
+  }
+
+  .badge-expired,
+  .badge-inactive {
+    @apply bg-semantic-red-100 dark:bg-semantic-red-500/30 text-semantic-red-500 dark:text-semantic-red-400;
+  }
+}

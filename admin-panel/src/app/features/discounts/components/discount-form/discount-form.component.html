@@ -1,0 +1,286 @@
+<section class="section relative">
+  <button backButton (click)="goToDiscountsPage()">Discounts</button>
+  <header class="ord-h4">
+    {{ mode === "create" ? "Create" : "Edit" }} Discount
+  </header>
+  <form
+    [formGroup]="formGroup"
+    (ngSubmit)="handleSubmit()"
+    class="w-full lg:w-2/3 space-y-4"
+  >
+    <!-- Discount code -->
+    <div class="card">
+      <div class="flex gap-4 items-end">
+        <app-input-text
+          class="flex-1"
+          id="code"
+          label="Discount code"
+          controlName="code"
+          hintText="Entered at checkout to receive discount."
+          patternErrorMessage="Discount code should contain at least 3 alphanumeric characters"
+          [value]="discount?.code"
+          [validators]="[
+            Validators.required,
+            Validators.pattern('^[a-zA-Z0-9]{3,}$')
+          ]"
+          [isUppercaseInput]="true"
+        />
+        <app-button
+          id="generate-code-button"
+          (btnClick)="generateDiscountCode()"
+        >
+          <ng-template appButtonText> Generate Code </ng-template>
+        </app-button>
+      </div>
+      <app-input-textarea
+        id="description"
+        label="Description"
+        controlName="description"
+        hintText="Visible to store managers and administrators only."
+        [value]="discount?.description"
+      />
+    </div>
+    <!-- Discount type and value -->
+    <div class="card flex flex-col md:flex-row gap-4">
+      <app-input-select
+        class="md:w-1/3"
+        id="type"
+        label="Discount type"
+        controlName="type"
+        [value]="discount?.type"
+        [options]="typeOptions"
+        [defaultOption]="defaultTypeOption"
+        [validators]="[Validators.required]"
+      />
+      <app-input-number
+        class="md:w-2/3"
+        id="value"
+        label="Discount value"
+        controlName="value"
+        [value]="discount?.formattedValue ?? 0"
+        [prefixText]="isFixedType ? '₱' : undefined"
+        [suffixText]="isPercentageType ? '%' : undefined"
+        [validators]="[Validators.required, Validators.min(0)]"
+      />
+    </div>
+    <!-- Applicable stores -->
+    @if(storeOptions$ | async; as storeOptions) {
+    <div class="card">
+      @if(storeOptions && storeOptions.length > 0) {
+      <app-input-select
+        class="md:w-1/3"
+        id="applicable-stores"
+        label="Store(s)"
+        controlName="applicableStores"
+        placeholder="Select which store(s) this discount can be used on"
+        [value]="discount?.applicableStores"
+        [options]="storeOptions"
+        [validators]="[Validators.required]"
+        [allowMultipleSelection]="true"
+      />
+      } @else {
+      <!-- TODO: Maybe enable user to create store from here -->
+      }
+    </div>
+    }
+    <!-- Validity period -->
+    <div class="card">
+      <h2 class="ord-subtitle-2">Validity period</h2>
+      <div class="input-description">
+        @if(validFrom && validThrough) {
+        <p>
+          This discount will be active from
+          {{ validFrom | date : "MMMM d, y HH:mm" }} to
+          {{ validThrough | date : "MMMM d, y HH:mm" }}.
+        </p>
+        } @else if(validFrom && !validThrough) {
+        <p>
+          This discount will be active from
+          {{ validFrom | date : "MMMM d, y HH:mm" }} indefinitely.
+        </p>
+        } @else if(!validFrom && validThrough) {
+        <p>
+          This discount will be active from the date it is created until
+          {{ validThrough | date : "MMMM d, y HH:mm" }}.
+        </p>
+        } @else {
+        <p>
+          If you don't specify a validity period, this discount will be active
+          indefinitely from the date it is created.
+        </p>
+        }
+      </div>
+      <div id="validity-period-datepicker" class="flex gap-4">
+        <app-input-datepicker
+          class="grow-0"
+          id="valid-from"
+          controlName="validFrom"
+          toggleLabel="Start Date"
+          [value]="discount?.validFrom ?? defaultValidFrom"
+          [toggleChecked]="!!discount?.validFrom"
+          [minDate]="undefined"
+          [maxDate]="validFrom"
+          [toggleable]="true"
+          [enableTime]="true"
+        />
+        <app-input-datepicker
+          class="grow-0"
+          id="valid-through"
+          controlName="validThrough"
+          toggleLabel="End Date"
+          [value]="discount?.validThrough ?? defaultValidThrough"
+          [toggleChecked]="!!discount?.validThrough"
+          [minDate]="validThrough"
+          [maxDate]="undefined"
+          [toggleable]="true"
+          [enableTime]="true"
+        />
+      </div>
+
+      <div class="help-text">
+        <p>
+          The date range during which the discount code will be active and
+          available for use by customers.
+        </p>
+      </div>
+    </div>
+    <!-- Availability -->
+    <div class="card">
+      <h2 class="ord-subtitle-2">Availability</h2>
+
+      <div class="input-description">
+        <!-- Display discount availability time -->
+        Discount will be available @if(isAvailableAllDay || !availableFrom ||
+        !availableThrough) {
+        <!-- If available all day or no specific time set -->
+        <span>all day</span>
+        } @else {
+        <!-- If specific time set -->
+        <span
+          >from {{ availableFrom | date : "HH:mm" }} to
+          {{ availableThrough | date : "HH:mm" }}
+        </span>
+        }
+        <!-- Display discount availability days -->
+        {{ isAvailableEveryday ? "every day" : "on selected days" }}
+        within the validity period.
+      </div>
+      <div class="space-y-4">
+        <!-- Days available -->
+        <app-input-day-of-week
+          id="days-available-input"
+          controlName="daysAvailable"
+          [value]="discount?.daysAvailable ?? defaultDaysAvailable"
+        />
+        <!-- Times available -->
+        <div id="times-available-input" class="space-y-2">
+          <div class="all-day-toggle-input">
+            <mat-slide-toggle
+              class="ord-slide-toggle"
+              formControlName="isAvailableAllDay"
+              hideIcon
+              (change)="onIsAvailableAllDayToggled($event)"
+              >All Day</mat-slide-toggle
+            >
+          </div>
+          <div id="timerange-input" [class.invisible]="isAvailableAllDay">
+            <div class="flex gap-2 items-center">
+              <div class="flex gap-1">
+                <app-input-timepicker
+                  id="available-from"
+                  controlName="availableFrom"
+                  label="Opening Time"
+                  [value]="discount?.hoursAvailable?.opens"
+                />
+              </div>
+              <span class="ord-body-2">to</span>
+              <div class="flex gap-1">
+                <app-input-timepicker
+                  id="available-through"
+                  controlName="availableThrough"
+                  label="Closing Time"
+                  [value]="discount?.hoursAvailable?.closes"
+                />
+              </div>
+            </div>
+            <p class="help-text">
+              If end time is less/earlier that value for the start time, then
+              the hour range is assumed to span over the next day.
+            </p>
+          </div>
+        </div>
+      </div>
+      <p class="help-text">
+        The specific days and hours when the discount is available within the
+        validity period.
+      </p>
+    </div>
+    <!-- Minimum spend -->
+    <div class="card">
+      <app-input-number
+        id="minimum-spend"
+        label="Minimum spend"
+        controlName="minimumSpend"
+        prefixText="₱"
+        [value]="discount?.minimumSpend ?? 0"
+        [validators]="[Validators.min(0)]"
+      />
+      <div class="help-text">
+        <p>Minimum amount a customer must spend to use this discount.</p>
+        <p>Set to 0 for no minimum spend requirement.</p>
+      </div>
+    </div>
+    <!-- Redemption limit -->
+    <div class="card">
+      <app-input-number
+        id="redemption-limit"
+        label="Redemption limit"
+        controlName="redemptionLimit"
+        [value]="discount?.redemptionLimit ?? 0"
+        [validators]="[Validators.min(0)]"
+      />
+      <div class="help-text">
+        <p>Total number of times this discount can be used.</p>
+        <p>Set to 0 for unlimited uses.</p>
+      </div>
+    </div>
+    <!-- Redemption limit per customer -->
+    <div class="card">
+      <app-input-number
+        id="redemption-limit-per-customer"
+        label="Redemption limit per customer"
+        controlName="redemptionLimitPerCustomer"
+        [value]="discount?.redemptionLimitPerCustomer ?? 0"
+        [validators]="[Validators.min(0)]"
+      />
+      <div class="help-text">
+        <p>Maximum number of times a single customer can use this discount.</p>
+        <p>Set to 0 for unlimited uses per customer.</p>
+      </div>
+    </div>
+    @if(mode === 'edit') {
+    <!-- Is archived -->
+    <div class="card">
+      <mat-slide-toggle
+        class="ord-slide-toggle"
+        formControlName="isArchived"
+        hideIcon
+        >Is Archived</mat-slide-toggle
+      >
+    </div>
+    }
+    <!-- Action buttons -->
+    <div id="form-actions">
+      <app-button
+        id="submit-button"
+        (btnClick)="handleSubmit()"
+        [disabled]="formGroup.invalid || loading"
+        [svgIcon]="loading ? 'loading' : undefined"
+      >
+        <ng-template appButtonText>
+          {{ mode === "create" ? "Add" : "Save" }}
+        </ng-template>
+      </app-button>
+    </div>
+  </form>
+</section>

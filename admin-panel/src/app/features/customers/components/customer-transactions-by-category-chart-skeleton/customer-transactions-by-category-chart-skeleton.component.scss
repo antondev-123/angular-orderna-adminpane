@@ -1,0 +1,24 @@
+.ord-skeleton.ord-pie-chart {
+  width: 200px;
+  height: 200px;
+  margin: 0 24px;
+}
+
+.ord-pie-chart-legend {
+  margin-top: 24px;
+  * {
+    padding: 2px 0px;
+  }
+  .ord-skeleton {
+    &.ord-pie-chart-legend-label {
+      height: 24px;
+      width: 90px;
+    }
+
+    &.ord-pie-chart-legend-item {
+      margin-left: 10px;
+      height: 18px;
+      width: 75px;
+    }
+  }
+}

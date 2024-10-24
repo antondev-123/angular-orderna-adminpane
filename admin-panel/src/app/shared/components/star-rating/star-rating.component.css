@@ -1,0 +1,23 @@
+.star {
+  color: #d3d3d3;
+  height: 32px;
+  width: 32px;
+}
+
+.active-star {
+  color: red !important;
+  fill: red !important;
+  stroke: red !important;
+}
+
+.active-star svg {
+  color: red !important;
+  fill: red !important;
+  stroke: red !important;
+}
+
+.active-star svg path {
+  fill: red !important;
+  stroke: red !important;
+  color: red !important;
+}

@@ -1,0 +1,13 @@
+.active {
+    color: #6366f1;
+  }
+  
+  #category-tabs li a.active{
+    --tw-border-opacity: 1;
+    --tw-text-opacity: 1;
+    border-bottom-width: 2px;
+    border-color: #6366f1;
+  }
+  .overflow-x-scroll {
+    overflow-x: auto;
+}

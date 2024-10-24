@@ -1,0 +1,12 @@
+<!-- TODO: Consult if table should be sortable -->
+<app-table
+  [title]="'Modifier Groups'"
+  [columns]="columns"
+  [totalRows]="data()?.length ?? 0"
+  [dataSource]="data() ?? []"
+  [selectable]="false"
+  [sortable]="false"
+  [initialSort]="{ field: 'createdAt', direction: 'desc' }"
+  (delete)="delete.emit($event)"
+  (edit)="edit.emit($event)"
+/>

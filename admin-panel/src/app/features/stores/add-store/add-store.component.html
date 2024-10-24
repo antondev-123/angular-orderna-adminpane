@@ -1,0 +1,62 @@
+<div class="w-full max-w-9xl mx-auto">
+  <div class="mx-auto mb-40 px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <button backButton (click)="goToStoresPage()">Stores</button>
+    <div>
+      <h3 class="ord-h6">
+        Step {{ currentStep().order }} of {{ STEPS.length }}:
+        {{ currentStep().description }}
+      </h3>
+      @switch (currentStep().order) { @case (1) {
+      <app-general
+        [data]="data"
+        [actionsTemplate]="generalActionsTemplate"
+        (submit)="goToNextStep($event)"
+      />
+      } @case (2) {
+      <app-opening-hours [actionsTemplate]="openingHoursActionsTemplate" 
+      (openingHoursChange)="getOpeningHour($event)"/>
+      } }
+    </div>
+  </div>
+</div>
+
+<ng-template
+  #generalActionsTemplate
+  let-formInvalid="formInvalid"
+  let-formValues="formValues"
+>
+  <app-button
+    [disabled]="formInvalid || loading()"
+    [svgIcon]="loading() ? 'loading' : undefined"
+    (btnClick)="goToNextStep(formValues)"
+  >
+    <ng-template appButtonText
+      >Next: {{ nextStep()?.description }}
+    </ng-template>
+  </app-button>
+</ng-template>
+
+<ng-template
+  #openingHoursActionsTemplate
+  let-formInvalid="formInvalid"
+  let-formValues="formValues"
+>
+  <div class="flex gap-2">
+    <app-button
+      variant="secondary"
+      [disabled]="loading()"
+      (btnClick)="goToPreviousStep()"
+    >
+      <ng-template appButtonText
+        >Back: {{ previousStep()?.description }}</ng-template
+      >
+    </app-button>
+    <app-button
+      [disabled]="formInvalid || loading()"
+      [svgIcon]="loading() ? 'loading' : undefined"
+      (btnClick)="handleLastStepCompleted(formValues);"
+    >
+      <ng-template appButtonText>Add</ng-template>
+    </app-button>
+  </div>
+</ng-template>

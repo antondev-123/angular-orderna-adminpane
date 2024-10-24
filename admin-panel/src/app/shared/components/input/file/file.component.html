@@ -1,0 +1,53 @@
+<div class="flex flex-col">
+  <label [for]="id" class="ord-form-field-label"
+    >{{ label }}
+    @if (required) {
+    <span class="ord-form-field-required">*</span>
+    }
+  </label>
+  <div
+    class="rounded bg-slate-50 dark:bg-slate-700/30 border border-dashed border-slate-300 dark:border-slate-700 text-center px-5 py-8 hover:cursor-pointer hover:border-2 hover:border-indigo-400"
+    appDragDrop
+    (files)="handleFileDrop($event)"
+  >
+    <svg
+      class="inline-flex w-4 h-4 fill-slate-400 dark:fill-slate-500 mb-3"
+      viewBox="0 0 16 16"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M8 4c-.3 0-.5.1-.7.3L1.6 10 3 11.4l4-4V16h2V7.4l4 4 1.4-1.4-5.7-5.7C8.5 4.1 8.3 4 8 4ZM1 2h14V0H1v2Z"
+      ></path>
+    </svg>
+    <input
+      class="opacity-0 ml-40"
+      id="upload-image"
+      type="file"
+      (change)="selectFile($event)"
+      accept=".png"
+    />
+    <button
+      class="text-center m-auto mt-[-25px] cursor-pointer block text-sm font-semibold text-slate-800 dark:text-slate-100 mb-2 top-[-25px]"
+    >
+      Upload Image</button
+    ><span class="block text-sm text-slate-500 dark:text-slate-400 italic mt-1">
+      We accept PNG up to 10MB.
+    </span>
+  </div>
+  @for (file of files; track $index) {
+  <div class="flex justify-between items-center mt-2">
+    <img [src]="imageUrl" width="32" height="32" />
+    <span>{{ file.name }}</span>
+    <p class="mb-0">
+      <span class="mr-2">{{ file.size | fileSize }}</span>
+      <span class="cursor-pointer" (click)="deleteFile($index)">
+        <mat-icon
+          svgIcon="trash"
+          aria-hidden="false"
+          class="mb-[-5px]"
+        ></mat-icon>
+      </span>
+    </p>
+  </div>
+  }
+</div>

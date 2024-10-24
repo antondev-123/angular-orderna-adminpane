@@ -1,0 +1,6 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "./badge-theme" as badge;
+
+:host {
+  @include badge.theme(theme.$admin-panel-theme);
+}

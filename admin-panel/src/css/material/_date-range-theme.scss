@@ -1,0 +1,42 @@
+app-input-datepicker {
+  .ord-form-field {
+    background-color: transparent !important;
+    width: 210px;
+  }
+
+  .mat-date-range-input,
+  .mat-date-range-input-separator {
+    color: #64748b !important;
+  }
+
+  .ord-date-range-picker {
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+        .mdc-text-field--invalid
+      )
+      .mdc-notched-outline__leading,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+        .mdc-text-field--invalid
+      )
+      .mdc-notched-outline__notch,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+        .mdc-text-field--invalid
+      )
+      .mdc-notched-outline__trailing {
+      border-right: 0;
+    }
+
+    .mdc-icon-button {
+      height: 36px !important;
+      width: 40px !important;
+    }
+
+    .mat-mdc-button-touch-target {
+      height: 36px !important;
+      width: 40px !important;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      background-color: transparent;
+    }
+  }
+}

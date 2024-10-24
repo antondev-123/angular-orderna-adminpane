@@ -1,0 +1,30 @@
+<div class="flex flex-col">
+  <label [for]="id" class="ord-form-field-label"
+    >{{ label }}
+    @if (!label) {
+    <span class="cdk-visually-hidden">Select Days of the Week</span>
+    } @if (required) {
+    <span class="ord-form-field-required">*</span>
+    }
+  </label>
+  <div [id]="id" class="flex gap-2">
+    @for (option of daysOfWeekOptions; track $index) {
+    <div
+      class="day-box"
+      (click)="handleDaySelected($index)"
+      [ngClass]="{ 'day-box--selected': isDaySelected($index) }"
+      [attr.aria-pressed]="isDaySelected($index) ? 'true' : 'false'"
+      tabindex="0"
+    >
+      {{ option.label }}
+    </div>
+    }
+  </div>
+  @if(hasHint) {
+  <span class="ord-hint">
+    {{ hintText }}
+  </span>
+  } @if(daysOfWeek.hasError('atLeastOneDaySelected')) {
+  <mat-error class="ord-error">Please select at least 1 day.</mat-error>
+  }
+</div>

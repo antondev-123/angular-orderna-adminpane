@@ -1,0 +1,99 @@
+<form [formGroup]="discountForm" #form="ngForm" class="py-4">
+  <div class="text-sm">
+    <div class="font-medium text-slate-800 dark:text-slate-100 mb-3">
+      Grant total discount based on invoice.
+    </div>
+  </div>
+  <div class="space-y-3">
+    <div>
+      <label class="block text-sm font-medium mb-1" for="discount-amount"
+        >Discount <span class="text-rose-500">*</span></label
+      >
+      <input
+        autocomplete="off"
+        id="name"
+        matInput
+        class="form-input w-full px-2 py-1"
+        type="number"
+        required
+        formControlName="value"
+      />
+
+      @if (form.invalid) {
+        <span [class.hidden]="" class="text-rose-500 text-xs mt-2">{{ discountForm.controls.value.errors?.['invalidDiscount'] }}</span>
+      }
+    </div>
+
+    <ul class="space-y-2 mb-4">
+      <div class="block text-sm font-medium mb-1">Discount Option</div>
+      <li>
+        <button
+          type="button"
+          class="w-full h-full text-left py-3 px-4 rounded bg-white dark:bg-slate-800 border-2 dark:border-indigo-500 shadow-sm duration-150 ease-in-out"
+          [class.border-indigo-500]="type() === DiscountType.FIXED"
+          (click)="toggle(DiscountType.FIXED)"
+        >
+          <div class="flex items-center">
+            <div
+              class="w-4 h-4 border-4 bg-white rounded-full mr-3"
+              [class.border-indigo-500]="type() === DiscountType.FIXED"
+            ></div>
+
+            <div class="grow">
+              <div class="flex flex-wrap items-center justify-between mb-0.5">
+                <span class="font-medium text-slate-800 dark:text-slate-100">
+                  Amount
+                </span>
+              </div>
+              <div class="text-sm">Sets the discounted amount.</div>
+            </div>
+          </div>
+        </button>
+      </li>
+      <li>
+        <button
+          type="button"
+          class="w-full h-full text-left py-3 px-4 rounded bg-white dark:bg-slate-800 border-2 dark:border-indigo-500 shadow-sm duration-150 ease-in-out"
+          [class.border-indigo-500]="type() === DiscountType.PERCENTAGE"
+          (click)="toggle(DiscountType.PERCENTAGE)"
+        >
+          <div class="flex items-center">
+            <div
+              class="w-4 h-4 border-4 bg-white rounded-full mr-3"
+              [class.border-indigo-500]="type() === DiscountType.PERCENTAGE"
+            ></div>
+
+            <div class="grow">
+              <div class="flex flex-wrap items-center justify-between mb-0.5">
+                <span class="font-semibold text-slate-800 dark:text-slate-100"
+                  >Percentage</span
+                >
+              </div>
+              <div class="text-sm">Sets discounted amount in percent.</div>
+            </div>
+          </div>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="pt-4 border-t border-slate-200 dark:border-slate-700">
+    <div class="flex flex-wrap justify-end space-x-2">
+      @if (discount()?.value) {
+        <button (click)="deleteDiscount()" class="btn-sm bg-rose-500 hover:bg-rose-600 text-white">
+          Delete Discount
+        </button>
+      }
+
+      <button
+        class="btn-sm border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300"
+        (click)="close()"
+      >
+        Cancel
+      </button>
+      <button (click)="apply()" type="submit" class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">
+        Apply
+      </button>
+    </div>
+  </div>
+</form>

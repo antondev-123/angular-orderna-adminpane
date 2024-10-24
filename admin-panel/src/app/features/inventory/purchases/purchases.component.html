@@ -1,0 +1,92 @@
+@if(errorMessage) {
+<p>Error: {{ errorMessage }}</p>
+} @if(infoMessage) {
+<p>Info: {{ infoMessage }}</p>
+} @if (data$ | async; as data){
+<section class="section">
+  <div
+    class="flex justify-between items-start md:items-center flex-col md:flex-row gap-2 mb-8"
+  >
+    <div class="mb-4 sm:mb-0">
+      <h1
+        class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold"
+      >
+        Purchases
+      </h1>
+    </div>
+
+    <div class="ml-auto flex justify-end items-start gap-2 flex-wrap">
+      @if (getSelectedPurchaseCount(data.totalPurchases) > 0) {
+      <app-row-controls
+        class="w-full md:w-fit"
+        [numberOfSelectedRows]="getSelectedPurchaseCount(data.totalPurchases)"
+        (delete)="
+          openPurchaseConfirmBulkDeleteModal(
+            getSelectedPurchaseCount(data.totalPurchases)
+          )
+        "
+      />
+      }
+      <app-input-search
+        placeholder="Search by item ..."
+        [initialValue]="queryOptions.searchQuery"
+        (searchTermChange)="handleSearch($event)"
+      />
+      <app-input-filter-immediate
+        svgIcon="calendar"
+        ariaLabel="Select date range"
+        [options]="dateFilterOptions"
+        [initialValue]="queryOptions.dateFilter"
+        (filterChange)="handleDateFilter($event)"
+      />
+      <app-input-filter-immediate
+        svgIcon="stores"
+        ariaLabel="Select store"
+        [options]="data.storeFilterOptions"
+        [initialValue]="initialStoreFilterValue"
+        (filterChange)="handleStoreFilter($event)"
+      />
+      <app-button
+        ariaControls="add-user-modal"
+        ariaLabel="Show add user modal"
+        svgIcon="plus"
+        (btnClick)="openPurchaseModal()"
+      >
+        <ng-template appButtonText> Add Purchase</ng-template>
+      </app-button>
+    </div>
+  </div>
+
+  <div [hidden]="data.isLoading">
+    <app-table
+      [expandable]="true"
+      [title]="'All Purchases'"
+      [columns]="columns"
+      [totalRows]="data.totalPurchases"
+      [dataSource]="dataSource"
+      [initialSort]="queryOptions.sort"
+      (allRowsSelectedChange)="handleAllRowsSelectedChange($event)"
+      (rowsSelectedChange)="handleRowsSelectedChange($event)"
+      (sort)="handleSort($event)"
+      (delete)="openPurchaseConfirmDeleteModal($event)"
+      (edit)="openPurchaseModal($event)"
+    >
+      <ng-template appTableRowExpandableContent let-row>
+        @if(row.note) {
+        <p><span class="font-bold">Note</span>: {{ row.note }}</p>
+        } @else{
+        <span class="italic opacity-80">No note</span>
+        }
+      </ng-template>
+    </app-table>
+    <app-pagination
+      [currentPage]="queryOptions.page"
+      [numberOfItems]="data.totalPurchases"
+    />
+  </div>
+
+  <div [hidden]="!data.isLoading">
+    <app-table-skeleton />
+  </div>
+</section>
+}

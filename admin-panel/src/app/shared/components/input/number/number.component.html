@@ -1,0 +1,32 @@
+<div class="flex flex-col">
+  <label [for]="id" class="ord-form-field-label"
+    >{{ label }}
+    @if (required) {
+    <span class="ord-form-field-required">*</span>
+    }
+  </label>
+  <mat-form-field class="ord-form-field" color="accent" appearance="outline">
+    @if(hasPrefix) {
+    <span matPrefix class="ord-prefix">{{ prefixText }}</span>
+    }
+    <input
+      matInput
+      [id]="id"
+      type="number"
+      [placeholder]="placeholder"
+      [formControlName]="controlName"
+      [required]="required"
+    />
+    @if(hasSuffix) {
+    <span matSuffix class="ord-suffix">{{ suffixText }}</span>
+    } @if (hasHint) {
+    <mat-hint class="ord-hint">{{ hintText }}</mat-hint>
+    } @if (text.hasError('required')) {
+    <mat-error class="ord-error">{{ label }} is required.</mat-error>
+    } @if (text.hasError('min')) {
+    <mat-error class="ord-error"
+      >{{ label }} must be at least {{ text.getError("min").min }}.</mat-error
+    >
+    }
+  </mat-form-field>
+</div>

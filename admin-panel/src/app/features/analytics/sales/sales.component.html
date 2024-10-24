@@ -1,0 +1,43 @@
+<mat-tab-group
+  mat-stretch-tabs="false"
+  mat-align-tabs="start"
+  [selectedIndex]="selectedTab"
+  (selectedIndexChange)="changeTab($event)"
+>
+  <mat-tab label="Revenue">
+    <app-revenue *ngIf="selectedTab === 0" />
+  </mat-tab>
+  <mat-tab label="Z-Report">
+    <app-z-report *ngIf="selectedTab === 1" />
+  </mat-tab>
+  <mat-tab label="Average Transaction Value">
+    <app-average-order-value *ngIf="selectedTab === 2" />
+  </mat-tab>
+  <mat-tab label="Day of Week">
+    <app-day-of-week *ngIf="selectedTab === 3" />
+  </mat-tab>
+  <mat-tab label="Time of Day">
+    <app-time-of-day *ngIf="selectedTab === 4" />
+  </mat-tab>
+  <mat-tab label="Products">
+    <app-sale-by-products *ngIf="selectedTab === 5" />
+  </mat-tab>
+  <mat-tab label="Categories">
+    <app-sale-by-categories *ngIf="selectedTab === 6" />
+  </mat-tab>
+  <mat-tab label="Tips">
+    <app-tips-by-day *ngIf="selectedTab === 7" />
+  </mat-tab>
+  <mat-tab label="Discounts">
+    <app-discount-summaries *ngIf="selectedTab === 8" />
+  </mat-tab>
+  <mat-tab label="Discounted Transactions">
+    <app-discounted-transactions *ngIf="selectedTab === 9" />
+  </mat-tab>
+  <mat-tab label="Refunded Transactions">
+    <app-refunded-transactions *ngIf="selectedTab === 10" />
+  </mat-tab>
+  <mat-tab label="Failed Transactions">
+    <app-failed-transactions *ngIf="selectedTab === 11" />
+  </mat-tab>
+</mat-tab-group>

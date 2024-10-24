@@ -1,0 +1,14 @@
+<app-timeline [events]="transactions">
+  <ng-template appTimelineContent let-event>
+    <div class="transaction-event">
+      <span class="transaction-event-description">
+        <span class="transaction-event-id"> #{{ event.id }}</span>
+        ordered.
+      </span>
+      <time [dateTime]="event.transactionDate" class="transaction-event-date">
+        {{ event.transactionDate | date : "MMM d" }} at
+        {{ event.transactionDate | date : "HH:mm" }}
+      </time>
+    </div>
+  </ng-template>
+</app-timeline>

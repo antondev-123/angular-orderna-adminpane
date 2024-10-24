@@ -1,0 +1,373 @@
+<section class="section relative">
+  <button backButton (click)="goToTransactionsPage()">Transactions</button>
+  @if(data$ | async; as data) {
+  <header class="flex items-center gap-2">
+    <h1 class="ord-h4">Transaction ID {{ data.id }}</h1>
+    <app-badge id="transaction-status" [text]="data.status" />
+  </header>
+  <div
+    class="flex"
+    [ngClass]="{
+      'flex-row gap-8': !isMediumOrSmaller(),
+      'flex-col gap-4': isMediumOrSmaller()
+    }"
+  >
+    <div
+      class="space-y-4"
+      [ngClass]="{
+        'w-2/3': !isMediumOrSmaller(),
+        'w-full': isMediumOrSmaller()
+      }"
+    >
+      <!-- Transaction details card -->
+      <article id="transaction-details" class="card relative">
+        <header id="transaction-details-header" class="space-y-1">
+          <h2 class="ord-h5">{{ data.customer?.fullName ?? "Walk In" }}</h2>
+          <!-- Transaction type and date -->
+          <div class="ord-text-gray">
+            <p id="transaction-type" class="flex items-center gap-2">
+              <span class="flex items-center gap-1">
+                @if(data.transactionTypeIcon){
+                <mat-icon
+                  [svgIcon]="data.transactionTypeIcon"
+                  class="ord-icon ord-icon-lg"
+                ></mat-icon>
+                }
+                <span id="transaction-type-label">
+                  {{ data.transactionTypeLabel }}
+                </span>
+              </span>
+              <span id="transaction-type-description">
+                {{ data.transactionTypeDescription }}
+              </span>
+            </p>
+            <p id="transaction-date">
+              {{ data.transactionDate | date : "MMM dd yyyy, hh:mm a" }}
+            </p>
+          </div>
+        </header>
+        <!-- Register name, cashier name, and payment type -->
+        <dl
+          id="transaction-details-content"
+          class="grid grid-cols-[auto,1fr] gap-x-2 ord-text-gray"
+        >
+          <dt>Store name:</dt>
+          <dd>{{ data.store.name }}</dd>
+
+          <dt>Register name:</dt>
+          <!-- TODO -->
+          <dd>#{{ 1 }}</dd>
+
+          <dt>Cashier name:</dt>
+          <dd>{{ data.user.fullName }}</dd>
+
+          <dt>Payment type:</dt>
+          <dd>{{ data.paymentTypeLabel }}</dd>
+        </dl>
+      </article>
+      <!-- Transaction items card -->
+      <article id="transaction-items" class="card">
+        <header id="transaction-items-header" class="space-y-1">
+          <h2 class="ord-h5">Transaction items</h2>
+        </header>
+
+        <table id="transaction-items-list">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(item of data.items; track item.id) {
+            <tr>
+              <td>{{ item.product.title }}</td>
+              <td>{{ item.quantity }}</td>
+              <td class="flex gap-2">
+                <span> {{ item.netSales | currency : "PHP" }} </span>
+                @if (item.discount) {
+                <span class="line-through">
+                  {{ item.salePrice | currency : "PHP" }}
+                </span>
+                } @if (item.wasRefunded) {
+                <div class="refunded">
+                  <app-badge text="refunded" />
+                </div>
+                }
+              </td>
+              <td>{{ item.note }}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+
+        <dl
+          id="transaction-items-total"
+          class="grid grid-cols-2 gap-y-1 items-center justify-stretch"
+        >
+          <dt>Sale</dt>
+          <dd>{{ data.salePrice | currency : "PHP" }}</dd>
+          <dt class="sub-item">Discount</dt>
+          <dd>{{ data.discountAmount | currency : "PHP" }}</dd>
+          <dt class="sub-item">Refunds</dt>
+          <dd>{{ data.refundAmount | currency : "PHP" }}</dd>
+          <dt>Subtotal</dt>
+          <dd>{{ data.netSales | currency : "PHP" }}</dd>
+          <dt class="sub-item">Taxes ({{ data.salesTaxRate | percent }})</dt>
+          <dd>{{ data.taxAmount | currency : "PHP" }}</dd>
+          <dt class="sub-item">
+            Service charge ({{ data.serviceChargeRate ?? 0 | percent }})
+          </dt>
+          <dd>{{ data.serviceAmount | currency : "PHP" }}</dd>
+          <dt class="total">Total</dt>
+          <dd class="total">{{ data.grossSales | currency : "PHP" }}</dd>
+        </dl>
+      </article>
+      <!-- Transaction notes card -->
+      <article id="transaction-notes" class="card">
+        <header id="transaction-notes-header" class="space-y-1">
+          <h2 class="ord-h5">Notes</h2>
+        </header>
+        @if(data.note) {
+        <div>{{ data.note }}</div>
+        }@else {
+        <div class="no-notes">No notes</div>
+        }
+      </article>
+    </div>
+    @if(data.customer ; as customer ){
+    <aside
+      #asidePanel
+      [ngClass]="{
+        'w-1/3': !isMediumOrSmaller(),
+        'w-full': isMediumOrSmaller()
+      }"
+    >
+      <!-- Customer details card -->
+      <article class="card h-fit" id="customer-details-card">
+        <header class="border-b pb-4">
+          <div class="flex justify-between items-center gap-2">
+            <h2 class="ord-h5">Customer details</h2>
+            <a [href]="'/customers/' + customer.id">View more details</a>
+          </div>
+          <p>
+            {{
+              customer.totalTransactions
+                | i18nPlural
+                  : {
+                      "=0": "No transactions",
+                      "=1": "1 transaction",
+                      other: "# transactions"
+                    }
+            }}
+          </p>
+        </header>
+        <!-- TODO: Extract component -->
+        <div class="space-y-2">
+          <address class="space-y-2">
+            @if (customer.mobileNumber ) {
+            <p class="customer-detail">
+              <mat-icon class="ord-icon" svgIcon="phone"></mat-icon>
+              <a [href]="'tel:' + customer.mobileNumber">
+                {{ customer.mobileNumber }}
+              </a>
+            </p>
+            } @if (customer.telephone ) {
+            <p class="customer-detail">
+              <mat-icon class="ord-icon" svgIcon="telephone"></mat-icon>
+              <a [href]="'tel:' + customer.telephone">
+                {{ customer.telephone }}
+              </a>
+            </p>
+            } @if (customer.email ) {
+            <p class="customer-detail">
+              <mat-icon class="ord-icon" svgIcon="mail"></mat-icon>
+              <a [href]="'mailto:' + customer.email">{{ customer.email }}</a>
+            </p>
+            } @if (customer.address ) {
+            <p class="customer-detail">
+              <mat-icon class="ord-icon" svgIcon="location"></mat-icon>
+
+              {{ customer.address }}
+            </p>
+            }
+          </address>
+          @if (customer.company ) {
+          <p class="customer-detail">
+            <mat-icon class="ord-icon" svgIcon="company"></mat-icon
+            >{{ customer.company }}
+          </p>
+          } @if (customer.birthday ) {
+          <p class="customer-detail">
+            <mat-icon class="ord-icon" svgIcon="cake"></mat-icon>
+            <time [dateTime]="customer.birthday">
+              {{ customer.birthday | date : "MMMM d, y" }}
+            </time>
+          </p>
+          } @if (customer.note ) {
+          <p class="customer-detail">
+            <mat-icon class="ord-icon" svgIcon="note"></mat-icon>
+            {{ customer.note }}
+          </p>
+          }
+        </div>
+      </article>
+    </aside>
+    }
+  </div>
+  }@else {
+  <header class="flex items-center gap-2">
+    <app-skeleton class="ord-h4" />
+  </header>
+  <div
+    class="flex"
+    [ngClass]="{
+      'flex-row gap-8': !isMediumOrSmaller(),
+      'flex-col gap-4': isMediumOrSmaller()
+    }"
+  >
+    <div
+      class="space-y-4"
+      [ngClass]="{
+        'w-2/3': !isMediumOrSmaller(),
+        'w-full': isMediumOrSmaller()
+      }"
+    >
+      <!-- Transaction details card -->
+      <article id="transaction-details" class="card relative">
+        <header id="transaction-details-header" class="space-y-1">
+          <app-skeleton class="ord-h5" />
+          <!-- Transaction type and date -->
+          <div class="ord-text-gray">
+            <p id="transaction-type" class="flex items-center gap-2">
+              <app-skeleton class="ord-body-1 w-3/4" />
+            </p>
+            <p id="transaction-date">
+              <app-skeleton class="ord-body-1 w-1/4" />
+            </p>
+          </div>
+        </header>
+        <!-- Register name, cashier name, and payment type -->
+        <dl
+          id="transaction-details-content"
+          class="grid grid-cols-[auto,1fr] gap-x-2 ord-text-gray"
+        >
+          <dt>Store name:</dt>
+          <dd>
+            <app-skeleton class="ord-body-1 w-20" />
+          </dd>
+
+          <dt>Register name:</dt>
+          <!-- TODO -->
+          <dd>
+            <app-skeleton class="ord-body-1 w-8" />
+          </dd>
+
+          <dt>Cashier name:</dt>
+          <dd>
+            <app-skeleton class="ord-body-1 w-28" />
+          </dd>
+
+          <dt>Payment type:</dt>
+          <dd>
+            <app-skeleton class="ord-body-1 w-14" />
+          </dd>
+        </dl>
+      </article>
+      <!-- Transaction items card -->
+      <article id="transaction-items" class="card">
+        <header id="transaction-items-header" class="space-y-1">
+          <h2 class="ord-h5">Transaction items</h2>
+        </header>
+
+        <table id="transaction-items-list">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(item of range(0, 5); track $index) {
+            <tr>
+              <td>
+                <app-skeleton class="ord-body-1 w-20" />
+              </td>
+              <td>
+                <app-skeleton class="ord-body-1 w-5" />
+              </td>
+              <td>
+                <app-skeleton class="ord-body-1 w-14" />
+              </td>
+              <td>
+                <app-skeleton class="ord-body-1 w-10" />
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+
+        <dl
+          id="transaction-items-total"
+          class="grid grid-cols-2 gap-y-1 items-center justify-stretch"
+        >
+          <dt>Sale</dt>
+          <dd><app-skeleton class="ord-subtitle-1" /></dd>
+          <dt class="sub-item">Discount</dt>
+          <dd><app-skeleton class="ord-subtitle-1" /></dd>
+          <dt class="sub-item">Refunds</dt>
+          <dd><app-skeleton class="ord-subtitle-1" /></dd>
+          <dt>Subtotal</dt>
+          <dd><app-skeleton class="ord-subtitle-1" /></dd>
+          <dt class="sub-item">Taxes</dt>
+          <dd><app-skeleton class="ord-subtitle-1" /></dd>
+          <dt class="sub-item">Service charge</dt>
+          <dd><app-skeleton class="ord-subtitle-1" /></dd>
+          <dt class="total">Total</dt>
+          <dd class="total"><app-skeleton class="ord-subtitle-1" /></dd>
+        </dl>
+      </article>
+      <!-- Transaction notes card -->
+      <article id="transaction-notes" class="card">
+        <header id="transaction-notes-header" class="space-y-1">
+          <h2 class="ord-h5">Notes</h2>
+        </header>
+        <div>
+          <app-skeleton class="ord-body-1 w-full" />
+        </div>
+      </article>
+    </div>
+    <aside
+      #asidePanel
+      [ngClass]="{
+        'w-1/3': !isMediumOrSmaller(),
+        'w-full': isMediumOrSmaller()
+      }"
+    >
+      <!-- Customer details card -->
+      <article class="card h-fit" id="customer-details-card">
+        <header class="border-b pb-4">
+          <div class="flex justify-between items-center gap-2">
+            <h2 class="ord-h5">Customer details</h2>
+          </div>
+          <app-skeleton class="customer-detail"></app-skeleton>
+        </header>
+
+        <div class="space-y-2">
+          <app-skeleton class="customer-detail"></app-skeleton>
+          <app-skeleton class="customer-detail"></app-skeleton>
+          <app-skeleton class="customer-detail"></app-skeleton>
+          <app-skeleton class="customer-detail"></app-skeleton>
+          <app-skeleton class="customer-detail"></app-skeleton>
+          <app-skeleton class="customer-detail"></app-skeleton>
+          <app-skeleton class="customer-detail"></app-skeleton>
+        </div>
+      </article>
+    </aside>
+  </div>
+  }
+</section>

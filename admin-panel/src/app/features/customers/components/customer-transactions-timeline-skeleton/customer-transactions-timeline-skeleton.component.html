@@ -1,0 +1,8 @@
+<app-timeline [events]="transactions">
+  <ng-template appTimelineContent let-event>
+    <div class="transaction-event">
+      <app-skeleton class="transaction-event-description" />
+      <app-skeleton class="transaction-event-date" />
+    </div>
+  </ng-template>
+</app-timeline>

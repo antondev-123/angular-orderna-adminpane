@@ -1,0 +1,16 @@
+<div class="ord-snackbar">
+  <span matSnackBarLabel class="ord-snackbar-label">
+    Copied <span class="font-bold">{{ data }}</span> to clipboard!
+  </span>
+  <button
+    matSnackBarAction
+    class="ord-snackbar-action"
+    (click)="snackBarRef.dismissWithAction()"
+  >
+    <span class="cdk-visually-hidden">Close</span>
+    <mat-icon svgIcon="close" aria-hidden="false" class="ord-icon"></mat-icon>
+  </button>
+  <!-- TODO: Nice to have progress bar at the bottom of the snackBar
+  to provide visual feedback to the user about how long the 
+  snackBar will remain visible -->
+</div>

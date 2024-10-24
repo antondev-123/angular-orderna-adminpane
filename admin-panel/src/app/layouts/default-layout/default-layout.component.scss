@@ -1,0 +1,191 @@
+.ord-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.toolbar {
+  min-height: 64px;
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+.user-name,
+.store {
+  display: flex;
+  align-items: center;
+}
+.profile-name {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 5px;
+  border-bottom: 1px solid #ccc;
+  width: 175px;
+  box-sizing: border-box;
+  small {
+    font-style: italic;
+    font-size: 12px;
+  }
+}
+h1.app-name {
+  margin-left: 8px;
+}
+
+.sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+       causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 5px;
+  img {
+    margin: auto;
+  }
+}
+.nav-list {
+  width: 100%;
+  height: 100%;
+}
+
+.nav-list .list-item-content,
+.nav-list .nav-expand > * {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.nav-list .icon {
+  display: flex;
+  align-items: center;
+  svg {
+    flex-shrink: 0;
+    flex-grow: 1;
+    height: 24px !important;
+    width: 24px !important;
+  }
+}
+
+// Styles for when only icons are shown on the side-nav
+
+// Ensure nav list items are center-aligned
+.nav-list-icon-only > .separator {
+  text-align: center;
+}
+.nav-list-icon-only > .nav-expand,
+.nav-list-icon-only > a .icon {
+  margin: 0 auto;
+}
+.nav-list-icon-only > .nav-expand {
+  margin-top: auto;
+}
+
+.nav-expand {
+  display: flex;
+  margin-left: auto;
+}
+
+.side-nav {
+  width: 65px;
+  transition: width 0.25s ease-in;
+  overflow: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &.sidenav {
+    z-index: 3;
+    width: 255px;
+    .nav-expand {
+      transform: rotate(180deg);
+    }
+  }
+  /* .no-scrollbar { */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  /* } */
+}
+.list-item-content {
+  display: flex;
+  gap: 12px;
+}
+.is-mobile .sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+       `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+.sidenav-content {
+  display: flex;
+  flex-direction: column;
+}
+// Ensure toolbar's position:sticky works on mobile
+// by disabling overflow from its nearest ancestors.
+//
+// Element with position:sticky will stick to nearest ancestor with overflow,
+// but for toolbar, we want it to stick to the root element
+//
+// Further reading: https://developer.mozilla.org/en-US/docs/Web/CSS/position#sticky
+.is-mobile .sidenav-container {
+  overflow: unset;
+  .sidenav-content {
+    overflow: unset;
+  }
+}
+
+.content-wrapper {
+  background-color: #f1f5f9;
+  flex: 1;
+}
+.separator {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0px 16px 10px;
+  margin-top: 40px;
+}
+.nav-text {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  .menu-badge {
+    margin-left: auto;
+    height: 20px;
+    width: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+  }
+}
+.sub-menu {
+  box-shadow: none !important;
+  .sub-menu-content {
+    padding: 0 16px;
+    .nav-text {
+      line-height: 24px;
+    }
+  }
+  .sub-menu-items {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 0;
+    a {
+      padding-left: 30px;
+      padding-right: 0;
+      height: 30px;
+    }
+  }
+}
+
+.void-transaction {
+  --mat-text-button-state-layer-color: transparent;
+  cursor: default !important;
+}

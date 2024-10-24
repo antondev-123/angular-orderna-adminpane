@@ -1,0 +1,183 @@
+<button backButton (click)="backToAttendanceList()">Attendance List</button>
+
+<h1
+  class="text-2xl md:text-3xl mb-5 text-slate-800 dark:text-slate-100 font-bold"
+>
+  Attendance Details
+</h1>
+
+@if (attendance()) {
+
+<div class="grid gap-4 md:grid-cols-[2fr_1fr]">
+  <div>
+    <div class="ord-card">
+      <div class="py-4 px-8">
+        <div class="grid grid-cols-3 gap-2 md:gap-0 text-xl font-bold">
+          <div class="flex flex-col md:items-center">
+            <h1 class="flex-1">Total Hours</h1>
+            @if (summary()?.totalHours) {
+            <h1 class="text-xl mt-2 text-gray-400">
+              {{ summary()?.totalHours }}
+            </h1>
+            } @else {
+            <h1 class="text-base mt-2 text-gray-400">Not available yet</h1>
+            }
+          </div>
+
+          <div class="flex flex-col md:items-center">
+            <h1 class="flex-1">Break Hours</h1>
+            <h1 class="text-xl mt-2 text-gray-400">
+              {{ summary()?.breakHours }}
+            </h1>
+          </div>
+
+          <div class="flex flex-col md:items-center">
+            <h1 class="flex-1">Total Pay</h1>
+            @if (summary()?.totalPay) {
+            <h1 class="text-xl mt-2 text-gray-400">
+              ₱{{ summary()?.totalPay }}
+            </h1>
+            } @else {
+            <h1 class="text-base mt-2 text-gray-400">Not available yet</h1>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 px-8">
+        <h1 class="font-semibold text-large mb-2">Attendance store</h1>
+        <div class="py-4 border-t">
+          <app-input-filter-immediate
+            class="pointer-events-none"
+            svgIcon="stores"
+            ariaLabel="Select store"
+            disabled
+            [options]="storeFilterOptions()"
+            [initialValue]="attendance()!.store.id"
+          />
+        </div>
+      </div>
+
+      <div class="pt-4 px-8">
+        <h1 class="font-semibold text-large mb-2">Time sheet</h1>
+        <div class="grid gap-4 pt-4 pb-8 md:grid-cols-2 border-t">
+          <div class="flex flex-col gap-4">
+            <div class="flex gap-4 items-center">
+              <app-switcher
+                [checked]="!!attendance()!.clockIn"
+                [disabled]="true"
+              />
+              <h1 class="text-base font-semibold">Clock In</h1>
+            </div>
+
+            <mat-form-field
+              class="ord-form-field"
+              color="accent"
+              appearance="outline"
+            >
+              <mat-icon svgIcon="calendar" matIconPrefix class="ord-icon" />
+              <input
+                type="text"
+                class="!cursor-default !pointer-events-none !text-gray-400 !font-medium"
+                [disabled]="true"
+                matInput
+                mwlFlatpickr
+                [enableTime]="true"
+                [ngModel]="attendance()!.clockIn"
+                dateFormat="F j, Y  H:i"
+              />
+            </mat-form-field>
+
+            @if (attendance()!.clockInImage) {
+            <img [src]="attendance()!.clockInImage" />
+            } @else {
+            <span class="text-sm font-medium text-gray-400">
+              Not available yet
+            </span>
+            }
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <div class="flex gap-4 items-center">
+              <app-switcher
+                [checked]="!!attendance()!.clockOut"
+                [disabled]="true"
+              />
+              <h1 class="text-base font-semibold">Clock Out</h1>
+            </div>
+
+            <mat-form-field
+              class="ord-form-field"
+              color="accent"
+              appearance="outline"
+            >
+              <mat-icon svgIcon="calendar" matIconPrefix class="ord-icon" />
+              <input
+                type="text"
+                class="!cursor-default !pointer-events-none !text-gray-400 !font-medium"
+                [disabled]="true"
+                matInput
+                mwlFlatpickr
+                [enableTime]="true"
+                [ngModel]="attendance()!.clockOut"
+                dateFormat="F j, Y  H:i"
+              />
+            </mat-form-field>
+
+            @if (attendance()!.clockOutImage) {
+            <img [src]="attendance()!.clockOutImage" />
+            } @else {
+            <span class="text-sm font-medium text-gray-400">
+              Not available yet
+            </span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <ng-container *ngTemplateOutlet="employee"></ng-container>
+    <app-wage-summary />
+    <app-break-summary [breaks]="attendance()!!.breaks" />
+  </div>
+</div>
+
+}
+
+<ng-template #employee>
+  <div class="ord-card">
+    <div class="pt-4 px-8">
+      <h1 class="font-semibold text-large mb-2">Employ Details</h1>
+
+      <div class="pt-4 pb-4 border-t">
+        <p class="text-large font-bold mb-2">
+          {{ user()?.fullName }}
+        </p>
+
+        <p class="customer-detail">
+          <mat-icon class="ord-icon" svgIcon="phone"></mat-icon>
+          <a [href]="'tel:' + user()?.mobile?.number">
+            {{ user()?.mobile?.number }}
+          </a>
+        </p>
+
+        <p class="customer-detail">
+          <mat-icon class="ord-icon" svgIcon="mail"></mat-icon>
+          <a [href]="'mailto:' + user()?.email">{{ user()?.email }}</a>
+        </p>
+
+        <p class="customer-detail">
+          <mat-icon class="ord-icon" svgIcon="note"></mat-icon>
+          <span>{{ user()?.jobTitle }}</span>
+        </p>
+
+        <p class="customer-detail">
+          <mat-icon class="ord-icon" svgIcon="cake"></mat-icon>
+          <span>{{ user()?.createdAt | date : "MMMM d, y" }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-template>

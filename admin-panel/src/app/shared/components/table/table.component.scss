@@ -1,0 +1,14 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "./table-theme" as table;
+
+:host {
+  @include table.theme(theme.$admin-panel-theme);
+}
+
+::ng-deep .note-field .mat-mdc-form-field-subscript-wrapper {
+  margin-bottom: -2em;
+}
+
+::ng-deep .mdc-text-field__input {
+  color: black !important;
+}

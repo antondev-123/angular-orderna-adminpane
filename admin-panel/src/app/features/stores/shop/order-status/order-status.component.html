@@ -1,0 +1,138 @@
+<div class="lg:relative lg:flex h-full">
+  <!-- Content -->
+  <div class="px-4 sm:px-6 lg:px-8 py-8 lg:grow lg:pr-8 xl:pr-16 2xl:ml-[80px]">
+    <div class="lg:max-w-[640px] lg:mx-auto">
+      <!-- Cart items -->
+      <div class="mb-6 lg:mb-0">
+        <header class="flex flex-col items-center mb-6 center">
+          <!-- Title -->
+          <h1
+            class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold mb-2"
+          >
+            Thank you!
+          </h1>
+          <p>Transaction complete</p>
+        </header>
+        <div
+          class="bg-slate-50 dark:bg-slate-800/20 lg:overflow-x-hidden lg:overflow-y-auto no-scrollbar"
+        >
+          <div class="py-8 px-4 lg:px-8 2xl:px-12">
+            <div class="max-w-sm mx-auto lg:max-w-none">
+              <!-- Transaction Summary -->
+              <h2
+                class="text-2xl text-slate-800 dark:text-slate-100 font-bold mb-6"
+              >
+                Transaction Summary
+              </h2>
+              <div class="space-y-6">
+                <div>
+                  <div class="border-b border-slate-200 dark:border-slate-700">
+                    <!-- Transaction ID-->
+                    <div class="flex items-center py-3">
+                      <div class="grow">
+                        <h4
+                          class="text-base font-bold text-slate-800 dark:text-slate-100 leading-tight"
+                        >
+                          Your transaction
+                        </h4>
+                      </div>
+                      <div
+                        class="text-sm font-medium text-slate-800 dark:text-slate-100 ml-2"
+                      >
+                        <h4>D281881</h4>
+                      </div>
+                    </div>
+                    <!-- Transaction Details-->
+                    <div class="flex items-center py-3">
+                      <div class="grow">
+                        <h4
+                          class="text-base font-bold text-slate-800 dark:text-slate-100 leading-tight"
+                        >
+                          Table
+                        </h4>
+                      </div>
+                      <div
+                        class="text-sm font-medium text-slate-800 dark:text-slate-100 ml-2"
+                      >
+                        <h4>5</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Cart items -->
+                  <div *ngFor="let item of items; let i = index" class="mb-4">
+                    <div
+                      class="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700"
+                    >
+                      {{ item.quantity }} X {{ item.product.title }}
+                      <p
+                        class="text-sm font-medium text-slate-800 dark:text-slate-100 ml-2"
+                      >
+                        ${{ item.product.price }}
+                      </p>
+                    </div>
+                  </div>
+                  <!-- Fees, discount and total -->
+                  <div>
+                    <div
+                      class="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700"
+                    >
+                      <div class="text-sm">Subtotal</div>
+                      <div
+                        class="text-sm font-medium text-slate-800 dark:text-slate-100 ml-2"
+                      >
+                        ${{ subtotal }}
+                      </div>
+                    </div>
+                    <div
+                      class="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700"
+                    >
+                      <div class="text-sm">Taxes</div>
+                      <div
+                        class="text-sm font-medium text-slate-800 dark:text-slate-100 ml-2"
+                      >
+                        ${{ taxes }}
+                      </div>
+                    </div>
+                    <div
+                      class="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700"
+                    >
+                      <div class="flex items-center">
+                        <span class="text-sm mr-2">Discount</span>
+                        <span
+                          class="text-xs inline-flex whitespace-nowrap font-medium uppercase bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 rounded-full text-center px-2.5 py-1"
+                          >XMAS22</span
+                        >
+                      </div>
+                      <div
+                        class="text-sm font-medium text-slate-800 dark:text-slate-100 ml-2"
+                      >
+                        -${{ discount }}
+                      </div>
+                    </div>
+                    <div
+                      class="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700"
+                    >
+                      <div class="text-sm">Total</div>
+                      <div class="text-sm font-medium text-emerald-600 ml-2">
+                        ${{ totalAmount }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-6">
+                  <div class="mb-4">
+                    <a
+                      [routerLink]="['/stores', shopTypeRoute, 'shop']"
+                      class="btn w-full bg-indigo-500 hover:bg-indigo-600 text-white"
+                      >Back to Shop</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,136 @@
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  [disabled]="loading"
+  (btnClick)="closeDialog()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">
+  {{ mode === "edit" ? "Edit" : "Add" }} Modifier Group
+</h2>
+<mat-dialog-content class="ord-modal-content">
+  <p class="ord-form-help-text">Provide modifier group details.</p>
+  <form
+    [formGroup]="formGroup"
+    (ngSubmit)="handleSubmit()"
+    class="grid grid-cols-2 gap-x-4"
+  >
+    <app-input-text
+      id="title"
+      label="Title"
+      controlName="title"
+      [value]="modifierGroup?.title"
+      [validators]="[Validators.required]"
+    />
+    <app-input-text
+      id="skuPlu"
+      label="SKU/PLU"
+      controlName="skuPlu"
+      [value]="modifierGroup?.skuPlu"
+    />
+    <app-input-textarea
+      id="description"
+      label="Description"
+      controlName="description"
+      class="col-span-2"
+      [value]="modifierGroup?.description"
+    />
+    <app-input-select
+      id="categoryIds"
+      label="Categories"
+      controlName="categoryIds"
+      class="col-span-2"
+      [value]="modifierGroup?.categoryIds"
+      [options]="categoryOptions()"
+      [validators]="[Validators.required]"
+      [allowMultipleSelection]="true"
+      (valueChanges)="onCategoriesSelectedChanged($event)"
+    />
+    <!-- Modifier group option -->
+    <div
+      id="options-card"
+      formArrayName="options"
+      class="col-span-2 card space-y-1"
+      [class.opacity-50]="optionControlsDisabled()"
+    >
+      <header>
+        <h3 class="ord-h6">Options</h3>
+      </header>
+      @for(control of optionsFormArray.controls; track
+      trackOptionControl($index, control)) {
+      <div [formGroupName]="'' + $index">
+        <div class="grid grid-cols-12 gap-x-2 items-center px-1">
+          <app-input-select
+            [id]="'option-' + $index + '-product-id'"
+            label="Option"
+            controlName="productId"
+            class="col-span-8"
+            [value]="getInitialModifierOption($index)?.productId"
+            [options]="productOptionsByRow()[$index]"
+            [validators]="[Validators.required]"
+            (valueChanges)="onProductSelectedChanged($index, $event)"
+          />
+          <app-input-number
+            [id]="'option-' + $index + '-custom-price'"
+            class="col-span-3"
+            prefixText="₱"
+            label="Price"
+            controlName="customPrice"
+            [value]="getInitialModifierOption($index)?.customPrice"
+            [validators]="[Validators.required]"
+          />
+          <div class="col-span-1 pr-1">
+            @if(optionsFormArray.length > 1) {
+            <app-button
+              variant="subdued"
+              svgIcon="trash-mini"
+              [size]="'xs'"
+              (btnClick)="removeOptionControls($index)"
+            />
+            }
+          </div>
+        </div>
+      </div>
+      }
+      <!-- Add inventory item used button -->
+      <button
+        dashedBorderAddButton
+        (click)="handleAddOptionButtonClicked($event)"
+      >
+        Add Option
+      </button>
+    </div>
+    <app-input-number
+      id="option-limit"
+      label="Option Limit"
+      controlName="optionLimit"
+      [hintText]="'Limit how many options a customer can choose.'"
+      [value]="modifierGroup?.optionLimit ?? 1"
+      [validators]="[Validators.required, Validators.min(1)]"
+    />
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="ord-modal-actions">
+  @if(errorMessage) {
+  <ul class="ord-modal-errors">
+    <li>{{ errorMessage }}</li>
+  </ul>
+  }
+  <app-button
+    variant="secondary"
+    (btnClick)="closeDialog()"
+    [disabled]="loading"
+  >
+    <ng-template appButtonText> Cancel </ng-template>
+  </app-button>
+  <app-button
+    (btnClick)="handleSubmit()"
+    [disabled]="formGroup.invalid || loading"
+    [svgIcon]="loading ? 'loading' : undefined"
+  >
+    <ng-template appButtonText>
+      {{ mode === "edit" ? "Save" : "Add" }}
+    </ng-template>
+  </app-button>
+</mat-dialog-actions>

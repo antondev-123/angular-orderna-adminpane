@@ -1,0 +1,77 @@
+@if(errorMessage) {
+<p>Error: {{ errorMessage }}</p>
+} @if(infoMessage) {
+<p>Info: {{ infoMessage }}</p>
+} @if (data$ | async; as data){
+<section class="section">
+  <div class="sm:flex sm:justify-between sm:items-center sm:gap-2 mb-8">
+    <div class="mb-4 sm:mb-0">
+      <h1
+        class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold"
+      >
+        Discounts
+      </h1>
+    </div>
+    <div class="ml-auto flex justify-end items-start gap-2 flex-wrap">
+      <app-row-controls
+        class="w-full md:w-fit"
+        [numberOfSelectedRows]="getSelectedDiscountsCount(data.totalDiscounts)"
+        (delete)="
+          openDiscountConfirmBulkDeleteModal(
+            getSelectedDiscountsCount(data.totalDiscounts)
+          )
+        "
+      />
+      <app-input-search
+        placeholder="Search discounts..."
+        [initialValue]="queryOptions.searchQuery"
+        (searchTermChange)="handleSearch($event)"
+      />
+      <app-input-filter-immediate
+        svgIcon="stores"
+        ariaLabel="Select store"
+        [options]="data.storeFilterOptions"
+        [initialValue]="initialStoreFilterValue"
+        (filterChange)="handleStoreFilter($event)"
+      />
+      <app-input-filter-checkbox
+        [options]="filterOptions"
+        [initialValue]="queryOptions.filters"
+        (filtersChange)="handleFilter($event)"
+      />
+      <app-button
+        ariaControls="add-discount-modal"
+        ariaLabel="Show add discount modal"
+        svgIcon="plus"
+        (btnClick)="goToDiscountCreatePage()"
+      >
+        <ng-template appButtonText> Add Discount </ng-template>
+      </app-button>
+    </div>
+  </div>
+
+  <div [hidden]="data.isLoading">
+    <app-table
+      [rowClickable]="true"
+      [title]="'All Discounts'"
+      [columns]="columns"
+      [totalRows]="data.totalDiscounts"
+      [dataSource]="discountsDataSource"
+      [initialSort]="queryOptions.sort"
+      (allRowsSelectedChange)="handleAllRowsSelectedChange($event)"
+      (rowsSelectedChange)="handleRowsSelectedChange($event)"
+      (rowClick)="goToDiscountDetailPage($event)"
+      (sort)="handleSort($event)"
+      (delete)="openDiscountConfirmDeleteModal($event)"
+      (edit)="goToDiscountUpdatePage($event)"
+    />
+    <app-pagination
+      [currentPage]="queryOptions.page"
+      [numberOfItems]="data.totalDiscounts"
+    />
+  </div>
+  <div [hidden]="!data.isLoading">
+    <app-table-skeleton />
+  </div>
+</section>
+}

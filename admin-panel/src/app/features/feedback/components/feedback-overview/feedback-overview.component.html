@@ -1,0 +1,21 @@
+@if(errorMessage) {
+  <p>Error: {{ errorMessage }}</p>
+} @if(infoMessage) {
+  <p>Info: {{ infoMessage }}</p>
+} @if (data$ | async; as data){
+  @if (data.feedbackOverview) {
+    <div class="bg-white flex flex-col md:flex-row justify-between mt-5 py-3 px-5 shadow-sm border-slate-800 rounded-sm">
+      <div>
+        <div class="flex align-middle">
+          <span class="text-4xl font-semibold mr-3 min-w-20">{{ data.feedbackOverview.averageRating }}</span>
+          <app-star-rating class="flex align-middle" [rating]="data.feedbackOverview.averageRating"></app-star-rating>
+        </div>
+        <div class="text-sm text-slate-400">Average rating over this time period</div>
+      </div>
+      <div class="flex flex-col items-end mt-5 md:mt-0">
+        <div class="text-4xl font-semibold inline-block">{{ data.feedbackOverview.feedbackPercentage }}%</div>
+        <div class="text-sm text-slate-400 inline-block">Of requests received feedback</div>
+      </div>
+    </div>
+  }
+}

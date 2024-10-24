@@ -1,0 +1,13 @@
+<div class="space-y-4">
+  <h3 class="ord-h6">Top {{ data().length }} Recent Products</h3>
+  <ol class="columns-2">
+    @for(item of data(); track $index) {
+    <li class="flex gap-2">
+      <span>{{ $index + 1 }}.</span>
+      <span>
+        {{ item }}
+      </span>
+    </li>
+    }
+  </ol>
+</div>

@@ -1,0 +1,59 @@
+<h2 mat-dialog-title class="ord-modal-title">
+  <mat-icon
+    svgIcon="overdue"
+    class="ord-icon ord-icon-xl ord-text-red"
+  ></mat-icon>
+  Your Account is Overdue
+</h2>
+<mat-dialog-content class="ord-modal-content">
+  <p>
+    Account <span class="font-bold">{{ data.email }}</span> is overdue by
+    {{ data.daysOverdue }} days. Please select number of months below and
+    payment method to continue enjoying <span class="font-bold">Orderna</span> .
+    For any problems, please contact team on
+    <span class="font-bold">example.email.com</span>.
+  </p>
+  <form
+    [formGroup]="formGroup"
+    (ngSubmit)="handleSubmit()"
+    class="grid grid-cols-2 gap-4 my-6"
+  >
+    <app-input-subscription-plan-duration
+      class="col-span-2"
+      id="subscription-plan-duration"
+      controlName="subscriptionPlanDuration"
+      label="Select Number of Months"
+      [validators]="[Validators.required]"
+    />
+    <app-input-select
+      class="col-span-2"
+      id="payment-method"
+      label="Payment Method"
+      controlName="paymentMethod"
+      placeholder="Select payment option"
+      [options]="paymentOptions"
+      [validators]="[Validators.required]"
+    />
+  </form>
+  <p>
+    Alternatively, add your credit/debit card in
+    <span class="font-bold">Settings</span> for monthly card subscription.
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="ord-modal-actions">
+  @if(errorMessage) {
+  <ul class="ord-modal-errors">
+    <li>{{ errorMessage }}</li>
+  </ul>
+  }
+  <app-button
+    (btnClick)="handleSubmit()"
+    [disabled]="formGroup.invalid || loading"
+    [svgIcon]="loading ? 'loading' : undefined"
+  >
+    <ng-template appButtonText>
+      Pay {{ amountDue | currency : "PHP" }} by
+      {{ paymentMethod.replace("_", " ") | capitalize }}</ng-template
+    >
+  </app-button>
+</mat-dialog-actions>

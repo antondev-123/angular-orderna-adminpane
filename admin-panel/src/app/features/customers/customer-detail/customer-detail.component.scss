@@ -1,0 +1,79 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "@angular/material" as mat;
+
+header {
+  margin-bottom: 16px;
+}
+
+.ord-skeleton.ord-h4 {
+  height: 32px;
+  width: 200px;
+}
+
+.ord-skeleton.ord-h5 {
+  height: 28px;
+  width: 150px;
+}
+
+.ord-skeleton.ord-subtitle-1 {
+  height: 24px;
+  width: 225px;
+}
+
+.ord-expansion-panel .ord-h5,
+.ord-h5 {
+  color: mat.get-theme-color(theme.$admin-panel-theme, accent, 900) !important;
+}
+
+.customer-detail {
+  font: mat.get-theme-typography(theme.$admin-panel-theme, body-1);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  &.ord-skeleton {
+    height: 24px;
+  }
+  &.ord-skeleton:nth-child(1) {
+    width: 150px;
+  }
+  &.ord-skeleton:nth-child(2) {
+    width: 125px;
+  }
+  &.ord-skeleton:nth-child(3) {
+    width: 160px;
+  }
+  &.ord-skeleton:nth-child(4) {
+    width: 200px;
+  }
+  &.ord-skeleton:nth-child(5) {
+    width: 130px;
+  }
+  &.ord-skeleton:nth-child(6) {
+    width: 150px;
+  }
+  &.ord-skeleton:nth-child(7) {
+    width: 100%;
+  }
+
+  .ord-icon {
+    flex-shrink: 0;
+  }
+
+  &:last-child {
+    flex-grow: 1;
+  }
+
+  a {
+    color: mat.get-theme-color(theme.$admin-panel-theme, primary, 500);
+    text-decoration: underline;
+    &:hover {
+      color: mat.get-theme-color(theme.$admin-panel-theme, primary, 600);
+    }
+  }
+}
+
+.w-1\/3 #customer-details-card {
+  position: sticky;
+  top: 0px;
+}

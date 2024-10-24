@@ -1,0 +1,5 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+
+@use "./modal-theme" as modal;
+
+@include modal.theme(theme.$admin-panel-theme);

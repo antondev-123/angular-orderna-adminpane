@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="Icon" transform="translate(-1 -1)">
+    <g id="chat-33" transform="translate(1 1)">
+      <path id="Path"
+        d="M-8.5,0C-3.805,0,0,3.184,0,7.111a6.354,6.354,0,0,1-1.7,4.253V16l-4.108-2.148a10,10,0,0,1-2.692.37c-4.695,0-8.5-3.184-8.5-7.111S-13.195,0-8.5,0Z"
+        transform="translate(22 6)" />
+      <path id="Path-2" data-name="Path"
+        d="M10,0C4.477,0,0,3.582,0,8a6.983,6.983,0,0,0,2,4.785V18l4.833-2.416A12.268,12.268,0,0,0,10,16c5.523,0,10-3.582,10-8S15.523,0,10,0Z"
+        fill="#94a3b8" />
+    </g>
+  </g>
+</svg>

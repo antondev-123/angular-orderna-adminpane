@@ -1,0 +1,39 @@
+<div class="flex flex-col">
+  @if(label) {
+  <label [for]="id" class="ord-form-field-label"
+    >{{ label }}
+    @if (required) {
+    <span class="ord-form-field-required">*</span>
+    }
+  </label>
+  }
+  <mat-form-field class="ord-form-field" color="accent" appearance="outline">
+    <input
+      type="text"
+      matInput
+      mwlFlatpickr
+      [dateFormat]="timeFormat"
+      [altFormat]="timeFormat"
+      [altInput]="true"
+      [convertModelValue]="true"
+      [formControlName]="controlName"
+      [noCalendar]="true"
+      [placeholder]="placeholder"
+      [enableTime]="true"
+      [defaultHour]="0"
+      [defaultMinute]="0"
+      [time24hr]="true"
+      [minTime]="minTime ?? ''"
+      [maxTime]="maxTime ?? ''"
+    />
+    <mat-icon
+      svgIcon="calendar"
+      aria-hidden="false"
+      matIconSuffix
+      class="ord-icon"
+    ></mat-icon>
+    @if (time.hasError('required')) {
+    <mat-error class="ord-error">{{ label }} is required.</mat-error>
+    }
+  </mat-form-field>
+</div>

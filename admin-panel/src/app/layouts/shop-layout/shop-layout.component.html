@@ -1,0 +1,21 @@
+<div>
+  <mat-toolbar class="toolbar">
+    <span class="toolbar-spacer"></span>
+
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>person</mat-icon>
+      <div class="user-name">
+        {{ customer.fullName }} <mat-icon> expand_more </mat-icon>
+      </div>
+    </button>
+
+    <mat-menu #menu="matMenu" class="user-menu">
+      <div class="profile-name">
+        {{ customer.fullName }}
+        <small>Customer</small>
+      </div>
+      <button mat-menu-item (click)="handleSignout()">Sign Out</button>
+    </mat-menu>
+  </mat-toolbar>
+  <router-outlet></router-outlet>
+</div>

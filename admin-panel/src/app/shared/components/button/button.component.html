@@ -1,0 +1,37 @@
+@if (isIconOnly) {
+<button
+  mat-icon-button
+  [matTooltip]="tooltip ?? ''"
+  [ngClass]="buttonClasses"
+  [disabled]="isDisabled"
+  [attr.aria-label]="ariaLabel"
+  [attr.aria-controls]="ariaControls"
+  (click)="handleClick($event)"
+>
+  <mat-icon
+    [svgIcon]="svgIcon!"
+    aria-hidden="false"
+    class="ord-icon"
+  ></mat-icon>
+</button>
+} @else {
+<button
+  mat-flat-button
+  [matTooltip]="tooltip ?? ''"
+  [ngClass]="buttonClasses"
+  [disabled]="isDisabled"
+  [attr.ariaLabel]="ariaLabel"
+  [attr.aria-controls]="ariaControls"
+  (click)="handleClick($event)"
+>
+  @if(hasIcon){
+  <mat-icon
+    [svgIcon]="svgIcon!"
+    aria-hidden="false"
+    class="ord-icon"
+  ></mat-icon>
+  } @if(hasText) {
+  <ng-container [ngTemplateOutlet]="text.templateRef"></ng-container>
+  }
+</button>
+}

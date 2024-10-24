@@ -1,0 +1,21 @@
+@use "@angular/material" as mat;
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+
+.unit-container {
+  color: mat.get-theme-color(theme.$admin-panel-theme, accent, 800);
+  font: mat.get-theme-typography(theme.$admin-panel-theme, body-1);
+  label {
+    font: mat.get-theme-typography(theme.$admin-panel-theme, subtitle-2);
+    margin-bottom: 4px;
+  }
+  div {
+    height: 36px;
+  }
+}
+
+.warn-icon-container {
+  height: 36px;
+  width: 36px;
+  border-radius: 100%;
+  padding: 8px;
+}

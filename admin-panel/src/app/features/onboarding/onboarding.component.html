@@ -1,0 +1,54 @@
+<section class="space-y-8">
+  @if(currentStep(); as currentStep){
+  <!-- Step Card -->
+  <div class="card md:min-h-[50vh] px-8 py-4">
+    <p class="ord-body-1">
+      <span class="font-bold">{{ currentStepIndex() + 1 }}</span>
+      /
+      <span>{{ numberOfSteps }}</span>
+    </p>
+    @for(step of steps; track $index) {
+    <div [class.hidden]="$index !== currentStepIndex()">
+      <ng-container
+        *ngComponentOutlet="step.component; inputs: step.componentInputs"
+      />
+    </div>
+    }
+  </div>
+  <!-- Step Buttons -->
+  <div class="flex space-between gap-2">
+    @if(currentStepIndex() !== 0) {
+
+    <app-button
+      variant="secondary"
+      [disabled]="loading()"
+      (btnClick)="goToPreviousStep()"
+    >
+      <ng-template appButtonText
+        >Back: {{ previousStep()?.description }}</ng-template
+      >
+    </app-button>
+    } @if(currentStepIndex() !== lastStepIndex ) {
+    <app-button
+      [disabled]="currentStep.form.invalid || loading()"
+      [svgIcon]="loading() ? 'loading' : undefined"
+      (btnClick)="goToNextStep()"
+      class="ml-auto"
+    >
+      <ng-template appButtonText
+        >Next: {{ nextStep()?.description }}</ng-template
+      >
+    </app-button>
+    } @if(currentStepIndex() === lastStepIndex ) {
+    <app-button
+      [disabled]="currentStep.form.invalid || loading()"
+      [svgIcon]="loading() ? 'loading' : undefined"
+      (btnClick)="handleLastStepCompleted()"
+      class="ml-auto"
+    >
+      <ng-template appButtonText>{{ lastStepButtonText }}</ng-template>
+    </app-button>
+    }
+  </div>
+  }
+</section>

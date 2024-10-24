@@ -1,0 +1,71 @@
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  (btnClick)="closeDialog()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">Cash Management</h2>
+<mat-dialog-content class="ord-modal-content w-[480px]">
+  <form
+    [formGroup]="formCashManagement"
+    (ngSubmit)="handleSubmit()"
+    class="grid grid-cols-2 gap-x-4"
+  >
+    <mat-button-toggle-group
+      appearance="legacy"
+      class="col-span-2 flex justify-between gap-2 mb-4"
+      name="cashType"
+      [value]="formCashManagement.value.cashType"
+      aria-label="Cash Type"
+      (change)="onChange($event)"
+    >
+      <mat-button-toggle class="w-full py-2 border-r" value="cashIn"
+        >Cash In</mat-button-toggle
+      >
+      <mat-button-toggle class="w-full py-2" value="cashOut"
+        >Cash Out</mat-button-toggle
+      >
+    </mat-button-toggle-group>
+
+    @if (formCashManagement.value.cashType === 'cashOut') {
+    <app-input-text
+      id="expenseName"
+      label="Expense Name"
+      controlName="expenseName"
+      [value]="cashData?.expenseName"
+    />
+    }
+
+    <app-input-number
+      id="amount"
+      label="Amount"
+      [class.col-span-2]="formCashManagement.value.cashType === 'cashIn'"
+      prefixText="₱"
+      controlName="amount"
+      [value]="cashData?.amount"
+      [validators]="[Validators.required]"
+    />
+
+    <app-input-textarea
+      id="note"
+      label="Note"
+      class="col-span-2"
+      controlName="note"
+      maxlength="255"
+      [value]="cashData?.note"
+      hintText="Max characters 255"
+    />
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="ord-modal-actions">
+  <app-button variant="secondary" (btnClick)="closeDialog()">
+    <ng-template appButtonText> Cancel </ng-template>
+  </app-button>
+  <app-button
+    (btnClick)="handleSubmit()"
+    [disabled]="formCashManagement.invalid"
+  >
+    <ng-template appButtonText> Save </ng-template>
+  </app-button>
+</mat-dialog-actions>

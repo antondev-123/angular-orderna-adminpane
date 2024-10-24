@@ -1,0 +1,14 @@
+<mat-slide-toggle
+  [id]="id"
+  [disabled]="isDisabled"
+  [attr.aria-label]="ariaLabel"
+  [attr.aria-controls]="ariaControls"
+  [checked]="checked"
+  color="primary"
+  (change)="btnToggle.emit($event)"
+  [hideIcon]="true"
+>
+  @if(hasText) {
+  <ng-container [ngTemplateOutlet]="text.templateRef"></ng-container>
+  }
+</mat-slide-toggle>

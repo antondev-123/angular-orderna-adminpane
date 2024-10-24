@@ -1,0 +1,23 @@
+header {
+  margin-bottom: 16px;
+}
+
+.ord-skeleton.ord-h4 {
+  height: 32px;
+  width: 200px;
+}
+
+.ord-skeleton.ord-h5 {
+  height: 28px;
+  width: 150px;
+}
+
+.ord-skeleton.ord-subtitle-1 {
+  height: 24px;
+  width: 225px;
+}
+
+.ord-skeleton.ord-badge {
+  height: 25px;
+  width: 100px;
+}

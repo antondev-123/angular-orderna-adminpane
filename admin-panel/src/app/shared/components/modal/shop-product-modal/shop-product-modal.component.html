@@ -1,0 +1,14 @@
+<!-- Modal backdrop -->
+<!-- <div *ngIf="modalOpen" class="fixed inset-0 bg-slate-900 bg-opacity-30 z-50 transition-opacity" (click)="onCloseModal()"></div> -->
+
+<!-- Modal dialog -->
+<div *ngIf="modalOpen" [id]="id" class="fixed inset-0 lg:bottom-auto  lg:inset-x-0 lg:top-[57rem] z-50 flex items-center justify-center" >
+    <div class="modal-content bg-white dark:bg-slate-800 rounded shadow-lg overflow-hidden max-w-lg w-full max-h-full relative">
+        <button class="absolute top-0 right-0 mt-3 mr-3 text-gray-500 hover:text-gray-800" (click)="onCloseModal()">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path d="M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z"/>
+            </svg>
+        </button>
+        <ng-content></ng-content>
+    </div>
+</div>

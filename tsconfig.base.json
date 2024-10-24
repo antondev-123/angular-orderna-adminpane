@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "rootDir": ".",
+        "baseUrl": ".",
+        "paths": {
+            "@orderna/admin-panel/*": [
+                "admin-panel/*"
+            ]
+        },
+    },
+}

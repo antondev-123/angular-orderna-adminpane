@@ -1,0 +1,83 @@
+<section class="section relative">
+  <button backButton (click)="goToDiscountsPage()">Discounts</button>
+  @if(data$ | async; as data) {
+  <header>
+    <h1 class="ord-h4">{{ data.discount.code }}</h1>
+  </header>
+  <div class="flex">
+    <div class="space-y-4 w-full lg:w-2/3">
+      <!-- Discount statistics card -->
+      <article class="card divide-y">
+        <header class="space-y-1">
+          <h2 class="ord-h5">{{ data.discount.code }}</h2>
+          <p class="ord-subtitle-1 ord-text-gray">
+            Created since
+            <time [dateTime]="data.discount.createdAt">{{
+              data.discount.createdAt | dateAgo | lowercase
+            }}</time>
+          </p>
+        </header>
+        <div>
+          <app-discount-statistics [data]="statistics" />
+        </div>
+      </article>
+      <!-- Stores accepting discount card -->
+      <article class="card">
+        <header>
+          <h2 class="ord-h5">Stores Accepting Discount</h2>
+        </header>
+        <div class="flex gap-2">
+          <!-- TODO: Get store names from service -->
+          @for(store of data.discount.applicableStores; track store) {
+          <app-badge [text]="'Store ' + store" />
+          }
+        </div>
+      </article>
+      <!-- Total redeemed over time card -->
+      <article class="card">
+        <header class="flex items-start justify-between">
+          <h2 class="ord-h5">Total redeemed amount over time</h2>
+        </header>
+        <app-discount-total-redeemed-over-time-chart
+          [data]="data.totalRedeemedAmountOverTimeChartData.data"
+          [labels]="data.totalRedeemedAmountOverTimeChartData.labels"
+        />
+      </article>
+    </div>
+  </div>
+  }@else {
+  <!-- Page skeleton placeholder -->
+  <header>
+    <app-skeleton class="ord-h4" />
+  </header>
+  <div class="flex">
+    <div class="space-y-4 w-full lg:w-2/3">
+      <article class="card divide-y">
+        <header class="space-y-1">
+          <app-skeleton class="ord-h5" />
+          <app-skeleton class="ord-subtitle" />
+        </header>
+        <div>
+          <app-discount-statistics-skeleton />
+        </div>
+      </article>
+      <article class="card">
+        <header>
+          <app-skeleton class="ord-h5" />
+        </header>
+        <div class="flex gap-2">
+          <app-skeleton class="ord-badge" />
+          <app-skeleton class="ord-badge" />
+          <app-skeleton class="ord-badge" />
+        </div>
+      </article>
+      <article class="card">
+        <header class="flex items-start justify-between">
+          <app-skeleton class="ord-h5" />
+        </header>
+        <app-discount-total-redeemed-over-time-chart-skeleton />
+      </article>
+    </div>
+  </div>
+  }
+</section>

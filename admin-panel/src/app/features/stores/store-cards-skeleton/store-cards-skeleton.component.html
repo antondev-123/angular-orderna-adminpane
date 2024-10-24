@@ -1,0 +1,26 @@
+<div class="grid grid-cols-12 gap-6 justify-items-stretch">
+  @for(card of cards; track $index) {
+  <div class="card-wrapper col-span-12 lg:col-span-4">
+    <div class="card col-span-full sm:col-span-6 xl:col-span-4">
+      <header class="card-header">
+        <app-skeleton class="ord-h5" />
+      </header>
+      <div class="card-content grow">
+        <address class="space-y-1">
+          <app-skeleton class="ord-body-1" />
+          <app-skeleton class="ord-body-1" />
+          <app-skeleton class="ord-body-1" />
+        </address>
+      </div>
+      <div class="card-actions">
+        <div>
+          <app-skeleton class="ord-subtitle-1" />
+        </div>
+        <div>
+          <app-skeleton class="ord-subtitle-1" />
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

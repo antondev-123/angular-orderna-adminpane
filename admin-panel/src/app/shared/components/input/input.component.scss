@@ -1,0 +1,7 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+
+@use "./input-theme" as input;
+
+:host {
+  @include input.theme(theme.$admin-panel-theme);
+}

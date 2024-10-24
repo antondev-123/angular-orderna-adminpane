@@ -1,0 +1,20 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "@angular/material" as mat;
+
+.back-button-wrapper {
+  // Base styles
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 8px;
+
+  // Typography styles
+  font: mat.get-theme-typography(theme.$admin-panel-theme, body-1);
+  font-weight: 500;
+
+  // Color styles
+  color: mat.get-theme-color(theme.$admin-panel-theme, primary, 500);
+  &:hover {
+    color: mat.get-theme-color(theme.$admin-panel-theme, primary, 600);
+  }
+}

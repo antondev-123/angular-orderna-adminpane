@@ -1,0 +1,29 @@
+<app-attendance-header
+  [selectedCount]="selectedCount()"
+  [filter]="viewModel().filter"
+  (deleteTriggered)="onSelectedRowsDeleted()"
+  (clearSelection)="clearSelection()"
+/>
+
+@if (viewModel().isLoading) {
+<app-table-skeleton />
+} @else {
+<app-table
+  [rowClickable]="true"
+  [title]="'All Attendances'"
+  [columns]="columns"
+  [totalRows]="viewModel().totalAttendances"
+  [dataSource]="attendanceSummaries()"
+  [initSelectedRows]="selectedIds()"
+  [initSelectAll]="allRowsSelected()"
+  (allRowsSelectedChange)="onAllRowsSelected($event)"
+  (rowsSelectedChange)="onRowSelected($event)"
+  (rowClick)="onRowClicked($event)"
+  (edit)="onRowEdited($event)"
+  (delete)="onRowDeleted($event)"
+/>
+<app-pagination
+  [currentPage]="viewModel().filter.page"
+  [numberOfItems]="viewModel().totalFiltered"
+/>
+}

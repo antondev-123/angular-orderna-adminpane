@@ -1,0 +1,46 @@
+:host {
+  width: fit-content;
+}
+
+.iso-switcher {
+  width: 36px;
+  height: 15px;
+  background-color: #ccc;
+  border-radius: 15px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+}
+
+.iso-switcher.disabled {
+  cursor: default;
+}
+
+.toggle-handle {
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: -3px;
+  left: 0;
+  transition: left 0.3s;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.iso-switcher-wrapper {
+  padding: 4px;
+
+  &.checked {
+    outline: 2px solid #6060ff;
+    border-radius: 13px;
+
+    .iso-switcher {
+      background-color: #6060ff;
+
+      .toggle-handle {
+        left: 18px;
+      }
+    }
+  }
+}

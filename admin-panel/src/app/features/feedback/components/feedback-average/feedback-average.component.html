@@ -1,0 +1,24 @@
+@if(errorMessage) {
+<p>Error: {{ errorMessage }}</p>
+} @if(infoMessage) {
+<p>Info: {{ infoMessage }}</p>
+} @if (data$ | async; as data){
+<div class="bg-white shadow-md border-slate-800 rounded-sm p-10 mt-5 w-full">
+  <apx-chart
+    [series]="chartOptions.series!"
+    [chart]="chartOptions.chart!"
+    [xaxis]="chartOptions.xaxis!"
+    [title]="chartOptions.title!"
+  ></apx-chart>
+</div>
+<div class="md:mt-12 mt-6">
+  <app-table
+    [selectable]="false"
+    [columns]="columns"
+    [dataSource]="feedbackAverageDataSource"
+    [rowClickable]="false"
+    [actions]="[]"
+    [hasActions]="false"
+  />
+</div>
+}

@@ -1,0 +1,556 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+@use "tailwind/shadows" as shadow;
+@use "tailwind/colors" as color;
+
+// Plus imports for other components in your app.
+@use "toolbar-theme" as toolbar;
+@use "side-nav-theme" as side-nav;
+@use "scrollbar-theme" as scrollbar;
+@use "tab-theme" as tab;
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define theme
+@import "custom-theme";
+@import "side-nav-and-toolbar-theme";
+@import "_date-range-theme";
+@import "_chart";
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.core-theme($admin-panel-theme);
+@include mat.input-theme($admin-panel-theme);
+@include mat.button-theme($admin-panel-theme);
+@include mat.chips-theme($admin-panel-theme);
+@include mat.checkbox-theme($admin-panel-theme);
+@include mat.pseudo-checkbox-theme($admin-panel-theme);
+@include mat.snack-bar-theme($admin-panel-theme);
+@include mat.slide-toggle-theme($admin-panel-theme);
+@include mat.datepicker-theme($admin-panel-theme);
+@include mat.tooltip-theme($admin-panel-theme);
+
+@include mat.sidenav-theme($side-nav-and-toolbar-theme);
+@include mat.toolbar-theme($side-nav-and-toolbar-theme);
+@include mat.list-theme($side-nav-and-toolbar-theme);
+@include mat.menu-theme($side-nav-and-toolbar-theme);
+
+@include side-nav.theme($side-nav-and-toolbar-theme);
+@include toolbar.theme($side-nav-and-toolbar-theme);
+
+@include scrollbar.theme($admin-panel-theme);
+@include tab.theme($admin-panel-theme);
+
+/* Global form field styles */
+@include mat.form-field-base($admin-panel-theme);
+@include mat.form-field-color($admin-panel-theme);
+@include mat.form-field-typography($admin-panel-theme);
+@include mat.form-field-density(mat.get-theme-density($admin-panel-theme) - 5);
+
+/* Global dialog styles */
+@include mat.dialog-base($admin-panel-theme);
+@include mat.dialog-color($admin-panel-theme);
+@include mat.dialog-typography($admin-panel-theme);
+@include mat.dialog-density(mat.get-theme-density($admin-panel-theme) + 1);
+
+/* Global select styles */
+@include mat.select-base($admin-panel-theme);
+@include mat.select-color($admin-panel-theme);
+@include mat.select-typography($admin-panel-theme);
+@include mat.select-density(mat.get-theme-density($admin-panel-theme) - 5);
+
+/* Global option styles */
+@include mat.option-base($admin-panel-theme);
+@include mat.option-color($admin-panel-theme);
+@include mat.option-typography($admin-panel-theme);
+
+/* Global expansion styles */
+@include mat.expansion-theme($side-nav-and-toolbar-theme);
+.ord-expansion-panel {
+  padding: 8px;
+  background-color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-color: mat.get-theme-color($admin-panel-theme, accent, 200);
+  border-radius: 8px;
+  box-shadow: shadow.get-shadow(shadow.$lg) !important;
+}
+// Use different style if expansion panel is inside a modal
+.ord-modal-panel .ord-expansion-panel {
+  padding: 0px;
+  background-color: transparent;
+  border: none;
+  box-shadow: none !important;
+}
+
+// Note:
+// Setting any density value below won't have any effect.
+// It's not supported yet for option components.
+// But it might be possible for Material 3 soon.
+@include mat.option-density(mat.get-theme-density($admin-panel-theme));
+
+/* Global text color utilities */
+.ord-text-yellow {
+  color: mat.get-color-from-palette(color.$amber-palette, 500);
+}
+
+.ord-text-green {
+  color: mat.get-color-from-palette(color.$emerald-palette, 500);
+}
+
+.ord-text-red {
+  color: mat.get-color-from-palette(color.$rose-palette, 500);
+}
+
+.ord-text-gray {
+  color: mat.get-color-from-palette(color.$slate-palette, 500);
+}
+
+.ord-text-indigo {
+  color: mat.get-color-from-palette(color.$indigo-palette, 500);
+}
+
+// Global fill utilities
+.ord-fill-yellow svg {
+  fill: mat.get-color-from-palette(color.$amber-palette, 500);
+}
+
+.ord-fill-green svg {
+  fill: mat.get-color-from-palette(color.$emerald-palette, 500);
+}
+
+.ord-fill-red svg {
+  fill: mat.get-color-from-palette(color.$rose-palette, 500);
+}
+
+.ord-fill-gray svg {
+  fill: mat.get-color-from-palette(color.$slate-palette, 500);
+}
+
+.ord-fill-indigo svg {
+  fill: mat.get-color-from-palette(color.$indigo-palette, 500);
+}
+
+/* Global background color utilities */
+.ord-bg-yellow {
+  background-color: mat.get-color-from-palette(color.$amber-palette, 500);
+}
+
+.ord-bg-yellow-200 {
+  background-color: mat.get-color-from-palette(color.$amber-palette, 200);
+}
+
+.ord-bg-green {
+  background-color: mat.get-color-from-palette(color.$emerald-palette, 500);
+}
+
+.ord-bg-red {
+  background-color: mat.get-color-from-palette(color.$rose-palette, 500);
+}
+
+.ord-bg-gray {
+  background-color: mat.get-color-from-palette(color.$slate-palette, 500);
+}
+
+.ord-bg-gray-100 {
+  background-color: mat.get-color-from-palette(color.$slate-palette, 100);
+}
+
+.ord-bg-indigo {
+  background-color: mat.get-color-from-palette(color.$indigo-palette, 500);
+}
+
+/* Global typography utilities */
+.ord-h1 {
+  font: mat.get-theme-typography($admin-panel-theme, headline-1);
+}
+
+.ord-h2 {
+  font: mat.get-theme-typography($admin-panel-theme, headline-2);
+}
+
+.ord-h3 {
+  font: mat.get-theme-typography($admin-panel-theme, headline-3);
+}
+
+.ord-h4 {
+  font: mat.get-theme-typography($admin-panel-theme, headline-4);
+}
+
+.ord-h5 {
+  font: mat.get-theme-typography($admin-panel-theme, headline-5);
+}
+
+.ord-h6 {
+  font: mat.get-theme-typography($admin-panel-theme, headline-6);
+}
+
+.ord-subtitle-1 {
+  font: mat.get-theme-typography($admin-panel-theme, subtitle-1);
+}
+
+.ord-body-1 {
+  font: mat.get-theme-typography($admin-panel-theme, body-1);
+}
+
+.ord-subtitle-2 {
+  font: mat.get-theme-typography($admin-panel-theme, subtitle-2);
+}
+
+.ord-body-2 {
+  font: mat.get-theme-typography($admin-panel-theme, body-2);
+}
+
+// Reduce font size in medium to small screens
+@media (max-width: 768px) {
+  .ord-h1 {
+    font: mat.get-theme-typography($admin-panel-theme, headline-2);
+  }
+
+  .ord-h2 {
+    font: mat.get-theme-typography($admin-panel-theme, headline-3);
+  }
+
+  .ord-h3 {
+    font: mat.get-theme-typography($admin-panel-theme, headline-4);
+  }
+
+  .ord-h4 {
+    font: mat.get-theme-typography($admin-panel-theme, headline-5);
+  }
+
+  .ord-h5 {
+    font: mat.get-theme-typography($admin-panel-theme, headline-6);
+  }
+
+  .ord-h6 {
+    font: mat.get-theme-typography($admin-panel-theme, headline-6);
+  }
+
+  .ord-subtitle-1 {
+    font: mat.get-theme-typography($admin-panel-theme, subtitle-2);
+  }
+
+  .ord-body-1 {
+    font: mat.get-theme-typography($admin-panel-theme, body-2);
+  }
+
+  .ord-subtitle-2 {
+    font: mat.get-theme-typography($admin-panel-theme, subtitle-2);
+  }
+
+  .ord-body-2 {
+    font: mat.get-theme-typography($admin-panel-theme, body-2);
+  }
+}
+
+/* Global internal elements styles */
+
+/*
+NOTE:
+Avoid any custom styles or overrides on internal elements within a Angular Material components.
+The DOM structure and CSS classes applied for each component may change at any time,
+causing custom styles to break.
+
+- https://material.angular.io/guide/customizing-component-styles#internal-component-elements
+
+Compiled here so that in case class names changes in the future,
+edits only need to be made in one file.
+*/
+
+/* Global internal expansion styles */
+.ord-expansion-panel {
+  .mat-expansion-panel-header {
+    padding: 8px;
+    padding-right: 16px;
+  }
+  .mat-expansion-indicator::after {
+    --mat-expansion-header-indicator-color: black;
+    border-color: black;
+  }
+}
+// Use different style if expansion panel is inside a modal
+.ord-modal-panel .ord-expansion-panel {
+  .mat-expansion-panel-header {
+    padding: 4px;
+    padding-right: 8px;
+  }
+  .mat-expansion-panel-body {
+    padding: 4px;
+  }
+}
+
+/* Global internal checkbox styles */
+.ord-checkbox {
+  .mdc-checkbox__ripple {
+    display: none;
+  }
+  &:focus-within .mdc-checkbox__background {
+    border-color: mat.get-theme-color(
+      $admin-panel-theme,
+      accent,
+      500
+    ) !important;
+  }
+  .mdc-checkbox__background {
+    border-color: mat.get-theme-color(
+      $admin-panel-theme,
+      accent,
+      300
+    ) !important;
+    border-width: 1px;
+    border-radius: 4px;
+    padding: 3px;
+    svg {
+      padding: 3px;
+    }
+  }
+}
+
+/* Global internal icon styles */
+.ord-icon.mat-icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.ord-icon-lg.mat-icon {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.ord-icon-xl.mat-icon {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+/* Global internal select styles */
+.ord-filter-immediate-select-panel,
+.ord-select-panel {
+  box-shadow: shadow.get-shadow(shadow.$lg) !important;
+
+  /* When option is selected */
+  .ord-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+    .mdc-list-item__primary-text,
+    .mat-pseudo-checkbox:not(.mat-pseudo-checkbox-full)::after {
+      color: mat.get-theme-color($admin-panel-theme, primary, 500) !important;
+    }
+    .mat-pseudo-checkbox-full {
+      background-color: mat.get-theme-color(
+        $admin-panel-theme,
+        primary,
+        500
+      ) !important;
+    }
+  }
+
+  /* When option is not selected */
+  .ord-option.mdc-list-item:not(.mdc-list-item--disabled) {
+    .mat-pseudo-checkbox-full {
+      /* Copied styles from ord-checkbox */
+      border-color: mat.get-theme-color(
+        $admin-panel-theme,
+        accent,
+        300
+      ) !important;
+      border-width: 1px;
+      border-radius: 4px;
+      padding: 3px;
+    }
+  }
+
+  .ord-option:hover,
+  .ord-option:selected {
+    background-color: mat.get-theme-color(
+      $admin-panel-theme,
+      accent,
+      50
+    ) !important;
+  }
+  .ord-option {
+    font-weight: 500;
+  }
+}
+
+/* Global internal form field styles */
+.ord-form-field {
+  // TODO: Alternative way to style autofilled inputs. Investigate why autofill style won't change.
+  // Reference: https://material.angular.io/cdk/text-field/overview#styling-the-autofill-state-of-an-input
+  // input {
+  //   @include cdk.text-field-autofill-color(red, red);
+  // }
+
+  // Style for autofilled inputs
+  &.mat-form-field-autofilled {
+    .mat-mdc-text-field-wrapper {
+      background-color: mat.get-theme-color($admin-panel-theme, primary, 100);
+      border-radius: 4px;
+    }
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0px 1000px
+        mat.get-theme-color($admin-panel-theme, primary, 100) inset !important; /* Custom background color */
+    }
+  }
+
+  .mat-mdc-text-field-wrapper {
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  --mdc-outlined-text-field-disabled-input-text-color: mat.get-theme-color(
+    $admin-panel-theme,
+    accent,
+    800
+  );
+  --mdc-outlined-text-field-input-text-color: mat.get-theme-color(
+    $admin-panel-theme,
+    accent,
+    800
+  );
+
+  /* Change the border color */
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+      .mdc-text-field--invalid
+    )
+    .mdc-notched-outline__leading,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+      .mdc-text-field--invalid
+    )
+    .mdc-notched-outline__notch,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+      .mdc-text-field--invalid
+    )
+    .mdc-notched-outline__trailing {
+    border-color: mat.get-theme-color(
+      $admin-panel-theme,
+      accent,
+      300
+    ) !important;
+  }
+
+  /* Change the border focused color */
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+      .mdc-text-field--invalid
+    )
+    .mdc-text-field--focused
+    .mdc-notched-outline__leading,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+      .mdc-text-field--invalid
+    )
+    .mdc-text-field--focused
+    .mdc-notched-outline__notch,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+      .mdc-text-field--invalid
+    )
+    .mdc-text-field--focused
+    .mdc-notched-outline__trailing {
+    border-color: mat.get-theme-color(
+      $admin-panel-theme,
+      accent,
+      400
+    ) !important;
+    box-shadow: shadow.get-shadow(shadow.$sm);
+  }
+
+  /* Change the border hover color */
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+      .mdc-text-field--invalid
+    )
+    :not(.mdc-text-field--focused):hover
+    .mdc-notched-outline
+    .mdc-notched-outline__leading,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+      .mdc-text-field--invalid
+    )
+    :not(.mdc-text-field--focused):hover
+    .mdc-notched-outline
+    .mdc-notched-outline__notch,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(
+      .mdc-text-field--invalid
+    )
+    :not(.mdc-text-field--focused):hover
+    .mdc-notched-outline
+    .mdc-notched-outline__trailing {
+    border-color: mat.get-theme-color(
+      $admin-panel-theme,
+      accent,
+      400
+    ) !important;
+  }
+}
+
+/* Global internal snackbar styles */
+.mdc-snackbar .mdc-snackbar__surface {
+  color: mat.get-theme-color($admin-panel-theme, accent, 200);
+  --mdc-snackbar-supporting-text-color: mat.get-theme-color(
+    $admin-panel-theme,
+    accent,
+    900
+  );
+  box-shadow: shadow.get-shadow(shadow.$lg) !important;
+
+  .ord-snackbar-action .ord-icon {
+    color: mat.get-theme-color($admin-panel-theme, accent, 200);
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.cash-register-dialog,
+.webcam-dialog {
+  width: 100%;
+}
+
+.ord-modal-panel.mat-mdc-dialog-panel {
+  width: 100%;
+}
+
+/* Global internal slide toggle styles */
+.ord-slide-toggle {
+  --mdc-switch-track-height: 20px;
+  .mdc-switch__track {
+    border-radius: 18px !important;
+  }
+  .mdc-switch__track::after {
+    background-color: mat.get-theme-color(
+      $admin-panel-theme,
+      primary,
+      500
+    ) !important;
+  }
+  .mdc-switch__track::before {
+    background-color: mat.get-theme-color(
+      $admin-panel-theme,
+      accent,
+      500
+    ) !important;
+  }
+  .mdc-switch__handle {
+    height: 16px !important;
+    width: 16px !important;
+  }
+  .mdc-switch__handle::after {
+    background-color: white !important;
+  }
+  .mdc-switch__ripple {
+    display: none;
+  }
+  .mdc-label {
+    font: mat.get-theme-typography($admin-panel-theme, subtitle-2);
+  }
+}
+
+@media (max-width: 599px) {
+  .cdk-overlay-pane.mat-mdc-dialog-panel {
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,154 @@
+<form [formGroup]="storeForm" (ngSubmit)="handleSubmit()">
+  <header>
+    <h1 class="ord-h2">General</h1>
+  </header>
+
+  <section>
+    <header>
+      <h3 class="ord-h5">Details</h3>
+      <p class="ord-body-1">Give your store a name and short description.</p>
+    </header>
+    <div class="card">
+      <app-input-text
+        label="Store name"
+        controlName="name"
+        [validators]="[Validators.required, Validators.maxLength(50)]"
+      />
+      <app-input-textarea
+        label="About"
+        controlName="about"
+        hintText="(150-300 characters are recommended)"
+        [validators]="[Validators.maxLength(300)]"
+      />
+      <app-input-text
+        id="input-currency"
+        value="PHP"
+        label="Currency"
+        controlName="currency"
+        [disabled]="true"
+      />
+    </div>
+  </section>
+
+  <div aria-hidden="true" class="divider"></div>
+
+  <section>
+    <header>
+      <h3 class="ord-h5">Contact Information</h3>
+      <p class="ord-body-1">
+        Your customers will use this information to contact you.
+      </p>
+    </header>
+    <div class="card">
+      <app-input-email
+        label="Email"
+        controlName="email"
+        [validators]="[Validators.required]"
+      />
+      <app-input-mobile
+        label="Mobile number"
+        controlName="mobile"
+        [validators]="[Validators.required]"
+      />
+      <app-input-telephone label="Telephone" controlName="telephone" />
+      <!-- TODO: Consider creating input component for URLs -->
+      <app-input-text
+        label="Website"
+        controlName="website"
+        [validators]="[Validators.pattern(websiteUrlPattern)]"
+      />
+    </div>
+  </section>
+
+  <div aria-hidden="true" class="divider"></div>
+
+  <section>
+    <header>
+      <h3 class="ord-h5">Store address</h3>
+      <p class="ord-body-1">
+        This address will show on your store and be used to calculate delivery
+        distances.
+      </p>
+    </header>
+    <div class="card">
+      <app-input-text label="Street address" controlName="streetAddress" />
+      <app-input-text
+        label="Building name/number"
+        controlName="buildingNumber"
+      />
+      <div class="flex flex-col md:flex-row md:gap-6">
+        <app-input-text class="flex-1" label="City" controlName="city" />
+        <app-input-text class="flex-1" label="Zip code" controlName="zipCode" />
+      </div>
+    </div>
+  </section>
+
+  <div aria-hidden="true" class="divider"></div>
+
+  <section>
+    <header>
+      <h3 class="ord-h5">Legal Information</h3>
+      <p class="ord-body-1">Tax identifier</p>
+    </header>
+    <div class="card">
+      <app-input-text label="VAT Number" controlName="VATNumber" />
+    </div>
+  </section>
+  <section>
+    <header>
+      <h3 class="ord-h5">Close store</h3>
+      <p class="ord-body-1">
+        Prevent customers ordering from this store indefinitely.
+      </p>
+    </header>
+    <div id="close-store" class="card">
+      <p class="ord-subtitle-1">
+        Store is {{ isOpen ? "closed" : "open" }}
+      </p>
+      <div id="input-is-permanently-closed">
+        <mat-slide-toggle
+          class="ord-slide-toggle"
+          formControlName="isOpen"
+          hideIcon
+          (change)="handleStoreTemporarilyClosed($event.checked)"
+          >{{ isOpen ? "Closed" : "Open" }}</mat-slide-toggle
+        >
+        <p class="ord-hint">
+          Enabling toggle will close your store indefinitely.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  @if(mode() === 'edit') {
+  <section>
+    <header>
+      <h3 class="ord-h5">Delete store</h3>
+      <p class="ord-body-1">
+        Permanently erase all store information, including products,
+        transactions, and customer data.
+      </p>
+    </header>
+    <div id="delete-store" class="card space-y-2">
+      <app-button variant="warn" (btnClick)="openStoreConfirmDeleteModal()">
+        <ng-template appButtonText>Delete Store</ng-template>
+      </app-button>
+      <div class="ord-hint">
+        This button is visible only to store administrators.
+      </div>
+    </div>
+  </section>
+  }
+
+  <div aria-hidden="true" class="divider"></div>
+
+  <div class="flex justify-end">
+    <ng-container
+      [ngTemplateOutlet]="actionsTemplate() ?? null"
+      [ngTemplateOutletContext]="{
+        formInvalid: storeForm.invalid,
+        formValues: storeFormRawValue
+      }"
+    />
+  </div>
+</form>

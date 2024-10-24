@@ -1,0 +1,54 @@
+<div class="shadow bg-white my-4 p-6">
+  <p class="mb-1 text-sm font-medium leading-5">{{ day() }}</p>
+  <div class="grid grid-cols-6 gap-6">
+    <div class="col-span-6">
+      <div *ngFor="let timeslot of openingHours().timeSlots; let i = index" class="py-2">
+        <div *ngIf="!openingHours().isClosed && !openingHours().is24Hours">
+          <app-store-timeslot
+            [timeSlots]="timeslot"
+            [alltimeSlots]="openingHours().timeSlots"
+            (deleteSelection)="deleteSelectedTimeslot(i)"
+            (timeslotChange)="onTimeslotChange($event, i)"
+          ></app-store-timeslot>
+        </div>
+      </div>
+      <button
+        *ngIf="!isAnyTimeslotClosedOr24Hours()"
+        (click)="addTimeslot()"
+        class="border btn mt-4 dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300"
+      >
+        Add Period
+      </button>
+      <div class="flex gap-8 mt-4">
+        <div>
+          <div class="items-center">
+            <p class="block text-sm font-medium leading-5 text-gray-700 mb-5">Closed</p>
+            <input
+              type="checkbox"
+              name="toggleClosed"
+              [id]="'toggleClosed-' + day()"
+              class="sr-only"
+              [(ngModel)]="openingHours().isClosed"
+              (change)="toggleClosed($event)"
+            />
+            <label class="toggle-switch relative h-7 w-11 bg-sky-600	rounded-full cursor-pointer" [for]="'toggleClosed-' + day()"></label>
+          </div>
+        </div>
+        <div>
+          <div class="items-center">
+            <p class="block text-sm font-medium leading-5 text-gray-700 mb-5">24 hours</p>
+            <input
+              type="checkbox"
+              name="toggle24Hours"
+              [id]="'toggle24Hours-' + day()"
+              class="sr-only"
+              [(ngModel)]="openingHours().is24Hours"
+              (change)="toggle24Hours($event)"
+            />
+            <label class="toggle-switch relative h-7 w-11 bg-sky-600	rounded-full cursor-pointer" [for]="'toggle24Hours-' + day()"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

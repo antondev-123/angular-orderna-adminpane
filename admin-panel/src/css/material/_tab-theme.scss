@@ -1,0 +1,93 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin base($theme) {
+  mat-tab-group {
+    mat-tab-header.mat-mdc-tab-header {
+      border-radius: 4px;
+      background-color: transparent;
+
+      .mat-mdc-tab-labels {
+        padding: 4px;
+      }
+
+      .mdc-tab {
+        min-height: 30px;
+      }
+
+      .mat-mdc-tab-label-container {
+        border-bottom: none;
+      }
+
+      .mat-mdc-tab-disabled {
+        pointer-events: visible;
+        cursor: not-allowed;
+      }
+
+      .mdc-tab-indicator {
+        display: none;
+      }
+
+      .mdc-tab--active {
+        border-bottom-width: 2px;
+        border-bottom-style: solid;
+      }
+
+      .mdc-tab__text-label {
+        padding: 4px;
+      }
+    }
+
+    mat-tab-body.mat-mdc-tab-body {
+      overflow-y: hidden !important;
+      height: fit-content !important;
+
+      .mat-mdc-tab-body-content {
+        overflow: visible;
+      }
+    }
+  }
+}
+
+@mixin color($theme) {
+  .ord-tab-label, // TODO: Use this class instead of mdc class
+  .mdc-tab__text-label {
+    color: mat.get-theme-color($theme, accent, 800);
+  }
+  .ord-tab-label--active,
+  .mdc-tab--active {
+    border-bottom-color: mat.get-theme-color($theme, primary, 500);
+    color: mat.get-theme-color($theme, primary, 500);
+  }
+  .ord-tab-label-warn {
+    color: mat.get-theme-color($theme, warn, 500);
+  }
+  .ord-tab-label--active.ord-tab-label-warn {
+    border-bottom-color: mat.get-theme-color($theme, warn, 500);
+    color: mat.get-theme-color($theme, warn, 500);
+  }
+}
+
+@mixin typography($theme) {
+}
+
+@mixin density($theme) {
+}
+
+@mixin theme($theme) {
+  @if mat.theme-has($theme, base) {
+    @include base($theme);
+  }
+
+  @if mat.theme-has($theme, color) {
+    @include color($theme);
+  }
+
+  @if mat.theme-has($theme, typography) {
+    @include typography($theme);
+  }
+
+  @if mat.theme-has($theme, density) {
+    @include density($theme);
+  }
+}

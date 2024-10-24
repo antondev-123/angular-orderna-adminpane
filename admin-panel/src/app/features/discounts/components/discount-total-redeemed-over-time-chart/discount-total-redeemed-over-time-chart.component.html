@@ -1,0 +1,9 @@
+@if(series().length > 1 || labels().length > 1) {
+<div id="chart">
+  <apx-chart
+    [chart]="chart"
+    [series]="series()"
+    [labels]="labels()"
+  ></apx-chart>
+</div>
+}

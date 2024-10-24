@@ -1,0 +1,13 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "@angular/material" as mat;
+
+:host {
+  display: block;
+  div {
+    background-color: mat.get-theme-color(
+      theme.$admin-panel-theme,
+      accent,
+      200
+    );
+  }
+}

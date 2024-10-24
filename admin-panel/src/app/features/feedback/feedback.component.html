@@ -1,0 +1,24 @@
+<section>
+  <mat-tab-group
+    mat-stretch-tabs="false"
+    mat-align-tabs="start"
+    [selectedIndex]="selectedTab()"
+    (selectedTabChange)="onTabChange($event)"
+  >
+    <mat-tab label="Feedback overview">
+      @if(selectedTab() === 0) {
+      <app-feedback-header header="Feedback overview" />
+      <app-feedback-overview />
+      }
+    </mat-tab>
+    <mat-tab label="Average over time">
+      @if(selectedTab() === 1) {
+      <app-feedback-header
+        header="Feedback average over time"
+        [hasGroupFilter]="true"
+      />
+      <app-feedback-average />
+      }
+    </mat-tab>
+  </mat-tab-group>
+</section>

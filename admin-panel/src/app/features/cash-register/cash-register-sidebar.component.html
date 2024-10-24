@@ -1,0 +1,244 @@
+<div
+  class="lg:top-16 bg-slate-100 dark:bg-gradient-to-b dark:from-slate-800 dark:to-slate-900 lg:overflow-x-hidden lg:overflow-y-auto no-scrollbar lg:shrink-0 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-700 lg:w-[450px] lg:h-[calc(100dvh-64px)]"
+>
+  <div class="py-8 px-4 lg:px-10">
+    @if (orderList().size) {
+    <div class="max-w-sm mx-auto lg:max-w-none">
+      <div
+        class="text-slate-800 text-xl dark:text-slate-100 font-semibold text-center mb-6"
+      >
+        Transaction List
+      </div>
+
+      @for (order of orderList() | keyvalue; track order.key) {
+      <div class="relative">
+        <label class="mb-3 relative block cursor-pointer text-left w-full">
+          <div
+            class="flex w-full justify-between items-center p-4 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-lg duration-150 ease-in-out"
+            (click)="openProductConfigurationDialog(order.value)"
+          >
+            <div class="flex flex-col w-[80%]">
+              <div class="flex gap-2 items-center">
+                <div
+                  class="text-sm font-medium text-slate-800 dark:text-slate-100"
+                >
+                  {{ order.value.quantity }}
+                </div>
+                <div class="text-xs">x</div>
+                <div
+                  class="text-sm font-medium text-slate-800 dark:text-slate-100"
+                >
+                  {{ order.value.product.title }}
+                </div>
+                <div class="text-xs">
+                  {{ order.value.price | number : "1.2-2" }}
+                </div>
+              </div>
+
+              @if (order.value.note) {
+              <span class="text-xs truncate italic"
+                >Note: {{ order.value.note }}</span
+              >
+              }
+            </div>
+
+            <div class="w-12 flex flex-col items-end">
+              <span class="text-sm">{{
+                order.value.getDiscountedTotal() | number : "1.2-2"
+              }}</span>
+
+              @if (order.value.discount) {
+              <span class="text-xs line-through">{{
+                order.value.getTotal() | number : "1.2-2"
+              }}</span>
+              }
+            </div>
+          </div>
+        </label>
+
+        <button
+          type="button"
+          class="absolute -right-[25px] top-[50%] -translate-y-1/2 text-slate-400 dark:text-slate-500 hover:text-slate-500 dark:hover:text-slate-400"
+          (click)="removeOrder(order.value)"
+        >
+          <mat-icon class="!flex">close</mat-icon>
+        </button>
+      </div>
+      }
+
+      <div class="mt-6">
+        <div
+          class="text-sm font-semibold text-slate-800 dark:text-slate-100 mb-1"
+        >
+          Summary
+        </div>
+        <ul>
+          <li
+            class="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700"
+          >
+            <div class="text-sm">Total Items</div>
+            <div
+              class="text-sm font-medium text-slate-800 dark:text-slate-100 ml-2"
+            >
+              {{ orderList().size }}
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="mt-6">
+        <div class="pb-4 border-b border-slate-200 dark:border-slate-700">
+          <div class="flex justify-between text-sm mb-2">
+            <div>Subtotal</div>
+            <div>{{ subtotal() | number : "1.2-2" }}</div>
+          </div>
+          <div class="flex justify-between text-sm mb-2">
+            <div>Taxes</div>
+            <div>{{ taxes() | number : "1.2-2" }}</div>
+          </div>
+
+          @if (generalDiscount()) {
+          <div class="flex justify-between text-sm mb-2">
+            <div>Discount</div>
+            <div>
+              {{
+                generalDiscount()?.type === DiscountType.FIXED
+                  ? (generalDiscount()?.value | number : "1.2-2")
+                  : generalDiscount()?.value + "%"
+              }}
+            </div>
+          </div>
+          }
+
+          <div
+            class="flex justify-between text-base font-semibold text-slate-800 dark:text-slate-100 mb-2"
+          >
+            <div>Total</div>
+            <div class="text-emerald-600">{{ total() | number : "1.2-2" }}</div>
+          </div>
+        </div>
+      </div>
+
+      @if (customer()) {
+      <div class="mt-6">
+        <div class="pb-4 border-b border-slate-200 dark:border-slate-700">
+          <div
+            class="text-sm font-semibold text-slate-800 dark:text-slate-100 mb-2"
+          >
+            Customer
+          </div>
+
+          <div class="relative">
+            <label class="mb-3 relative block cursor-pointer text-left w-full">
+              <div
+                class="flex w-full justify-between items-center p-4 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-lg duration-150 ease-in-out"
+              >
+                <div
+                  class="text-sm font-medium text-slate-800 dark:text-slate-100"
+                >
+                  <div
+                    class="mb-0.5 font-medium text-slate-800 dark:text-slate-100"
+                  >
+                    {{ customer()?.firstName }} {{ customer()?.lastName }} [{{
+                      customer()?.company
+                    }}]
+                  </div>
+                  <div class="text-sm">
+                    {{ customer()?.mobileNumber }}
+                    <span class="font-bold text-slate-400 dark:text-slate-500"
+                      >/</span
+                    >
+                    {{ customer()?.email }}
+                    <span class="font-bold text-slate-400 dark:text-slate-500"
+                      >/</span
+                    >
+                    {{ customer()?.street }}
+                  </div>
+                </div>
+              </div>
+            </label>
+
+            <button
+              type="button"
+              class="absolute -right-[25px] top-[50%] -translate-y-1/2 text-slate-400 dark:text-slate-500 hover:text-slate-500 dark:hover:text-slate-400"
+              (click)="removeCustomer()"
+            >
+              <mat-icon class="!flex">close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      }
+
+      <div class="flex items-center space-x-3 mt-6">
+        <div class="w-1/3">
+          <button
+            class="btn w-full dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300"
+            aria-controls="discount-modal"
+            (click)="openDiscountDialog()"
+          >
+            <span class="font-extrabold text-slate-500 dark:text-slate-400"
+              >%</span
+            >
+            <span class="ml-2">Discount</span>
+          </button>
+        </div>
+
+        <div class="w-1/3">
+          <button
+            class="btn w-full dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300"
+            aria-controls="customer-modal"
+            (click)="openCustomerDetailsDialog()"
+          >
+            <mat-icon>perm_identity</mat-icon>
+            <span class="ml-2">Customer</span>
+          </button>
+        </div>
+        <div class="w-1/3">
+          <button
+            class="btn w-full dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300"
+            aria-controls="payment-options-modal"
+            (click)="openPaymentOptionsDialog()"
+          >
+            <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 16 4">
+              <circle cx="8" cy="2" r="2"></circle>
+              <circle cx="2" cy="2" r="2"></circle>
+              <circle cx="14" cy="2" r="2"></circle>
+            </svg>
+            <span class="ml-2">Options</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3 mt-6">
+        <button
+          class="btn bg-indigo-500 hover:bg-indigo-600 text-white grow"
+          aria-controls="cash-change-modal"
+          (click)="openCashChangeDialog()"
+        >
+          <svg
+            class="w-4 h-4 fill-current opacity-50 shrink-0"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M15 4c.6 0 1 .4 1 1v10c0 .6-.4 1-1 1H3c-1.7 0-3-1.3-3-3V3c0-1.7 1.3-3 3-3h7c.6 0 1 .4 1 1v3h4zM2 3v1h7V2H3c-.6 0-1 .4-1 1zm12 11V6H2v7c0 .6.4 1 1 1h11zm-3-5h2v2h-2V9z"
+            ></path>
+          </svg>
+          <span class="xs:block ml-2">Cash</span>
+        </button>
+      </div>
+    </div>
+    } @else {
+    <div class="flex flex-col items-center">
+      <div
+        class="text-slate-800 text-xl dark:text-slate-100 font-semibold text-center mb-6"
+      >
+        Nothing to display
+      </div>
+      <img
+        class="w-full max-w-[200px]"
+        src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png"
+      />
+    </div>
+    }
+  </div>
+</div>

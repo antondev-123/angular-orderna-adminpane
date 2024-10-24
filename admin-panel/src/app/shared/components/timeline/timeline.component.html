@@ -1,0 +1,21 @@
+<div class="ord-timeline">
+  @for (event of events; track $index; let last = $last) {
+  <div class="ord-timeline-event">
+    <div class="ord-timeline-event-separator">
+      <div
+        class="ord-timeline-event-marker"
+        [ngClass]="getMarkerColorClass(event)"
+      ></div>
+      @if (!last) {
+      <div class="ord-timeline-event-connector"></div>
+      }
+    </div>
+    <div class="ord-timeline-event-content">
+      <ng-container
+        [ngTemplateOutlet]="content.templateRef"
+        [ngTemplateOutletContext]="{ $implicit: event }"
+      ></ng-container>
+    </div>
+  </div>
+  }
+</div>

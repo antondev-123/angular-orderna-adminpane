@@ -1,0 +1,69 @@
+@if(errorMessage) {
+  <p>Error: {{ errorMessage }}</p>
+} @if(infoMessage) {
+  <p>Info: {{ infoMessage }}</p>
+} @if (filterState){
+<div class="feedback-header">
+  <form
+    [formGroup]="formGroup"
+    class="shadow-sm"
+    subscriptSizing="dynamic"
+  >
+    <div class="flex flex-col justify-between align-middle mt-4 sm:flex-row">
+      <h4 class="text-lg md:text-2xl sm:text-xl font-semibold">{{ header }}</h4>
+      <app-input-filter-immediate
+        svgIcon="stores"
+        ariaLabel="Select store"
+        [options]="filterState.storeFilterOptions"
+        [initialValue]="filterState.storeId"
+        (filterChange)="handleStoreFilter($event)"
+        class="background-none inline drop-shadow-sm mt-3 sm:mt-0"
+      />
+    </div>
+    <div class="flex mt-2">
+      <app-button
+        variant="ghost"
+        class="ord-modal-button-close inline-block mr-1"
+        svgIcon="printer"
+        ariaLabel="Print"
+      >
+        <ng-template appButtonText>
+          <span class="inline-block sm:inline-block">Print</span>
+        </ng-template>
+      </app-button>
+      <app-button
+        variant="ghost"
+        class="ord-modal-button-close inline-block"
+        svgIcon="export"
+        ariaLabel="Export"
+      >
+        <ng-template appButtonText>
+          <span class="inline-block sm:inline-block">Export</span>
+        </ng-template>
+      </app-button>
+    </div>
+    <div class="flex flex-col items-start sm:flex-row">
+      <app-input-datepicker
+        id="dateRangeFilter"
+        controlName="dateRangeFilter"
+        [value]="formGroup.value['dateRangeFilter']"
+        mode="range"
+        class="inline-block shadow-sm"
+        (dateChange)="handleDateChange($event)"
+        />
+      @if (hasGroupFilter) {
+        <div class="flex items-start ml-5 mt-4 sm:mt-0">
+          <span class="text-sm">Group by:</span>
+          <app-input-filter-immediate
+            ariaLabel=""
+            [options]="groupOptions"
+            [initialValue]="filterState.dateGroup"
+            (filterChange)="handleGroupFilter($event)"
+            class="ml-2 shadow-sm"
+          />
+        </div>
+      }
+    </div>
+  </form>
+</div>
+}

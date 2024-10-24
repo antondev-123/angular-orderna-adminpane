@@ -1,0 +1,6 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "./button-theme" as button;
+
+:host {
+  @include button.theme(theme.$admin-panel-theme);
+}

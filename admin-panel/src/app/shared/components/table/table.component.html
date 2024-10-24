@@ -1,0 +1,361 @@
+<div class="ord-table-outer-wrapper">
+  @if(title || totalRows){
+
+  <header class="ord-table-header">
+    <h2 class="ord-table-header-title">{{ title }}</h2>
+    <span class="ord-table-header-total-row-count">{{ totalRows }}</span>
+  </header>
+  }
+  <div class="ord-table-inner-wrapper">
+    <table
+      class="ord-table"
+      mat-table
+      matSort
+      [dataSource]="dataSource"
+      [matSortActive]="sortState.active"
+      [matSortDirection]="sortState.direction"
+      (matSortChange)="handleSort($event)"
+      multiTemplateDataRows
+    >
+      <!-- Select column -->
+      <ng-container matColumnDef="select" *ngIf="selectable">
+        <th mat-header-cell *matHeaderCellDef class="ord-table-cell">
+          <mat-checkbox
+            class="ord-checkbox"
+            (change)="toggleAllRowsSelection()"
+            [checked]="isAllRowsSelected()"
+            [indeterminate]="isRowSelectionIndeterminate()"
+            aria-label="Select all rows on all pages"
+          >
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row" class="ord-table-cell">
+          <mat-checkbox
+            class="ord-checkbox"
+            (click)="$event.stopPropagation()"
+            (change)="$event ? toggleRowSelection(row.id) : null"
+            [checked]="isRowSelected(row.id)"
+            [ariaLabel]="getRowAriaLabel(row.id)"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Entity columns -->
+      @for (column of columns; let i = $index; track [column.key, i]) { @switch
+      (column.type) {
+      <!-- Badge columns -->
+      @case('badge') {
+      <ng-container [matColumnDef]="column.key">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="ord-table-cell"
+          [disabled]="!sortable"
+          [sortActionDescription]="getSortActionDescription(column.label)"
+        >
+          {{ column.label }}
+        </th>
+        <td mat-cell *matCellDef="let row" class="ord-table-cell">
+          <app-badge [text]="getValue(column, row)" />
+        </td>
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          class="ord-table-cell ord-table-footer-title"
+        >
+          {{ i === 0 ? "Summary" : "" }}
+        </td>
+      </ng-container>
+      }
+      <!-- Text w/ subtext columns -->
+      @case('text-with-subtext') {
+      <ng-container [matColumnDef]="column.key">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="ord-table-cell ord-table-cell-text-with-subtext"
+          [disabled]="!sortable"
+          [sortActionDescription]="getSortActionDescription(column.label)"
+        >
+          {{ column.label }}
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          class="ord-table-cell ord-table-cell-text-with-subtext"
+        >
+          <p>{{ getValue(column, row).mainText }}</p>
+          <p>{{ getValue(column, row).subText }}</p>
+        </td>
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          class="ord-table-cell ord-table-footer-title"
+        >
+          {{ i === 0 ? "Summary" : "" }}
+        </td>
+      </ng-container>
+      }
+      <!-- Currency -->
+      @case('currency'){
+      <ng-container [matColumnDef]="column.key">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="ord-table-cell"
+          [disabled]="!sortable"
+          [sortActionDescription]="getSortActionDescription(column.label)"
+        >
+          {{ column.label }}
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          class="ord-table-cell"
+          [class.no-value]="!getValue(column, row)"
+        >
+          <div class="inline-flex space-x-2 items-center">
+            <!-- TODO: Handle case where row value is not a number or might already have a currency sign. -->
+            {{ getValue(column, row) | currency : "PHP" }}
+          </div>
+        </td>
+        <ng-container *ngIf="hasSummary">
+          <td mat-footer-cell *matFooterCellDef>
+            {{ getSummaryValue(column) | currency : "PHP" }}
+          </td>
+        </ng-container>
+      </ng-container>
+      }
+      <!-- Number -->
+      @case('number'){
+      <ng-container [matColumnDef]="column.key">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="ord-table-cell"
+          [disabled]="!sortable"
+          [sortActionDescription]="getSortActionDescription(column.label)"
+        >
+          {{ column.label }}
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          class="ord-table-cell"
+          [class.no-value]="!getValue(column, row)"
+        >
+          <div class="inline-flex space-x-2 items-center">
+            {{ getValue(column, row) | nullPipe : "" }}
+          </div>
+        </td>
+        <ng-container *ngIf="hasSummary">
+          <td mat-footer-cell *matFooterCellDef>
+            {{ getSummaryValue(column) | nullPipe : "" }}
+          </td>
+        </ng-container>
+      </ng-container>
+      }
+      <!-- Other columns -->
+      @default {
+      <ng-container [matColumnDef]="column.key">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="ord-table-cell"
+          [disabled]="!sortable"
+          [sortActionDescription]="getSortActionDescription(column.label)"
+        >
+          {{ column.label }}
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          class="ord-table-cell"
+          [class.no-value]="!getValue(column, row)"
+        >
+          <div class="inline-flex space-x-2 items-center">
+            @if(column.type === 'square-img-plus-string' && row.image){
+            <div class="g-slate-700 mr-2">
+              <img [src]="row.image" class="w-8 h-8" />
+            </div>
+            }
+            <!-- Check if value should be truncated  -->
+            @if(column.truncateAfter) {
+            {{
+              getValue(column, row)
+                | nullPipe : ""
+                | truncate : column.truncateAfter : true
+            }}
+            }@else {
+            {{ getValue(column, row) | nullPipe : "" }}
+            }
+            <!-- Add copy button if value is copyable  -->
+            @if (getValue(column, row) && column.isCopyable) {
+            <button
+              class="ord-table-button"
+              (click)="handleCopy($event, getValue(column, row))"
+            >
+              <span class="cdk-visually-hidden">Copy</span>
+              <mat-icon
+                svgIcon="copy"
+                aria-hidden="false"
+                class="ord-icon-lg"
+              ></mat-icon>
+            </button>
+            }
+          </div>
+        </td>
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          class="ord-table-cell ord-table-footer-title"
+        >
+          {{
+            isLabel(column)
+              ? (getSummaryValue(column) | nullPipe : "")
+              : column.key === "currency"
+              ? (getSummaryValue(column) | currency)
+              : (getSummaryValue(column) | nullPipe : "")
+          }}
+        </td>
+      </ng-container>
+      } } }
+
+      <!-- Actions column -->
+      @if(hasActions) {
+      <ng-container matColumnDef="actions">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="ord-table-cell"
+          [style.--actions-column-width]="actionsColumnWidth"
+        >
+          Actions
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let row"
+          class="ord-table-cell"
+          [style.--actions-column-width]="actionsColumnWidth"
+        >
+          <div>
+            @if (actions.includes('edit')){
+            <button class="ord-table-button" (click)="handleEdit($event, row)">
+              <span class="cdk-visually-hidden">Edit</span>
+              <mat-icon
+                svgIcon="pencil"
+                aria-hidden="false"
+                class="ord-icon-xl"
+              ></mat-icon>
+            </button>
+            } @if (actions.includes('download')){
+            <button
+              class="ord-table-button"
+              (click)="handleDownload($event, row.id)"
+            >
+              <span class="cdk-visually-hidden">Download</span>
+              <mat-icon
+                svgIcon="download"
+                aria-hidden="false"
+                class="ord-icon-xl"
+              ></mat-icon>
+            </button>
+            } @if (actions.includes('delete')){
+            <button
+              class="ord-table-button ord-red"
+              (click)="handleDelete($event, row)"
+            >
+              <span class="cdk-visually-hidden">Delete</span>
+              <mat-icon
+                svgIcon="trash"
+                aria-hidden="false"
+                class="ord-icon-xl"
+              ></mat-icon>
+            </button>
+            }
+          </div>
+        </td>
+      </ng-container>
+      }
+
+      <!-- Expand column -->
+      <ng-container matColumnDef="expand">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          class="ord-table-cell"
+          aria-label="row expand"
+        >
+          &nbsp;
+        </th>
+
+        <td mat-cell *matCellDef="let row" class="ord-table-cell">
+          <div>
+            <button
+              (click)="handleExpandRow($event, row)"
+              class="ord-table-button"
+            >
+              <span class="cdk-visually-hidden">{{
+                expandedRow ? "Expand row" : "Collapse row"
+              }}</span>
+              @if (expandedRow === row) {
+              <mat-icon>keyboard_arrow_up</mat-icon>
+              } @else {
+              <mat-icon>keyboard_arrow_down</mat-icon>
+              }
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedRowContent">
+        <td
+          mat-cell
+          *matCellDef="let row"
+          [attr.colspan]="displayedColumns.length"
+          class="ord-table-cell--expandable"
+        >
+          @if(expandableContent) {
+          <div [@detailExpand]="row === expandedRow ? 'expanded' : 'collapsed'">
+            <ng-container
+              [ngTemplateOutlet]="expandableContent.templateRef"
+              [ngTemplateOutletContext]="{ $implicit: row }"
+            ></ng-container>
+          </div>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="ord-table-row"
+        [class.clickable]="rowClickable"
+        (click)="handleRowClicked(row)"
+      ></tr>
+      <ng-container *ngIf="expandable">
+        <tr
+          mat-row
+          *matRowDef="let row; columns: ['expandedRowContent']"
+          class="ord-table-row--expandable"
+        ></tr>
+      </ng-container>
+      <ng-container *ngIf="hasSummary">
+        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+      </ng-container>
+      <tr *matNoDataRow class="ord-table-row-no-data">
+        <td class="ord-table-cell" [attr.colspan]="displayedColumns.length">
+          No results
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

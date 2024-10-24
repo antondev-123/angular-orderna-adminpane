@@ -1,0 +1,141 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@use "../../../../css/material/tailwind/shadows" as shadow;
+
+@mixin base($theme) {
+  .ord-button:not(.ord-button-ghost) {
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    box-shadow: shadow.get-shadow(shadow.$sm);
+  }
+  .ord-button {
+    transition: all 150ms ease-in-out;
+  }
+  .ord-button-primary .mat-icon {
+    opacity: 50%;
+  }
+
+  .ord-icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ord-button-w-full {
+    width: 100%;
+  }
+}
+
+@mixin color($theme) {
+  .ord-button-primary {
+    background-color: mat.get-theme-color($theme, primary, 500);
+    border-color: transparent;
+
+    &:hover,
+    &:focus {
+      background-color: mat.get-theme-color($theme, primary, 600);
+    }
+    &:disabled {
+      background-color: mat.get-theme-color($theme, accent, 200);
+      color: mat.get-theme-color($theme, accent, 400);
+    }
+  }
+  .ord-button-warn {
+    background-color: mat.get-theme-color($theme, warn, 500);
+    border-color: transparent;
+
+    &:hover,
+    &:focus {
+      background-color: mat.get-theme-color($theme, warn, 600);
+    }
+    &:disabled {
+      background-color: mat.get-theme-color($theme, accent, 200);
+      color: mat.get-theme-color($theme, accent, 400);
+    }
+  }
+  .ord-button-secondary,
+  .ord-button-subdued,
+  .ord-button-outlined {
+    border-color: mat.get-theme-color($theme, accent, 200);
+
+    &:hover,
+    &:focus {
+      border-color: mat.get-theme-color($theme, accent, 300);
+    }
+    &:disabled {
+      color: mat.get-theme-color($theme, accent, 300);
+    }
+  }
+  .ord-button-ghost {
+    &:disabled {
+      color: mat.get-theme-color($theme, accent, 300);
+    }
+  }
+  .ord-button-secondary {
+    background-color: white;
+  }
+  .ord-button-subdued,
+  .ord-button-ghost,
+  .ord-button-outlined {
+    background-color: transparent;
+  }
+
+  .ord-button-indigo {
+    color: mat.get-theme-color($theme, primary, 500);
+  }
+  .ord-button-gray {
+    color: mat.get-theme-color($theme, accent, 500);
+    &:hover {
+      color: mat.get-theme-color($theme, accent, 600);
+    }
+  }
+  .ord-button-red {
+    color: mat.get-theme-color($theme, warn, 500);
+  }
+  .ord-button-white {
+    color: white;
+  }
+}
+
+@mixin typography($theme) {
+  .ord-button {
+    font: mat.get-theme-typography($theme, button);
+    white-space: nowrap;
+  }
+}
+
+@mixin density($theme) {
+  .ord-button-xs {
+    @include mat.button-density(mat.get-theme-density($theme) - 2);
+  }
+  .ord-button-sm {
+    @include mat.button-density(mat.get-theme-density($theme) - 1);
+  }
+  .ord-button-base {
+    @include mat.button-density(mat.get-theme-density($theme));
+  }
+  .ord-button-lg {
+    @include mat.button-density(mat.get-theme-density($theme) + 1);
+  }
+  @include mat.icon-button-density(mat.get-theme-density($theme) - 3);
+}
+
+@mixin theme($theme) {
+  @if mat.theme-has($theme, base) {
+    @include base($theme);
+  }
+
+  @if mat.theme-has($theme, color) {
+    @include color($theme);
+  }
+
+  @if mat.theme-has($theme, typography) {
+    @include typography($theme);
+  }
+
+  @if mat.theme-has($theme, density) {
+    @include density($theme);
+  }
+}

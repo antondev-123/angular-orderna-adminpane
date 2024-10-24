@@ -1,0 +1,38 @@
+<div class="ord-table-outer-wrapper">
+  @if(!hideHeader()) {
+  <header class="ord-table-header">
+    <app-skeleton class="h-4 w-24" />
+  </header>
+  }
+  <div class="ord-table-inner-wrapper">
+    <table class="ord-table w-full">
+      <thead>
+        <tr class="border-b flex">
+          <th class="ord-table-cell w-auto">
+            <app-skeleton class="ord-checkbox m-3 h-4 w-4 block" />
+          </th>
+          @for (j of range(0, columnsCount); track $index) {
+          <th class="ord-table-cell w-1/3 md:w-1/5">
+            <app-skeleton class="my-3 h-4 w-full block" />
+          </th>
+          }
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (i of range(0, rowsCount() -1); track $index) {
+        <tr class="border-b flex">
+          <td class="ord-table-cell w-auto">
+            <app-skeleton class="ord-checkbox m-3 h-4 w-4 block" />
+          </td>
+          @for (j of range(0, columnsCount); track $index) {
+          <td class="ord-table-cell w-1/3 md:w-1/5">
+            <app-skeleton class="my-3 h-4 w-full block" />
+          </td>
+          }
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

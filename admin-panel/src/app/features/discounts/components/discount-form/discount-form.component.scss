@@ -1,0 +1,32 @@
+@use "@angular/material" as mat;
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+
+.card h2,
+header {
+  margin-bottom: 16px;
+}
+
+.help-text {
+  color: mat.get-theme-color(theme.$admin-panel-theme, accent, 500);
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 20px;
+}
+
+.input-description {
+  font: mat.get-theme-typography(theme.$admin-panel-theme, body-2);
+  margin-bottom: 8px;
+}
+
+#generate-code-button {
+  margin-bottom: 22px;
+}
+
+#submit-button {
+  margin-left: auto;
+}
+
+#form-actions {
+  display: flex;
+  margin-top: 32px;
+}

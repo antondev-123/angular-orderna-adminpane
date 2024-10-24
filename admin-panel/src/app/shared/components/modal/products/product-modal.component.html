@@ -1,0 +1,281 @@
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  [disabled]="loading"
+  (btnClick)="closeDialog()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">
+  {{ modalTitle }}
+</h2>
+<mat-dialog-content class="ord-modal-content">
+  <mat-tab-group
+    #tabGroup
+    mat-stretch-tabs="false"
+    mat-align-tabs="start"
+    class="ord-modal-tab-group"
+    (selectedTabChange)="handleSelectedTabChange($event)"
+  >
+    <mat-tab label="Details" [labelClass]="getTabLabelClass(TabIndex.DETAILS)">
+      <!-- TODO: Handle enter key pressed event -->
+      <form [formGroup]="detailsFormGroup">
+        <div class="grid grid-cols-2 gap-x-4">
+          <p class="ord-form-help-text">Provide product details.</p>
+          <app-input-text
+            id="title"
+            label="Title"
+            controlName="title"
+            class="col-span-2"
+            [value]="product?.title"
+            [validators]="[Validators.required]"
+          />
+          <app-input-number
+            id="cost"
+            label="Cost"
+            controlName="cost"
+            [validators]="[Validators.required]"
+            [value]="product?.cost"
+          />
+          <app-input-number
+            id="price"
+            label="Price"
+            controlName="price"
+            [validators]="[Validators.required]"
+            [value]="product?.price"
+          />
+          <app-input-text
+            id="unit"
+            label="Unit"
+            controlName="unit"
+            [validators]="[Validators.required]"
+            [value]="product?.unit"
+          />
+          <app-input-text
+            id="sku"
+            label="SKU/PLU"
+            controlName="skuPlu"
+            [value]="product?.sk_plu"
+          />
+          <app-input-textarea
+            id="description"
+            label="Description"
+            controlName="description"
+            class="col-span-2"
+            [value]="product?.description"
+          />
+          <app-input-number
+            id="stock"
+            label="Stock"
+            controlName="stock"
+            [value]="product?.stock"
+          />
+          <app-input-file
+            class="col-span-2"
+            id="image"
+            label="Image"
+            controlName="image"
+            [value]="product?.image"
+            (hideEvent)="receive($event)"
+            [fileTypes]="'png'"
+          />
+
+          @if(product?.image && showPreview) {
+          <div class="flex justify-between items-center mt-2">
+            <img [src]="product?.image" width="32" height="32" />
+            <p class="mb-0">
+              <span class="cursor-pointer" (click)="deleteFile()">
+                <mat-icon
+                  svgIcon="trash"
+                  aria-hidden="false"
+                  class="mb-[-5px]"
+                ></mat-icon>
+              </span>
+            </p>
+          </div>
+          }
+        </div>
+      </form>
+    </mat-tab>
+    <mat-tab
+      label="Inventory Items Used"
+      [disabled]="detailsFormGroup.invalid"
+      [labelClass]="getTabLabelClass(TabIndex.INVENTORY_ITEMS_USED)"
+    >
+      <p class="ord-form-help-text">
+        Specify all the raw materials, ingredients, or inputs required to create
+        your product.
+      </p>
+      <form [formGroup]="inventoryItemsUsedFormGroup">
+        <div formArrayName="inventoryItemsUsed" class="space-y-1">
+          @for(control of inventoryItemsUsedFormArray.controls; track
+          control.value.id) {
+          <div [formGroupName]="'' + $index">
+            <div class="grid grid-cols-12 gap-x-2 items-center px-1">
+              <app-input-select
+                [id]="'inventory-item-used-' + $index + '-inventory-item-id'"
+                controlName="inventoryItemId"
+                label="Inventory Item Used"
+                placeholder="Select inventory item"
+                class="col-span-7"
+                [options]="getInventoryItemOptions($index)"
+                [validators]="[Validators.required]"
+                (valueChanges)="onInventoryItemSelectedChanged($index, $event)"
+              />
+              <app-input-number
+                label="Quantity"
+                controlName="quantity"
+                class="col-span-2"
+                [id]="'inventory-item-used-' + $index + '-quantity'"
+                [validators]="[Validators.required, Validators.min(1)]"             />
+              <div class="unit-container col-span-2 self-start">
+                <label [for]="'inventory-item-used-' + $index + '-unit'"
+                  >Unit</label
+                >
+                <div
+                  [id]="'inventory-item-used-' + $index + '-unit'"
+                  class="flex items-center"
+                >
+                  {{ inventoryItemUnitByRow()[$index] }}
+                </div>
+              </div>
+              <div class="col-span-1 pr-1">
+                @if(inventoryItemsUsedFormArray.length > 1) {
+                <app-button
+                  variant="subdued"
+                  svgIcon="trash-mini"
+                  [size]="'xs'"
+                  (btnClick)="removeInventoryItemUsedControls($index)"
+                />
+                }
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+        <!-- Add inventory item used button -->
+        <button
+          dashedBorderAddButton
+          (click)="handleAddInventoryItemUsedButtonClicked($event)"
+        >
+          Add Inventory Item Used
+        </button>
+      </form>
+    </mat-tab>
+    @if(mode=== 'edit') {
+    <mat-tab
+      label="Modifiers"
+      [disabled]="detailsFormGroup.invalid"
+      [labelClass]="getTabLabelClass(TabIndex.MODIFIERS)"
+    >
+      <div class="space-y-4">
+        <app-modifier-group-table
+          [data]="modifierGroupTableData()"
+          (edit)="openModifierGroupModal($event)"
+          (delete)="openModifierGroupConfirmDeleteModal($event)"
+        />
+        <button dashedBorderAddButton (click)="openModifierGroupModal()">
+          Add Modifier Group
+        </button>
+      </div>
+    </mat-tab>
+    <mat-tab
+      label="Delete"
+      [disabled]="detailsFormGroup.invalid"
+      [labelClass]="getTabLabelClass(TabIndex.DELETE)"
+    >
+      <div class="space-y-4">
+        <div class="flex justify-start items-start gap-4">
+          <div class="warn-icon-container ord-bg-yellow-200">
+            <mat-icon
+              svgIcon="warn"
+              class="ord-icon ord-icon-lg ord-text-yellow"
+            ></mat-icon>
+          </div>
+          <div>
+            <p>
+              This action will permanently delete product
+              <span class="font-bold">{{ product?.title }}</span>
+              and all its related information. This action can't be undone.
+            </p>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    }
+  </mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="ord-modal-actions">
+  @if(errorMessage) {
+  <ul class="ord-modal-errors">
+    <li>{{ errorMessage }}</li>
+  </ul>
+  }
+  <!-- Create product actions  -->
+  @if(mode === 'create' ) {
+  <!-- Details tab -->
+  @switch(selectedTabIndex()) { @case (TabIndex.DETAILS) {
+  <app-button
+    variant="secondary"
+    (btnClick)="closeDialog()"
+    [disabled]="loading"
+  >
+    <ng-template appButtonText> Cancel </ng-template>
+  </app-button>
+  <app-button
+    tooltip="Proceed to set inventory items used"
+    (btnClick)="goToTab(TabIndex.INVENTORY_ITEMS_USED)"
+    [disabled]="detailsFormGroup.invalid || loading"
+    [svgIcon]="loading ? 'loading' : undefined"
+  >
+    <ng-template appButtonText> Next </ng-template>
+  </app-button>
+  } @case(TabIndex.INVENTORY_ITEMS_USED) {
+  <app-button
+    variant="secondary"
+    tooltip="Return to product details"
+    (btnClick)="goToTab(TabIndex.DETAILS)"
+    [disabled]="loading"
+  >
+    <ng-template appButtonText> Back </ng-template>
+  </app-button>
+  <app-button
+    (btnClick)="handleSubmit()"
+    [disabled]="
+      detailsFormGroup.invalid || inventoryItemsUsedFormGroup.invalid || loading
+    "
+    [svgIcon]="loading ? 'loading' : undefined"
+  >
+    <ng-template appButtonText> Save </ng-template>
+  </app-button>
+  } } }
+  <!-- Update product actions  -->
+  @if(mode === 'edit') {
+  <app-button
+    variant="secondary"
+    (btnClick)="closeDialog()"
+    [disabled]="loading"
+  >
+    <ng-template appButtonText> Cancel </ng-template>
+  </app-button>
+  @if(selectedTabIndex() === TabIndex.DETAILS || selectedTabIndex() ===
+  TabIndex.INVENTORY_ITEMS_USED) {
+  <app-button
+    (btnClick)="handleSubmit()"
+    [disabled]="
+      detailsFormGroup.invalid || inventoryItemsUsedFormGroup.invalid || loading
+    "
+    [svgIcon]="loading ? 'loading' : undefined"
+  >
+    <ng-template appButtonText> Save </ng-template>
+  </app-button>
+  } @else if(selectedTabIndex() === TabIndex.DELETE) {
+  <app-button
+    variant="warn"
+    (btnClick)="handleDelete()"
+    [disabled]="detailsFormGroup.invalid || loading"
+  >
+    <ng-template appButtonText>Delete Product</ng-template>
+  </app-button>
+  } }
+</mat-dialog-actions>

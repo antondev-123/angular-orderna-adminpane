@@ -1,0 +1,48 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin theme($theme) {
+  * {
+    scrollbar-width: 8px;
+  }
+
+  /* For websites that doesn't support scrollbar-width */
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Track */
+  *::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  /* Corner */
+  *::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+
+  /* Handle */
+  *::-webkit-scrollbar-thumb {
+    background-clip: content-box;
+    border: 8px solid transparent;
+    border-radius: 20px;
+    background: mat.get-theme-color($theme, accent, 400);
+  }
+
+  /* Handle on hover */
+  *::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
+    background: mat.get-theme-color($theme, accent, 500);
+  }
+
+  /* Use different color for side-nav */
+  /* Note: As of this writing, setting opacity of the scrollbar is not allowed */
+  .side-nav [cdkscrollable]::-webkit-scrollbar-thumb {
+    background: mat.get-theme-color($theme, accent, 900);
+  }
+
+  .side-nav [cdkscrollable]::-webkit-scrollbar-thumb:hover {
+    background: mat.get-theme-color($theme, accent, 700);
+  }
+}

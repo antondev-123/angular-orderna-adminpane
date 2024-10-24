@@ -1,0 +1,26 @@
+.percentage {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.percentage.percent-decrease {
+  background-color: rgba(220, 38, 38, 0.15);
+  color: #dc2626;
+}
+
+.percentage.percent-increase {
+  background-color: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+}
+
+.percentage.percent-increase svg,
+.percentage.percent-increase svg path {
+  stroke: #4ade80;
+  fill: #4ade80;
+}
+
+.percentage.percent-decrease svg,
+.percentage.percent-decrease svg path {
+  stroke: #dc2626;
+  fill: #dc2626;
+}

@@ -1,0 +1,33 @@
+<div class="w-full max-w-9xl mx-auto">
+  <button backButton (click)="goToStoresPage()">Stores</button>
+  <!-- Page header -->
+  <div class="sm:flex sm:justify-between sm:items-center mb-8">
+    <!-- Left: Title -->
+    <div class="mb-4 sm:mb-0">
+      <h1
+        class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold"
+      >
+        Store Settings
+      </h1>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <ul
+    class="space-y-2 sm:flex sm:space-y-0 sm:space-x-2 lg:space-y-2 lg:space-x-0 lg:flex-col mb-4"
+  >
+    <li *ngFor="let storeSetting of storeSettings">
+      <button
+        (click)="onClick(storeSetting)"
+        class="w-full h-full text-left py-3 px-4 rounded bg-white dark:bg-slate-800 border hover:border-2 hover:border-indigo-400 dark:border-slate-700 dark:hover:border-slate-600 shadow-sm duration-150 ease-in-out"
+      >
+        <div class="flex flex-wrap items-center justify-between mb-0.5">
+          <span class="font-semibold text-slate-800 dark:text-slate-100">{{
+            storeSetting.name
+          }}</span>
+        </div>
+        <div class="text-sm">{{ storeSetting.description }}.</div>
+      </button>
+    </li>
+  </ul>
+</div>

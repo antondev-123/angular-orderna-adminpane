@@ -1,0 +1,307 @@
+@if(errorMessage) {
+<p>Error: {{ errorMessage }}</p>
+} @if (data$ | async; as data){
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  [disabled]="loading"
+  (btnClick)="closeDialog()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">
+  {{ modalTitle }}
+</h2>
+<mat-dialog-content class="ord-modal-content" cdkScrollable>
+  <form [formGroup]="formGroup" (ngSubmit)="handleSubmit()">
+    <mat-tab-group
+      mat-stretch-tabs="false"
+      mat-align-tabs="start"
+      class="ord-modal-tab-group"
+    >
+      <mat-tab label="Details">
+        <p class="ord-form-help-text">Provide transaction details.</p>
+        <div class="grid grid-cols-2 gap-x-4">
+          <app-input-select
+            id="customer"
+            label="Customer"
+            controlName="customer"
+            placeholder="Select customer"
+            [options]="data.customerOptions"
+            [defaultOption]="defaultCustomerOption"
+            [value]="transaction?.customer"
+          />
+          <app-input-select
+            id="store"
+            label="Store"
+            controlName="store"
+            placeholder="Select store"
+            [options]="data.storeOptions"
+            [value]="transaction?.store"
+            [validators]="[Validators.required]"
+            (valueChanges)="onStoreSelectedChanged($event)"
+          />
+          <app-input-select
+            id="staff"
+            label="Staff"
+            controlName="staff"
+            placeholder="Select staff"
+            [options]="data.userOptions"
+            [value]="transaction?.user"
+            [validators]="[Validators.required]"
+          />
+          <app-input-select
+            id="discount"
+            label="Discount"
+            controlName="discount"
+            placeholder="Select discount"
+            [value]="transaction?.discount"
+            [options]="discountOptionsState()"
+            [resettable]="true"
+          />
+          <app-input-number
+            id="service-charge-rate"
+            label="Service Charge Rate"
+            controlName="serviceChargePercent"
+            [value]="transaction?.serviceChargePercent"
+            suffixText="%"
+            [validators]="[Validators.min(1)]"
+          />
+          <app-input-number
+            id="tip"
+            label="Tip"
+            controlName="tip"
+            [value]="transaction?.tip"
+            prefixText="₱"
+            [validators]="[Validators.min(1)]"
+          />
+          <app-input-number
+            id="sales-tax-rate"
+            label="Sales Tax Rate"
+            controlName="salesTaxPercent"
+            suffixText="%"
+            [value]="transaction?.salesTaxPercent"
+            [validators]="[Validators.required, Validators.min(1)]"
+          />
+          <app-input-select
+            id="paymentType"
+            label="Payment Type"
+            controlName="paymentType"
+            [options]="paymentTypeOptions"
+            [defaultOption]="defaultPaymentTypeOption"
+            [value]="transaction?.paymentType"
+            [validators]="[Validators.required]"
+          />
+          <app-input-select
+            id="status"
+            label="Status"
+            controlName="status"
+            [options]="statusOptions"
+            [defaultOption]="defaultStatusOption"
+            [value]="transaction?.status"
+            [validators]="[Validators.required]"
+          />
+          <app-input-select
+            id="type"
+            label="Type"
+            controlName="type"
+            [options]="typeOptions"
+            [defaultOption]="defaultTypeOption"
+            [value]="transaction?.transactionType"
+            [validators]="[Validators.required]"
+          />
+          <app-input-datepicker
+            id="transactionDate"
+            label="Transaction Date"
+            controlName="transactionDate"
+            [value]="transaction ? transaction.transactionDate : dateNow"
+            [validators]="[Validators.required]"
+          />
+          <app-input-textarea
+            class="col-span-2"
+            id="note"
+            label="Note"
+            controlName="note"
+            [value]="transaction?.note"
+          />
+        </div>
+      </mat-tab>
+      <mat-tab label="Items" [disabled]="selectedStoreId() === null">
+        <div class="flex flex-col gap-4">
+          <div formArrayName="items" class="space-y-4">
+            @for(control of transactionItemsFormArray.controls; track $index) {
+            <div
+              class="card"
+              [class.opacity-50]="
+                selectedStoreId() !== null && control.value.wasRefunded
+              "
+            >
+              <div [formGroupName]="'' + $index">
+                <div class="grid grid-cols-12 gap-x-2 items-center px-1">
+                  <!-- Row 1: product, quantity, discount, trash button -->
+                  <app-input-select
+                    [id]="'item-' + $index + '-product'"
+                    controlName="productId"
+                    label="Product"
+                    placeholder="Select product"
+                    [value]="getTransactionItem($index)?.productId"
+                    [options]="getProductOptions($index)"
+                    class="col-span-5"
+                    [validators]="[Validators.required]"
+                    (valueChanges)="onProductSelectedChanged($index, $event)"
+                  />
+                  <app-input-number
+                    label="Quantity"
+                    controlName="quantity"
+                    class="col-span-2"
+                    [id]="'item-' + $index + '-quantity'"
+                    [value]="getTransactionItem($index)?.quantity"
+                    [validators]="[Validators.required, Validators.min(1)]"
+                    (valueChanges)="onQuantityChanged($index, $event)"
+                  />
+                  <app-input-select
+                    placeholder="Select discount"
+                    controlName="discountId"
+                    label="Discount"
+                    class="col-span-4"
+                    [id]="'item-' + $index + '-discount'"
+                    [value]="getTransactionItem($index)?.discount?.id"
+                    [options]="discountIdOptionsState()"
+                    [resettable]="true"
+                    (valueChanges)="onDiscountSelectedChanged($index, $event)"
+                  />
+                  <div class="col-span-1 pr-1">
+                    @if(transactionItemsFormArray.length > 1) {
+                    <app-button
+                      variant="subdued"
+                      svgIcon="trash-mini"
+                      [size]="'xs'"
+                      (btnClick)="removeTransactionItemControls($index)"
+                    />
+                    }
+                  </div>
+                  <!-- Row 2: unit price, total price, refunded? -->
+                  <!-- Unit price -->
+                  <div class="price-container col-span-2 self-start">
+                    <label [for]="'item-' + $index + '-unit-price'"
+                      >Unit Price</label
+                    >
+                    <p [id]="'item-' + $index + '-unit-price'">
+                      {{
+                        getUnitPrice($index) ??
+                          getTransactionItem($index)?.unitPrice ??
+                          0 | currency : "PHP"
+                      }}
+                    </p>
+                  </div>
+                  <!-- Total price -->
+                  <div class="price-container col-span-6">
+                    <label [for]="'item-' + $index + '-total-price'"
+                      >Total Price</label
+                    >
+                    <div
+                      [id]="'item-' + $index + '-total-price'"
+                      class="flex items-center justify-start gap-1"
+                    >
+                      <span>
+                        {{
+                          getTotalPrice($index) ??
+                            getTransactionItem($index)?.netSales ??
+                            0 | currency : "PHP"
+                        }}
+                      </span>
+                      @if (!control.value.wasRefunded &&
+                      (getOriginalTotalPrice($index) ||
+                      getTransactionItem($index)?.discount)) {
+                      <span class="original-price">
+                        {{
+                          getOriginalTotalPrice($index) ??
+                            getTransactionItem($index)?.salePrice ??
+                            0 | currency : "PHP"
+                        }}
+                      </span>
+                      }
+                    </div>
+                  </div>
+                  <!-- Refunded? -->
+                  <mat-slide-toggle
+                    class="ord-slide-toggle col-span-3 justify-self-end"
+                    formControlName="wasRefunded"
+                    hideIcon
+                    (change)="onWasRefundedChanged($index, $event)"
+                    >Refunded?</mat-slide-toggle
+                  >
+                </div>
+                <!-- Row 3: note -->
+                <mat-expansion-panel
+                  class="note-expansion-panel ord-expansion-panel"
+                  expanded="false"
+                  (opened)="openNotePanel($index)"
+                  (closed)="closeNotePanel($index)"
+                >
+                  <mat-expansion-panel-header>
+                    <mat-panel-title class="ord-subtitle-2"
+                      >{{ isNotePanelExpanded($index) ? "Collapse" : "Expand" }}
+                      Note
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <app-input-textarea
+                    [id]="'item-' + $index + '-note'"
+                    placeholder="Add a note"
+                    controlName="note"
+                    [value]="getTransactionItem($index)?.note"
+                  />
+                </mat-expansion-panel>
+              </div>
+            </div>
+            }
+          </div>
+          <!-- Add product button -->
+          <button
+            dashedBorderAddButton
+            (click)="handleAddProductButtonClicked($event)"
+          >
+            Add Product
+          </button>
+          <!-- Totals -->
+          <dl
+            class="invoice-breakdown-container grid grid-cols-2 gap-y-1 items-center justify-stretch"
+          >
+            <dt>Sale</dt>
+            <dd>{{ saleAmount() | currency : "PHP" }}</dd>
+            <dt>Discount</dt>
+            <dd>{{ discountAmount() | currency : "PHP" }}</dd>
+            <dt>Refunds</dt>
+            <dd>{{ refundsAmount() | currency : "PHP" }}</dd>
+            <dt class="subtotal">Subtotal</dt>
+            <dd class="subtotal">{{ subtotalAmount() | currency : "PHP" }}</dd>
+          </dl>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="ord-modal-actions">
+  @if(errorMessage) {
+  <ul class="ord-modal-errors">
+    <li>{{ errorMessage }}</li>
+  </ul>
+  }
+  <app-button
+    variant="secondary"
+    (btnClick)="closeDialog()"
+    [disabled]="loading"
+  >
+    <ng-template appButtonText> Cancel </ng-template>
+  </app-button>
+  <app-button
+    (btnClick)="handleSubmit()"
+    [disabled]="formGroup.invalid || loading"
+    [svgIcon]="loading ? 'loading' : undefined"
+  >
+    <ng-template appButtonText>
+      {{ mode === "create" ? "Add" : "Save" }}
+    </ng-template>
+  </app-button>
+</mat-dialog-actions>
+}

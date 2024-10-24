@@ -1,0 +1,48 @@
+<div class="py-4">
+  <div class="text-sm">
+    <div class="font-medium text-slate-800 dark:text-slate-100 mb-3">
+      Configure item details.
+    </div>
+  </div>
+  <div class="grid grid-cols-2 gap-4">
+    <!-- Item Quantity -->
+    <div>
+      <label class="block text-sm font-medium mb-1" for="first-name"
+        >Item Quantity
+      </label>
+      <input [formControl]="form.controls.quantity" min="1" class="form-input w-full px-2 py-1" type="number" />
+    </div>
+    <!-- Item Price -->
+    <div>
+      <label class="block text-sm font-medium mb-1" for="last-name"
+        >Item Price
+      </label>
+      <input [formControl]="form.controls.newPrice" class="form-input w-full px-2 py-1" type="number" />
+    </div>
+    <div class="col-span-2">
+      <label class="block text-sm font-medium mb-1" for="add-customer-note"
+        >Note</label
+      >
+      <textarea
+        id="add-customer-note"
+        class="form-textarea w-full px-2 py-1"
+        rows="4"
+        [formControl]="form.controls.note"
+      ></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="py-4 border-t border-slate-200 dark:border-slate-700">
+  <div class="flex flex-wrap justify-end space-x-2">
+    <button
+      class="btn-sm border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300"
+      (click)="close()"
+    >
+      Cancel
+    </button>
+    <button (click)="apply()" class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">
+      Apply
+    </button>
+  </div>
+</div>

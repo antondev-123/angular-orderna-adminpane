@@ -1,0 +1,118 @@
+@if(errorMessage) {
+<p>Error: {{ errorMessage }}</p>
+} @if (data$ | async; as data){
+
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  [disabled]="loading"
+  (btnClick)="closeDialog()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">
+  {{ mode === "edit" ? "Edit" : "Add" }} Purchase
+</h2>
+<mat-dialog-content class="ord-modal-content">
+  <p class="ord-form-help-text">Provide basic inventory item details.</p>
+
+  <form
+    [formGroup]="formGroup"
+    (ngSubmit)="handleSubmit()"
+    class="grid grid-cols-2 gap-x-4"
+  >
+    <app-input-select
+      id="inventoryItem"
+      label="Inventory Item"
+      controlName="inventoryItem"
+      [value]="purchase?.inventoryItemId"
+      [options]="data.inventoryOption"
+      [validators]="[Validators.required]"
+    />
+    <app-input-select
+      id="store"
+      label="Store"
+      controlName="store"
+      [value]="purchase?.storeId"
+      [options]="data.storeOptions"
+      [validators]="[Validators.required]"
+    />
+    <app-input-number
+      id="unitPrice"
+      label="Unit Price"
+      controlName="unitPrice"
+      [value]="purchase?.price"
+      [validators]="[Validators.required]"
+    />
+    <app-input-select
+      id="unit"
+      label="Unit"
+      controlName="unit"
+      [options]="unitOptions"
+      [value]="purchase?.unit"
+      [validators]="[Validators.required]"
+    />
+    <app-input-number
+      id="quantity"
+      label="Quantity"
+      controlName="quantity"
+      [value]="purchase?.quantity"
+      [validators]="[Validators.required]"
+    />
+    <app-input-select
+      id="supplier"
+      label="Supplier"
+      controlName="supplier"
+      [value]="purchase?.supplierId"
+      [validators]="[Validators.required]"
+      [options]="data.supplierOption"
+    />
+
+    <app-input-datepicker
+      id="purchaseDates"
+      label="Purchase Date"
+      controlName="purchaseDates"
+      [value]="purchase?.purchaseDate"
+      [validators]="[Validators.required]"
+    />
+    <app-input-datepicker
+      id="expirationDate"
+      label="Expiration Date"
+      controlName="expirationDate"
+      [value]="purchase?.expirationDate"
+      [validators]="[Validators.required]"
+    />
+    <app-input-textarea
+      class="col-span-2"
+      id="note"
+      label="Note"
+      controlName="note"
+      [value]="purchase?.note"
+      [validators]="[Validators.required]"
+    />
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="ord-modal-actions">
+  @if(errorMessage) {
+  <ul class="ord-modal-errors">
+    <li>{{ errorMessage }}</li>
+  </ul>
+  }
+  <app-button
+    variant="secondary"
+    (btnClick)="closeDialog()"
+    [disabled]="loading"
+  >
+    <ng-template appButtonText> Cancel </ng-template>
+  </app-button>
+  <app-button
+    (btnClick)="handleSubmit()"
+    [disabled]="formGroup.invalid || loading"
+    [svgIcon]="loading ? 'loading' : undefined"
+  >
+    <ng-template appButtonText>
+      {{ mode === "create" ? "Add" : "Save" }}
+    </ng-template>
+  </app-button>
+</mat-dialog-actions>
+}

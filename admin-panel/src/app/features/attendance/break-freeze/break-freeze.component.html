@@ -1,0 +1,62 @@
+<main class="bg-white dark:bg-slate-900">
+  <div class="relative flex">
+    <!-- Content -->
+    <div class="w-full md:w-1/2">
+      <div class="min-h-[100dvh] h-full flex flex-col after:flex-1">
+        <!-- Header -->
+        <div class="flex-1"></div>
+
+        <div class="max-w-sm mx-auto w-full px-4 py-8">
+          <img
+            src="../../../assets/images/logo.svg"
+            class="ord-logo py-2"
+            width="140"
+          />
+          <h1
+            class="text-3xl text-slate-800 dark:text-slate-100 font-bold mb-6"
+          >
+            Break Time!
+          </h1>
+          <!-- Form -->
+          <form
+            name="form-signin"
+            [formGroup]="formGroup"
+            (ngSubmit)="getBackToWork()"
+            autocomplete="ord-login-user"
+          >
+            <div class="space-y-4">
+              <app-input-text
+                id="pin"
+                label="Pin"
+                controlName="pin"
+                [validators]="[Validators.required]"
+              />
+            </div>
+            <div class="flex justify-end">
+              <app-button
+                (btnClick)="getBackToWork()"
+                [disabled]="formGroup.invalid"
+              >
+                <ng-template appButtonText>Get back to work</ng-template>
+              </app-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image -->
+    <div
+      class="hidden md:block absolute top-0 bottom-0 right-0 md:w-1/2"
+      aria-hidden="true"
+    >
+      <img
+        class="object-cover object-center w-full h-full"
+        src="{{ RegisterComponent.AUTH_IMG_PATH }}"
+        width="760"
+        height="1024"
+        alt="{{ RegisterComponent.AUTH_IMG_ALT }}"
+      />
+    </div>
+  </div>
+</main>

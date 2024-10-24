@@ -1,0 +1,53 @@
+<div class="settings-container">
+  @if(storeData) {
+  <div class="mx-auto mb-40 px-4 sm:px-6 lg:px-8 max-w-5xl">
+    <button backButton (click)="goToStoreSettingsPage()">Store Settings</button>
+
+    <ng-container [ngSwitch]="currentSetting">
+      <app-general
+        *ngSwitchCase="'general'"
+        [data]="storeData"
+        [actionsTemplate]="generalActionsTemplate"
+        (submit)="handleStoreGeneralSettingSaved($event)"
+      ></app-general>
+      <app-opening-hours
+        *ngSwitchCase="'opening-hours'"
+        [actionsTemplate]="openingHoursActionsTemplate"
+        [openingHourData]="openingHourData"
+        (openingHoursChange)="getEditOpeningHour($event)"
+      ></app-opening-hours>
+      <div *ngSwitchDefault>Invalid setting</div>
+    </ng-container>
+  </div>
+  } @else {
+  <!-- TODO: Some placeholder -->
+  }
+</div>
+
+<ng-template
+  #generalActionsTemplate
+  let-formInvalid="formInvalid"
+  let-formValues="formValues"
+>
+  <app-button
+    [disabled]="formInvalid || loading()"
+    [svgIcon]="loading() ? 'loading' : undefined"
+    (btnClick)="handleStoreGeneralSettingSaved(formValues)"
+  >
+    <ng-template appButtonText> Save </ng-template>
+  </app-button>
+</ng-template>
+
+<ng-template
+  #openingHoursActionsTemplate
+  let-formInvalid="formInvalid"
+  let-formValues="formValues"
+>
+  <app-button
+    [disabled]="formInvalid || loading()"
+    [svgIcon]="loading() ? 'loading' : undefined"
+    (btnClick)="handleStoreOpeningHoursSaved()"
+  >
+    <ng-template appButtonText>Save</ng-template>
+  </app-button>
+</ng-template>

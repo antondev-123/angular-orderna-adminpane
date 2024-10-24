@@ -1,0 +1,34 @@
+<div class="ord-select-wrapper flex flex-col">
+  <label [for]="id" class="ord-form-field-label"
+    >{{ label }}
+    @if (required) {
+    <span class="ord-form-field-required">*</span>
+    }
+  </label>
+  <mat-form-field
+    appearance="outline"
+    color="accent"
+    class="ord-form-field ord-select"
+  >
+    <mat-select
+      class="ord-select"
+      panelClass="ord-select-panel"
+      [placeholder]="placeholder"
+      [formControlName]="controlName"
+      [multiple]="allowMultipleSelection"
+    >
+      @if(resettable) {
+      <mat-option [value]="null" class="ord-option"> None </mat-option>
+      } @for (option of options; track $index) { @if(isGroup(option)) {
+      <!-- TODO: Add code if grouped options should be supported  -->
+      }@else {
+      <mat-option [value]="option.value" class="ord-option">{{
+        option.label
+      }}</mat-option>
+      } }
+    </mat-select>
+    @if (select.hasError('required')) {
+    <mat-error class="ord-error">{{ label }} is required.</mat-error>
+    }
+  </mat-form-field>
+</div>

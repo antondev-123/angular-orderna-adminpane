@@ -1,0 +1,28 @@
+<div class="bg-white py-2 px-5 drop-shadow-md rounded-md">
+  <h2 class="text-lg md:text-2xl sm:text-xl font-semibold">Dashboard</h2>
+
+  <div class="flex flex-wrap justify-between items-center my-5 align-middle">
+    <app-input-filter-immediate
+      svgIcon="stores"
+      ariaLabel="Select store"
+      [options]="stores"
+      [initialValue]="filter.storeId"
+      (filterChange)="handleStoreFilter($event)"
+      class="background-none inline drop-shadow-sm"
+    />
+    <mat-button-toggle-group name="dateGroup" aria-label="Date Filter" class="flex flex-wrap rounded-md">
+      @for (filter of dateFilter; track $index) {
+        <mat-button-toggle [value]="filter" [checked]="filter === selectedDateFilter" class="border-solid border-2 pb-1 px-2" (change)="toggleFilter(filter)">
+          <span class="text-sm">{{ capitalizeFirstLetter(filter.toLowerCase().split('_').join(' ')) }}</span>
+        </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+    <app-input-datepicker
+      [customPresets]="customPresets"
+      [start]="filter.startDate"
+      [end]="filter.endDate"
+      (filterChange)="handleDateFilter($event)"
+    />
+  </div>
+
+</div>

@@ -1,0 +1,26 @@
+@if(errorMessage) {
+  <p>Error: {{ errorMessage }}</p>
+}
+
+@if (data$ | async; as data) {
+  @if (data.summaryData.length > 0) {
+    <div class="bg-white mt-10 py-2 px-5 drop-shadow-md rounded-md">
+      <div class="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-16">
+        @for (summaryData of data.summaryData; track $index) {
+          <app-dashboard-overview-change
+            title="{{ summaryData.title }}"
+            [percent]="summaryData.percent"
+            value="{{ summaryData.value }}"
+            [from]="summaryData.from"
+            [valueIsCurrency]="summaryData.valueIsCurrency"
+            />
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="bg-white mt-10 py-2 px-5 drop-shadow-md rounded-md">
+      <h4 class="text-lg font-semibold">Store summary</h4>
+      <p class="mt-2 italic text-sm">Please select a store</p>
+    </div>
+  }
+}

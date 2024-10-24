@@ -1,0 +1,121 @@
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  [disabled]="loading"
+  (btnClick)="closeDialog()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">
+  {{ mode === "edit" ? "Edit" : "Add" }} Supplier
+</h2>
+<mat-dialog-content class="ord-modal-content">
+  <p class="ord-form-help-text">Provide supplier details.</p>
+
+  <form
+    [formGroup]="formGroup"
+    (ngSubmit)="handleSubmit()"
+    class="grid grid-cols-2 gap-x-4"
+  >
+    <app-input-text
+      id="first-name"
+      label="First Name"
+      controlName="firstName"
+      [value]="supplier?.firstName"
+      [validators]="[Validators.required]"
+    />
+    <app-input-text
+      id="last-name"
+      label="Last Name"
+      controlName="lastName"
+      [value]="supplier?.lastName"
+      [validators]="[Validators.required]"
+    />
+    <app-input-email
+      id="email"
+      label="Email"
+      controlName="email"
+      [value]="supplier?.email"
+      [validators]="[Validators.required]"
+    />
+    <app-input-text
+      id="company"
+      label="Company"
+      controlName="company"
+      [value]="supplier?.company"
+      [validators]="[Validators.required]"
+    />
+    <app-input-mobile
+      id="mobileNumber"
+      label="Mobile phone"
+      controlName="mobile"
+      [value]="{
+        countryCode: supplier?.mobileNumber?.slice(0, 3) || '+63',
+        number: supplier?.mobileNumber?.slice(3) || ''
+      }"
+      [validators]="[Validators.required]"
+    />
+    <app-input-telephone
+      id="telephoneNumber"
+      label="Telephone"
+      controlName="telephoneNumber"
+      [value]="{
+        countryCode: supplier?.telephoneNumber?.slice(0, 3) || '+63',
+        number: supplier?.telephoneNumber?.slice(3) || ''
+      }"
+      [validators]="[Validators.required]"
+    />
+    <app-input-text
+      id="zipCode"
+      label="Zip Code"
+      controlName="zipCode"
+      [value]="supplier?.zipCode"
+      [validators]="[Validators.required]"
+    />
+    <app-input-text
+      id="city"
+      label="City"
+      [value]="supplier?.city"
+      controlName="city"
+      [validators]="[Validators.required]"
+    />
+    <app-input-text
+      id="street"
+      label="Street"
+      [value]="supplier?.street"
+      controlName="street"
+      [validators]="[Validators.required]"
+    />
+    <app-input-textarea
+      class="col-span-2"
+      id="note"
+      label="Note"
+      controlName="note"
+      [value]="supplier?.note"
+      [validators]="[Validators.required]"
+    />
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="ord-modal-actions">
+  @if(errorMessage) {
+  <ul class="ord-modal-errors">
+    <li>{{ errorMessage }}</li>
+  </ul>
+  }
+  <app-button
+    variant="secondary"
+    (btnClick)="closeDialog()"
+    [disabled]="loading"
+  >
+    <ng-template appButtonText> Cancel </ng-template>
+  </app-button>
+  <app-button
+    (btnClick)="handleSubmit()"
+    [disabled]="formGroup.invalid || loading"
+    [svgIcon]="loading ? 'loading' : undefined"
+  >
+    <ng-template appButtonText>
+      {{ mode === "create" ? "Add" : "Save" }}
+    </ng-template>
+  </app-button>
+</mat-dialog-actions>

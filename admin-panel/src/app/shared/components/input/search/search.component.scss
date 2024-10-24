@@ -1,0 +1,27 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+
+@use "./search-theme" as search;
+
+:host {
+  @include search.theme(theme.$admin-panel-theme);
+}
+.mat-mdc-text-field-wrapper {
+  --tw-border-opacity: 1;
+  --tw-text-opacity: 1;
+  --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  border-color: #e2e8f0;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity));
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  color: #1e293b;
+  color: rgb(30 41 59 / var(--tw-text-opacity));
+  font-size: 0.875rem;
+  line-height: 1.5715;
+  line-height: 1.25rem;
+  padding: 0.5rem 0.75rem;
+}
+.mat-mdc-input-element {
+  // padding: .3rem 0rem;
+}

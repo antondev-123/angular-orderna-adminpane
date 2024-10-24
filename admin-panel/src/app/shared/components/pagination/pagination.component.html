@@ -1,0 +1,70 @@
+<div class="pagination">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+    @if(numberOfPages > 1) {
+    <nav
+      class="mb-4 sm:mb-0 sm:order-1"
+      role="navigation"
+      aria-label="Navigation"
+    >
+      <ul class="flex justify-center">
+        <li class="ml-3 first:ml-0">
+          <app-button
+            variant="secondary"
+            textColor="indigo"
+            [disabled]="isFirstPage"
+            (btnClick)="changePage(currentPage - 1)"
+          >
+            <ng-template appButtonText> &lt;- Previous </ng-template>
+          </app-button>
+        </li>
+        <li class="ml-3 first:ml-0 text-center" *ngIf="!!perPages">
+          <div
+            class="text-sm font-medium text-slate-600 dark:text-slate-300 mt-2"
+          >
+            {{ currentPage }} - {{ numberOfPages }} of
+            {{ numberOfPages }}
+          </div>
+        </li>
+        <li class="ml-3 first:ml-0">
+          <app-button
+            variant="secondary"
+            textColor="indigo"
+            [disabled]="isLastPage"
+            (btnClick)="changePage(currentPage + 1)"
+          >
+            <ng-template appButtonText> Next -&gt; </ng-template>
+          </app-button>
+        </li>
+      </ul>
+    </nav>
+    } @if (!!perPages && perPages.length > 0) {
+    <div
+      class="text-sm text-slate-500 dark:text-slate-400 text-center sm:text-left"
+    >
+      Rows per page
+      <select
+        class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden ml-2"
+        (change)="changePerPage($event)"
+        [value]="perPage"
+      >
+        <option [value]="page" *ngFor="let page of perPages">
+          {{ page }}
+        </option>
+      </select>
+    </div>
+    } @else {
+    <div
+      class="text-sm text-slate-500 dark:text-slate-400 text-center sm:text-left"
+    >
+      Showing page
+      <span class="font-medium text-slate-600 dark:text-slate-300">{{
+        currentPage
+      }}</span>
+      of
+      <span class="font-medium text-slate-600 dark:text-slate-300">{{
+        numberOfPages
+      }}</span>
+    </div>
+    }
+  </div>
+</div>

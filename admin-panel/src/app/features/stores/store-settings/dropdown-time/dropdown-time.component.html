@@ -1,0 +1,48 @@
+<div class="time-picker flex items-center relative">
+  <button class="time-picker-btn btn w-full justify-between border min-w-0 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-500 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-200" (click)="toggleDropdown('hours')">
+    {{ timeSlots.selectedHours }}
+    <svg class="arrow-icon w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M6.293 7.293a1 1 0 0 1 1.414 0L10 9.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd" />
+    </svg>
+  </button>
+  <span class="time-separator px-4 py-2">:</span>
+  <button class="time-picker-btn btn w-full justify-between border min-w-0 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-500 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-200" (click)="toggleDropdown('mins')">
+    {{ timeSlots.selectedMins }}
+    <svg class="arrow-icon w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M6.293 7.293a1 1 0 0 1 1.414 0L10 9.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" clip-rule="evenodd" />
+    </svg>
+  </button>
+  <div *ngIf="dropdownOpenHours" class="dropdown-content absolute bg-white border
+   rounded shadow-lg z-10 top-full left-0 w-full bg-white dark:bg-slate-800 border 
+   border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden 
+   max-h-60 overflow-y-scroll mt-1 flex-col	">
+    <button *ngFor="let hour of hours" (click)="selectHour(hour)" [class.selected]="hour === timeSlots.selectedHours" class="dropdown-item 
+   flex  place-content-between	text-start border-b border-slate-200 
+   font-semibold	 block w-full py-2 px-4 text-sm text-gray-800 hover:bg-indigo-500 hover:text-white">
+      <span class="item-text">{{ hour }}</span>
+      <span *ngIf="hour === timeSlots.selectedHours" class="tick-mark text-indigo-400">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" 
+        stroke="currentColor" class="size-4   font-semibold">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+        </svg>
+        
+      </span>
+    </button>
+  </div>
+  <div *ngIf="dropdownOpenMins" class="dropdown-content absolute 
+  flex place-content-between bg-white border rounded shadow-lg z-10 top-full left-0 w-full
+  font-semibold	 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5
+   rounded shadow-lg overflow-hidden max-h-60 overflow-y-scroll mt-1 flex-col">
+    <button *ngFor="let min of minutes" (click)="selectMin(min)" [class.selected]="min === timeSlots.selectedMins" class="dropdown-item text-start border-b border-slate-200 block w-full py-2 px-4 text-sm
+    flex  place-content-between text-gray-800 hover:bg-indigo-500 hover:text-white">
+      <span class="item-text">{{ min }}</span>
+      <span *ngIf="min === timeSlots.selectedMins" class="tick-mark text-indigo-400">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+         stroke="currentColor" class="size-4   font-semibold">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+        </svg>
+        
+      </span>
+    </button>
+  </div>
+</div>

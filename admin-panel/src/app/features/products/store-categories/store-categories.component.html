@@ -1,0 +1,68 @@
+<div class="sm:flex sm:justify-between sm:items-center mb-8">
+  <div class="mb-4 sm:mb-0">
+    <button backButton (click)="backToProducts()">Product Summary</button>
+    <h1
+      class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold"
+    >
+      {{storeName}}
+    </h1>
+  </div>
+  <div
+    class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2"
+  >
+    <app-button [svgIcon]="'plus'" (btnClick)="openCategoryModal('create')">
+      <ng-template appButtonText> Add Category </ng-template>
+    </app-button>
+  </div>
+</div>
+@if(categories === undefined) {
+<app-category-cards-skeleton />
+} @else if(categories && categories.length === 0) {
+<p class="text-center ord-text-gray">No categories</p>
+} @else{ @for (category of categories ; track category.id; let index = $index;)
+{
+<div class="mb-3">
+  <mat-expansion-panel [expanded]="index">
+    <mat-expansion-panel-header class="mt-2 mb-2">
+      <mat-panel-title>
+        <div class="d-flex items-center">
+          <!-- Category name -->
+          <app-button [variant]="'ghost'" [textColor]="'indigo'">
+            <ng-template appButtonText>
+              {{ category.categoryName }}
+            </ng-template>
+          </app-button>
+          <!-- Edit button -->
+          <mat-icon
+            svgIcon="pencil"
+            aria-hidden="false"
+            class="mb-[-8px] ord-text-indigo"
+            (click)="handleEditCategory($event, category)"
+          ></mat-icon>
+          <!-- Delete button -->
+          <mat-icon
+            svgIcon="trash"
+            color="warn"
+            aria-hidden="false"
+            class="mb-[-8px] ord-fill-red"
+            (click)="handleDeleteCategory($event, category)"
+          ></mat-icon>
+          <!-- Category Description -->
+          <div>
+            <span class="ord-text-gray font-semibold ml-4"
+              >{{ category.categoryDescription }}
+            </span>
+          </div>
+        </div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-add-edit-products
+      [products]="category.products"
+      [storeDetails]="{
+        storeId: +storeId,
+        categoryId: category.categoryId
+      }"
+    ></app-add-edit-products>
+  </mat-expansion-panel>
+</div>
+} }

@@ -1,0 +1,56 @@
+@if(errorMessage) {
+<p>Error: {{ errorMessage }}</p>
+} @if(infoMessage) {
+<p>Info: {{ infoMessage }}</p>
+} @if (data$ | async; as data){
+<div class="sm:flex sm:justify-between sm:items-center sm:gap-2 my-4">
+  <div class="mb-4 sm:mb-0">
+    <h1
+      class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold px-5"
+    >
+      All Transactions
+    </h1>
+  </div>
+  <div class="ml-auto flex justify-end items-start gap-2 flex-wrap">
+    <span class="text-sm mt-2">Status</span>
+    <app-input-filter-immediate
+      ariaLabel="Select status"
+      [options]="statusFilterOptions"
+      [initialValue]="initialStatusFilterValue"
+      (filterChange)="handleStatusFilter($event)"
+    />
+    <app-input-datepicker
+      [customPresets]="customPresets"
+      [start]="initialStartDate"
+      [end]="initialEndDate"
+      (filterChange)="handleDateFilter($event)"
+    />
+    <app-input-filter-immediate
+      svgIcon="stores"
+      ariaLabel="Select store"
+      [options]="data.storeFilterOptions"
+      [initialValue]="initialStoreFilterValue"
+      [multiple]="true"
+      (filterChange)="handleStoreFilter($event)"
+    />
+  </div>
+</div>
+
+<div [hidden]="data.isLoading">
+  <app-table
+    [columns]="columns"
+    [dataSource]="allTransactionDataSource"
+    [selectable]="false"
+    [hasActions]="false"
+    (sort)="handleSort($event)"
+    [initialSort]="queryOptions.sort"
+  />
+  <app-pagination
+    [currentPage]="queryOptions.page"
+    [numberOfItems]="data.totalRecords"
+  />
+</div>
+<div [hidden]="!data.isLoading">
+  <app-table-skeleton />
+</div>
+}

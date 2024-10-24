@@ -1,0 +1,40 @@
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  [disabled]="loading"
+  (btnClick)="closeDialog()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">
+  <mat-icon svgIcon="warn" class="ord-icon ord-lg ord-yellow"></mat-icon>
+  <span>Confirm delete</span>
+</h2>
+<mat-dialog-content class="ord-modal-content">
+  <p>
+    Are you sure you want to delete
+    <span class="font-bold">{{ productsToDeleteCount }}</span> products?
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="ord-modal-actions">
+  @if(errorMessage) {
+  <ul class="ord-modal-errors">
+    <li>{{ errorMessage }}</li>
+  </ul>
+  }
+  <app-button
+    variant="secondary"
+    [disabled]="loading"
+    (btnClick)="closeDialog()"
+  >
+    <ng-template appButtonText> Cancel </ng-template>
+  </app-button>
+  <app-button
+    variant="warn"
+    [disabled]="loading"
+    (btnClick)="handleSubmit()"
+    [svgIcon]="loading ? 'loading' : undefined"
+  >
+    <ng-template appButtonText> Delete </ng-template>
+  </app-button>
+</mat-dialog-actions>

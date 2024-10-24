@@ -1,0 +1,6 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "./timeline-theme" as timeline;
+
+:host {
+  @include timeline.theme(theme.$admin-panel-theme);
+}

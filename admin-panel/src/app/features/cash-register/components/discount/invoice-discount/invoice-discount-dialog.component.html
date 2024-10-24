@@ -1,0 +1,14 @@
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  (btnClick)="close()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">
+  Invoice Discount
+</h2>
+
+<mat-dialog-content class="ord-modal-content">
+  <app-discount-form (applyDiscount)="apply($event)" [discount]="data.discount" [maxDiscount]="data.maxDiscount" />
+</mat-dialog-content>

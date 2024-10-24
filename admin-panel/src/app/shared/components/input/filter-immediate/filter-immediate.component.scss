@@ -1,0 +1,4 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "./filter-immediate-theme" as filter-immediate;
+
+@include filter-immediate.theme(theme.$admin-panel-theme);

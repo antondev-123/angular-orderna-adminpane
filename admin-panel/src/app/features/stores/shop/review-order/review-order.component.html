@@ -1,0 +1,175 @@
+<div class="lg:relative lg:flex h-full">
+  <div class="px-4 sm:px-6 lg:px-8 py-8 lg:grow lg:pr-8 xl:pr-16 2xl:ml-[80px]">
+    <!-- Content -->
+    <div class="lg:max-w-[640px] lg:mx-auto">
+      <!-- Cart items -->
+      <div class="mb-6 lg:mb-0">
+        <div class="mb-3">
+          <button
+            (click)="goBack()"
+            class="mb-2 flex items-center text-sm font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
+          >
+            <svg
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="mr-1 w-4 h-4"
+            >
+              <path d="M15 19l-7-7 7-7"></path>
+            </svg>
+            <span>Shop</span>
+          </button>
+        </div>
+        <header class="mb-6">
+          <!-- Title -->
+          <h1
+            class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold mb-2"
+          >
+            Review Transaction
+          </h1>
+          <p>
+            You will receive a confirmation email with details of your
+            transaction.
+          </p>
+        </header>
+        <!-- Billing Information -->
+        <div>
+          <div class="text-slate-800 dark:text-slate-100 font-semibold mb-4">
+            Billing Information
+          </div>
+          <form [formGroup]="billingForm" (ngSubmit)="onSubmit()">
+            <div class="space-y-4">
+              <!-- 1st row -->
+              <div class="md:flex space-y-4 md:space-y-0 md:space-x-4">
+                <div class="flex-1">
+                  <label class="block text-sm font-medium mb-1" for="first-name"
+                    >First Name</label
+                  >
+                  <input
+                    id="first-name"
+                    formControlName="name"
+                    class="form-input w-full"
+                    type="text"
+                  />
+                  <div
+                    *ngIf="
+                      billingForm.get('name')?.touched &&
+                      billingForm.get('name')?.invalid
+                    "
+                    class="text-red-600 text-sm"
+                  >
+                    First name is required.
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <label class="block text-sm font-medium mb-1" for="last-name"
+                    >Last Name</label
+                  >
+                  <input
+                    id="last-name"
+                    formControlName="lastname"
+                    class="form-input w-full"
+                    type="text"
+                  />
+                  <div
+                    *ngIf="
+                      billingForm.get('lastname')?.touched &&
+                      billingForm.get('lastname')?.invalid
+                    "
+                    class="text-red-600 text-sm"
+                  >
+                    Last name is required.
+                  </div>
+                </div>
+              </div>
+              <!-- 2nd row -->
+              <div class="md:flex space-y-4 md:space-y-0 md:space-x-4">
+                <div class="flex-1">
+                  <label class="block text-sm font-medium mb-1" for="email"
+                    >Email</label
+                  >
+                  <input
+                    id="email"
+                    formControlName="email"
+                    class="form-input w-full"
+                    type="email"
+                  />
+                  <div
+                    *ngIf="
+                      billingForm.get('email')?.touched &&
+                      billingForm.get('email')?.invalid
+                    "
+                    class="text-red-600 text-sm"
+                  >
+                    <div *ngIf="billingForm.get('email')?.errors?.['required']">
+                      Email is required.
+                    </div>
+                    <div *ngIf="billingForm.get('email')?.errors?.['email']">
+                      Invalid email format.
+                    </div>
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <label class="block text-sm font-medium mb-1" for="phone"
+                    >Phone</label
+                  >
+                  <input
+                    id="phone"
+                    formControlName="phone"
+                    class="form-input w-full"
+                    type="text"
+                  />
+                  <div
+                    *ngIf="
+                      billingForm.get('phone')?.touched &&
+                      billingForm.get('phone')?.invalid
+                    "
+                    class="text-red-600 text-sm"
+                  >
+                    <div *ngIf="billingForm.get('phone')?.errors?.['required']">
+                      Phone number is required.
+                    </div>
+                    <div *ngIf="billingForm.get('phone')?.errors?.['pattern']">
+                      Invalid phone number format.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 3rd row -->
+              <div class="md:flex space-y-4 md:space-y-0 md:space-x-4">
+                <div class="flex-1">
+                  <label
+                    class="block text-sm font-medium mb-1"
+                    for="order-notes"
+                    >Add transaction notes</label
+                  >
+                  <textarea
+                    id="order-notes"
+                    formControlName="note"
+                    class="form-textarea w-full focus:border-slate-300"
+                    rows="4"
+                    placeholder="Add transaction notes…"
+                    style="height: 105px"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Sidebar -->
+  <div class="relative">
+    <div class="lg:sticky lg:top-0">
+      <app-shop-sidebar-summary
+        (placeOrderForm)="onPlaceOrder()"
+        [placeOrder]="true"
+        [editQuantity]="false"
+      ></app-shop-sidebar-summary>
+    </div>
+  </div>
+</div>

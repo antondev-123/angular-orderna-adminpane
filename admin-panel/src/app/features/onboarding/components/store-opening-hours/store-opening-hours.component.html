@@ -1,0 +1,22 @@
+<form [formGroup]="form()" class="flex flex-col md:flex-row gap-8">
+  <header class="w-full md:w-1/3">
+    <h3 class="ord-h5">Opening hours</h3>
+    <p class="ord-body-1">
+      Your customers can only make purchases if your store is "open" at the time
+      they checkout. Set your opening times for each day here.
+    </p>
+    <p class="ord-body-1">
+      Add multiple time periods if you close and re-open during one day. For
+      example you could be open from 9AM to 1PM and then 5PM to 10PM.
+    </p>
+  </header>
+  <div class="w-full md:w-2/3">
+    <div class="mt-5 md:col-span-2 md:mt-0">
+      @for(weekday of WEEKLY; track weekday) {
+      <div>
+        <app-store-opening-hour-card [day]="weekday" [openingHours]="weeklyOpeningHours[weekday]" />
+      </div>
+      }
+    </div>
+  </div>
+</form>

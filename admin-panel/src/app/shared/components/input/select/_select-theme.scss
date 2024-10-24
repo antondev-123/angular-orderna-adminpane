@@ -1,0 +1,44 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@use "../../../../../css/material/tailwind/shadows" as shadow;
+
+@mixin base($theme) {
+}
+
+@mixin color($theme) {
+  .ord-select.ord-form-field .ord-icon,
+  .ord-select.ord-form-field .ord-select {
+    color: mat.get-theme-color($theme, accent, 500);
+    &::placeholder {
+      color: mat.get-theme-color($theme, accent, 400);
+    }
+  }
+}
+
+@mixin typography($theme) {
+  .ord-select .ord-select {
+    font-weight: 500;
+  }
+}
+
+@mixin density($theme) {
+}
+
+@mixin theme($theme) {
+  @if mat.theme-has($theme, base) {
+    @include base($theme);
+  }
+
+  @if mat.theme-has($theme, color) {
+    @include color($theme);
+  }
+
+  @if mat.theme-has($theme, typography) {
+    @include typography($theme);
+  }
+
+  @if mat.theme-has($theme, density) {
+    @include density($theme);
+  }
+}

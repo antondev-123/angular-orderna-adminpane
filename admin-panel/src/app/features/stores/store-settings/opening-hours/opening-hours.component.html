@@ -1,0 +1,42 @@
+<div>
+  <div class="mb-3">
+    <h2
+      class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold"
+    >
+      Opening hours
+    </h2>
+  </div>
+  <div>
+    <div class="mt-4 md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <div class="sm:pl-0 sm:pr-5">
+          <p class="mt-2 text-sm">
+            Your customers can only make purchases if your store is "open" at
+            the time they checkout. Set your opening times for each day here.
+          </p>
+          <p class="mt-2 text-sm">
+            Add multiple time periods if you close and re-open during one day.
+            For example you could be open from 9AM to 1PM and then 5PM to 10PM.
+          </p>
+        </div>
+      </div>
+      <div class="mt-5 md:col-span-2 md:mt-0">
+        <div *ngFor="let day of WEEKLY;let i =index">
+          <app-store-opening-hour-card [day]="day" [openingHours]="weeklyOpeningHours[day]" 
+           (openingHoursChange)="dataFromChild ($event,i)"/>
+        </div>
+      </div>
+    </div>
+    <div class="mt-8 border-t pt-5 border-slate-200 dark:border-slate-700">
+      <div class="flex justify-end">
+        <ng-container
+          [ngTemplateOutlet]="actionsTemplate() ?? null"
+          [ngTemplateOutletContext]="{
+            formInvalid: formGroup.invalid,
+            formValues: formGroup.value
+          }"
+        />
+      </div>
+    </div>
+  </div>
+</div>

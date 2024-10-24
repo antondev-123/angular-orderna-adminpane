@@ -1,0 +1,17 @@
+<div class="bg-white mt-10 py-2 px-5 drop-shadow-md rounded-md">
+  <h4 class="text-lg font-semibold my-4">Store comparison</h4>
+  <app-input-filter-immediate
+    svgIcon="stores"
+    ariaLabel="Select store"
+    [options]="stores"
+    [initialValue]="[]"
+    (filterChange)="storeSelect($event)"
+    [multiple]="true"
+  />
+  <apx-chart
+    [chart]="chartOptions.chart!"
+    [series]="chartOptions.series!"
+    [xaxis]="chartOptions.xaxis!"
+    [plotOptions]="chartOptions.plotOptions!"
+  ></apx-chart>
+</div>

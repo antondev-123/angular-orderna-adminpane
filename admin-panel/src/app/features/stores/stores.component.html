@@ -1,0 +1,96 @@
+<section class="section">
+  <header class="__web-inspector-hide-shortcut__">
+    <h1 class="ord-h2">Stores</h1>
+    <div
+      class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2"
+    >
+      <app-input-search
+        placeholder="Search..."
+        (searchTermChange)="handleSearch($event)"
+      ></app-input-search>
+
+      <app-button
+        ariaControls="add-user-modal"
+        ariaLabel="Show add user modal"
+        svgIcon="plus"
+        (btnClick)="goToAddStorePage()"
+      >
+        <ng-template appButtonText> Add Store </ng-template>
+      </app-button>
+    </div>
+  </header>
+
+  <!-- Cards -->
+
+  @if(stores() === null) {
+  <app-store-cards-skeleton />
+  } @else if(stores() !== null && stores()?.length === 0) {
+  <p class="text-center ord-text-gray">No results</p>
+  } @else{
+  <div class="grid grid-cols-12 gap-6 justify-items-stretch">
+    @for(store of stores(); track store.id) {
+    <div class="card-wrapper col-span-12 lg:col-span-4">
+      <div class="card col-span-full sm:col-span-6 xl:col-span-4">
+        <header class="card-header">
+          <a
+            target="_blank"
+            [routerLink]="getRouterLink(store.name)"
+            class="shop-page-link inline-flex items-center gap-2"
+          >
+            <h2 class="ord-h5">
+              {{ store.name }}
+            </h2>
+            <mat-icon svgIcon="open-in-new" class="ord-icon" />
+          </a>
+        </header>
+        <div class="card-content grow">
+          <address class="space-y-1">
+            @if (store.streetAddress ) {
+            <p class="store-detail ord-body-1">
+              <mat-icon class="ord-icon" svgIcon="location"></mat-icon>
+              {{ store.streetAddress }}
+            </p>
+            }
+             @if (store.telephone ) {
+            <p class="store-detail ord-body-1">
+              <mat-icon class="ord-icon" svgIcon="telephone"></mat-icon>
+              <a [href]="'tel:' + store.telephone.number">
+                {{ store.telephone.number }}
+              </a>
+            </p>
+            } @if (store.mobile.number ) {
+            <p class="store-detail ord-body-1">
+              <mat-icon class="ord-icon" svgIcon="phone"></mat-icon>
+              <a [href]="'tel:' + store.mobile.number">
+                {{ store.mobile.number }}
+              </a>
+            </p>
+            }
+          </address>
+        </div>
+        <div class="card-actions">
+          <a [routerLink]="getStoreEditLink(store.id)" class="ord-subtitle-1">
+            <mat-icon svgIcon="three-dots" class="ord-icon" />
+            <span>Settings</span>
+          </a>
+          <a
+            [routerLink]="getStoreItemsEditLink(store.id)"
+            class="ord-subtitle-1"
+          >
+            <mat-icon svgIcon="tag" class="ord-icon" />
+            <span>Edit Items</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    } 
+  </div>
+  <div class="pagination-controls-wrapper">
+    <app-pagination-store-view
+      [currentPage]="currentPage()"
+      [totalPages]="numberOfPages()"
+      (pageChange)="onPageChange($event)"
+    />
+  </div>
+  }
+</section>

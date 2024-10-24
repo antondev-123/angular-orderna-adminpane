@@ -1,0 +1,226 @@
+<div class="ord-container" [class.is-mobile]="sideMenuStatus() == 'mobile'">
+  <mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav
+      #snav
+      class="side-nav"
+      [class.sidenav]="sideMenuStatus() != 'mini' || isSideNavExpanded()"
+      [mode]="sideMenuStatus() == 'mobile' ? 'over' : 'side'"
+      [opened]="!isStoresComponent && sideMenuStatus() != 'mobile'"
+      [disableClose]="!isStoresComponent && sideMenuStatus() != 'mobile'"
+      fixedTopGap="56"
+      color="primary"
+    >
+      <mat-nav-list
+        class="nav-list"
+        [ngClass]="{
+          'nav-list-icon-only':
+            sideMenuStatus() === 'mini' && !isSideNavExpanded()
+        }"
+      >
+        <div class="logo">
+          @if(sideMenuStatus() == 'mobile'){
+          <button mat-icon-button (click)="snav.toggle()" class="back-nav">
+            <mat-icon>keyboard_backspace</mat-icon></button
+          >}<img
+            src="../../../../assets/images/logo.svg"
+            [width]="
+              sideMenuStatus() === 'mini' && !isSideNavExpanded() ? 50 : 160
+            "
+            [style.marginLeft]="
+              sideMenuStatus() == 'mobile'
+                ? 'auto'
+                : sideMenuStatus() === 'mini' && !isSideNavExpanded()
+                ? 0
+                : '11px'
+            "
+            [style.marginRight]="
+              sideMenuStatus() == 'mobile'
+                ? 'auto'
+                : sideMenuStatus() === 'mini' && !isSideNavExpanded()
+                ? 0
+                : '11px'
+            "
+          />
+        </div>
+        <div class="separator">
+          @if((sideMenuStatus()==='mini' &&
+          !isSideNavExpanded())){<span>•••</span>}
+          @if((sideMenuStatus()==='mini' && isSideNavExpanded()) ||
+          sideMenuStatus()!=='mini'){<span>PAGES</span>}
+        </div>
+        @for (nav of sideMenuItems; track nav) { @if(nav.children &&
+        nav.children.length>0){
+        <mat-expansion-panel
+          class="sub-menu"
+          [hideToggle]="sideMenuStatus() === 'mini' && !isSideNavExpanded()"
+        >
+          <mat-expansion-panel-header
+            class="sub-menu-content"
+            (click)="expandSidebar()"
+          >
+            <span class="list-item-content">
+              <mat-icon
+                class="icon"
+                mat-list-icon
+                [svgIcon]="nav.icon"
+              ></mat-icon>
+              @if(!(sideMenuStatus()==='mini' && !isSideNavExpanded())){
+              <span class="nav-text">
+                {{ nav.name }}
+              </span>
+              }
+            </span>
+          </mat-expansion-panel-header>
+          <mat-nav-list dense class="sub-menu-items">
+            @for (child of nav.children; track child) {
+            <a
+              mat-list-item
+              [routerLink]="child.path"
+              routerLinkActive="active-link"
+            >
+              <span class="list-item-content">
+                @if(child.icon){
+                <mat-icon
+                  class="icon"
+                  mat-list-icon
+                  [svgIcon]="child.icon"
+                ></mat-icon
+                >} @if(!(sideMenuStatus()==='mini' && !isSideNavExpanded())){
+                <span class="nav-text">
+                  {{ child.name }}
+                </span>
+                }
+              </span>
+            </a>
+            }
+          </mat-nav-list>
+        </mat-expansion-panel>
+        } @if(!nav.children || nav.children.length==0){
+        <a mat-list-item [routerLink]="nav.path" routerLinkActive="active-link">
+          <div class="list-item-content">
+            <mat-icon
+              class="icon"
+              mat-list-icon
+              [svgIcon]="nav.icon"
+            ></mat-icon>
+            @if(!(sideMenuStatus()==='mini' && !isSideNavExpanded())){
+            <div class="nav-text" matBadge="4" matBadgeOverlap="false">
+              <span> {{ nav.name }} </span>
+              @if(nav.badge){
+              <span class="menu-badge">{{ nav.badge }}</span
+              >}
+            </div>
+            }
+          </div> </a
+        >} }
+
+        <div class="separator">
+          @if((sideMenuStatus()==='mini' &&
+          !isSideNavExpanded())){<span>•••</span>}
+          @if((sideMenuStatus()==='mini' && isSideNavExpanded()) ||
+          sideMenuStatus()!=='mini'){
+          <span>MORE</span>
+          }
+        </div>
+        <a mat-list-item routerLink="support" routerLinkActive="active-link">
+          <span class="list-item-content">
+            <mat-icon class="icon" mat-list-icon svgIcon="support"></mat-icon>
+            @if(!(sideMenuStatus()==='mini' && !isSideNavExpanded())){
+            <span class="nav-text"> Support </span>
+            }
+          </span> </a
+        >@if (sideMenuStatus()=='mini') {
+        <button
+          mat-icon-button
+          (click)="toggleSidebar()"
+          class="nav-expand"
+          aria-label="Expand side navigation"
+        >
+          <mat-icon
+            color="primary"
+            svgIcon="mini-expand"
+            class="icon"
+          ></mat-icon>
+        </button>
+        }
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content
+      class="sidenav-content"
+      [@onSideNavChange]="
+        sideMenuStatus() == 'mobile'
+          ? 'mobile'
+          : !(sideMenuStatus() != 'mini' || isSideNavExpanded())
+          ? 'mini'
+          : 'full'
+      "
+    >
+      @if (currentUser$ | async; as currentUser) {
+      <mat-toolbar class="toolbar">
+        @if (sideMenuStatus() == 'mobile') {
+        <button mat-icon-button (click)="snav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        }
+
+        <span class="toolbar-spacer"></span>
+
+        <div class="flex store"></div>
+
+        @if (isDisplayVoidTransaction()) {
+        <button mat-button [disableRipple]="true" class="void-transaction">
+          <mat-icon>highlight_off</mat-icon>
+          <div class="store">
+            <span>Void Transaction</span>
+          </div>
+        </button>
+        } @if (isDisplaySelectedStore()) {
+        <button mat-button [matMenuTriggerFor]="storeMenu">
+          <mat-icon>store</mat-icon>
+          <div class="store">
+            {{ selectedStoreName() }} <mat-icon> expand_more </mat-icon>
+          </div>
+        </button>
+        <mat-menu #storeMenu="matMenu" class="store">
+          @for (store of stores(); track store.id) {
+          <button (click)="onSelectStore(store.id)" mat-menu-item>
+            {{ store.name }}
+          </button>
+          }
+        </mat-menu>
+        }
+
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>person</mat-icon>
+          <div class="user-name">
+            {{ currentUser.fullName }} <mat-icon> expand_more </mat-icon>
+          </div>
+        </button>
+
+        <mat-menu #menu="matMenu" class="user-menu">
+          <div class="profile-name">
+            {{ currentUser.fullName }}
+            <small>Administrator</small>
+          </div>
+          <button mat-menu-item (click)="goToProfilePage()">Settings</button>
+          <button mat-menu-item (click)="handleSignout()">Sign Out</button>
+        </mat-menu>
+
+        <mat-menu #menu="matMenu" class="user-menu">
+          <div class="profile-name">
+            {{ currentUser.fullName }}
+            <small>Administrator</small>
+          </div>
+          <button mat-menu-item (click)="goToProfilePage()">Settings</button>
+          <button mat-menu-item (click)="handleSignout()">Sign Out</button>
+        </mat-menu>
+      </mat-toolbar>
+
+      <div class="content-wrapper {{ isStoresComponent ? '' : 'p-3 sm:p-8' }}">
+        <router-outlet></router-outlet>
+      </div>
+      }
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

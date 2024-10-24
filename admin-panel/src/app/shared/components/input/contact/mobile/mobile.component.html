@@ -1,0 +1,55 @@
+<div class="flex flex-col">
+  <label [for]="id" class="ord-form-field-label"
+    >{{ label }}
+    @if (required) {
+    <span class="ord-form-field-required">*</span>
+    }
+  </label>
+  <div class="flex" [formGroup]="mobile" class="flex gap-2 flex-nowrap">
+    <!-- Country Code -->
+    <mat-form-field
+      appearance="outline"
+      color="accent"
+      class="ord-form-field ord-select w-20"
+    >
+      <mat-select
+        class="ord-select"
+        panelClass="ord-select-panel"
+        formControlName="countryCode"
+        [hideSingleSelectionIndicator]="true"
+      >
+        @for (countryCode of countryCodes; track countryCode.code) {
+        <mat-option [value]="countryCode.dial_code" class="ord-option">
+          <span class="text-nowrap"
+            >{{ countryCode.emoji }} {{ countryCode.dial_code }}</span
+          >
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <!-- Mobile Number -->
+    <mat-form-field
+      class="ord-form-field flex-1"
+      color="accent"
+      appearance="outline"
+    >
+      <input
+        matInput
+        [id]="id + 'mobile-number'"
+        type="tel"
+        [placeholder]="placeholder"
+        formControlName="number"
+      />
+      @if (numberControl?.hasError('required')) {
+      <mat-error class="ord-error">{{ label }} is required.</mat-error>
+      <!-- TODO: Check if digits -->
+      } @else if (numberControl && numberControl.hasError('pattern')){
+      <mat-error class="ord-error">Should be 10 digits.</mat-error>
+      } @else if (numberControl && numberControl.hasError('maxlength')) {
+      <mat-error class="ord-error">Mobile number is too long.</mat-error>
+      } @else if (numberControl && numberControl.hasError('minlength')) {
+      <mat-error class="ord-error">Mobile number is too short.</mat-error>
+      }
+    </mat-form-field>
+  </div>
+</div>

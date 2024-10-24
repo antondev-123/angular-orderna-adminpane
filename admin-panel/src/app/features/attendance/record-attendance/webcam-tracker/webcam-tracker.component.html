@@ -1,0 +1,28 @@
+<div class="relative w-full pt-[75%]">
+  <div class="webcam-wrapper">
+    @if (trackingImage()) {
+    <img class="h-full w-full object-cover" [src]="trackingImage()" />
+    }
+
+    <div
+      [class.hidden]="trackingImage()"
+      [class.pointer-events-none]="disabled()"
+      class="cursor-pointer flex flex-col items-center"
+      (click)="submitImage()"
+    >
+      <mat-icon class="!w-auto !h-auto text-4xl">camera_alt</mat-icon>
+      Take Picture
+    </div>
+  </div>
+</div>
+
+@if (trackingImage()) {
+<app-button
+  (btnClick)="resubmitImage()"
+  size="xs"
+  class="block mt-2"
+  variant="outlined"
+>
+  <ng-template appButtonText>Retake Picture</ng-template>
+</app-button>
+}

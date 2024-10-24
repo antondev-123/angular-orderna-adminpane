@@ -1,0 +1,96 @@
+<div class="relative inline-flex">
+  <app-button
+    variant="secondary"
+    svgIcon="filter"
+    aria-haspopup="true"
+    ariaLabel="Filter"
+    [ariaExpanded]="isOpen"
+    (btnClick)="isOpen = !isOpen"
+  />
+  @if(isOpen) {
+  <div
+    [@dropdownFadeInOut]
+    class="origin-top-right z-10 absolute top-full left-0 right-auto min-w-56 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 pt-1.5 rounded shadow-lg overflow-hidden mt-1 md:left-auto md:right-0"
+  >
+    <div>
+      <ng-template #checkboxGroup let-group>
+        <div
+          class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2"
+        >
+          Filter by {{ group.groupName }}
+        </div>
+        <ul class="mb-4">
+          @for (option of group.options; track $index) {
+          <li>
+            <label class="flex items-center">
+              <mat-checkbox
+                class="ord-checkbox"
+                (change)="toggleOption(option.value, group.groupName)"
+                [checked]="isChecked(option.value, group.groupName)"
+              >
+              </mat-checkbox>
+              <span class="text-sm font-medium ml-2">{{
+                option.label
+              }}</span></label
+            >
+          </li>
+          }
+        </ul>
+      </ng-template>
+
+      @if(!hasGroup(options)) {
+      <div
+        class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-3"
+      >
+        Filters
+      </div>
+      }
+
+      <ul class="mb-4">
+        @for (option of options; track $index) { @if(isGroup(option)) {
+        <li class="py-1 px-3">
+          <ng-container
+            [ngTemplateOutlet]="checkboxGroup"
+            [ngTemplateOutletContext]="{ $implicit: option }"
+          />
+        </li>
+        } @else {
+        <li class="py-1 px-3">
+          <label class="flex items-center">
+            <mat-checkbox
+              class="ord-checkbox"
+              (change)="toggleOption(option.value)"
+              [checked]="isChecked(option.value)"
+            >
+            </mat-checkbox>
+            <span class="text-sm font-medium ml-2">{{
+              option.label
+            }}</span></label
+          >
+        </li>
+        } }
+      </ul>
+      <div
+        class="py-2 px-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/20"
+      >
+        <ul class="flex items-center justify-between">
+          <li>
+            <app-button
+              variant="secondary"
+              size="xs"
+              (btnClick)="handleClear()"
+            >
+              <ng-template appButtonText> Clear </ng-template>
+            </app-button>
+          </li>
+          <li>
+            <app-button size="xs" (btnClick)="handleApply()">
+              <ng-template appButtonText> Apply </ng-template>
+            </app-button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  }
+</div>

@@ -1,0 +1,9 @@
+<div class="grid grid-flow-col content-center">
+  <mat-icon
+    svgIcon="star"
+    aria-hidden="false"
+    class="star-rating star"
+    *ngFor="let star of stars; let i = index"
+    [ngClass]="{'active-star': star}"
+  ></mat-icon>
+</div>

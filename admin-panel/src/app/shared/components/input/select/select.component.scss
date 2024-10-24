@@ -1,0 +1,9 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "./select-theme" as select;
+@use "../input-theme" as input;
+
+@include select.theme(theme.$admin-panel-theme);
+
+.ord-select-wrapper {
+  @include input.theme(theme.$admin-panel-theme);
+}

@@ -1,0 +1,24 @@
+@use "@angular/material" as mat;
+@use "../../../../css/material/custom-theme" as theme;
+
+.ord-snackbar {
+  width: 100%;
+  display: flex;
+  padding: 8px;
+  gap: 12px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ord-snackbar-label {
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+.ord-snackbar-action {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,0 +1,43 @@
+<div class="relative w-full pt-[75%]">
+  <div class="file-upload-wrapper">
+    @if (trackingImage()) {
+    <img class="h-full w-full object-contain" [src]="trackingImage()" />
+    }
+
+    <label
+      [class.hidden]="trackingImage()"
+      [for]="fileUploadId()"
+      [class.pointer-events-none]="disabled()"
+      class="cursor-pointer flex flex-col items-center"
+    >
+      <img
+        class="w-11 mb-2 fill-gray-500"
+        src="/assets/icons/upload-file.svg"
+      />
+      Upload file
+
+      <input
+        #fileUploadInput
+        [id]="fileUploadId()"
+        type="file"
+        class="hidden"
+        (change)="onFileSelected($event)"
+        accept="image/png, image/jpeg, image/jpg"
+      />
+      <p class="text-xs font-medium text-gray-400 mt-2">
+        PNG, JPG and JPEG are Allowed.
+      </p>
+    </label>
+  </div>
+</div>
+
+@if (trackingImage()) {
+<app-button
+  (btnClick)="resubmitImage()"
+  size="xs"
+  class="block mt-2"
+  variant="outlined"
+>
+  <ng-template appButtonText>Re-upload image</ng-template>
+</app-button>
+}

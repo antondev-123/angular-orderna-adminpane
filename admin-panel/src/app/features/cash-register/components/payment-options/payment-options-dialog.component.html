@@ -1,0 +1,57 @@
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  (btnClick)="close()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">Payment Options</h2>
+
+<mat-dialog-content class="ord-modal-content">
+  <div class="py-4">
+    <div class="text-sm">
+      <div class="font-medium text-slate-800 dark:text-slate-100 mb-3">
+        A list of payment options.
+      </div>
+    </div>
+    <div class="space-y-3">
+      <ul class="space-y-2 mb-4">
+        <div class="block text-sm font-medium mb-1">Payment Type</div>
+
+        @for (option of OPTIONS; track option.value) {
+          <li>
+            <button
+              class="w-full h-full text-left py-3 px-4 rounded bg-white dark:bg-slate-800 border-2 shadow-sm duration-150 ease-in-out"
+              (click)="selectedOption.set(option.value)"
+              [class.border-indigo-500]="option.value === selectedOption()"
+            >
+              <div class="flex items-center">
+                <div
+                  class="w-4 h-4 border-4 bg-white rounded-full mr-3"
+                  [class.border-indigo-500]="option.value === selectedOption()"
+                ></div>
+                <div class="font-semibold text-slate-800 dark:text-slate-100">
+                  {{option.label}}
+                </div>
+              </div>
+            </button>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+  <!-- Modal footer -->
+  <div class="pt-4 border-t border-slate-200 dark:border-slate-700">
+    <div class="flex flex-wrap justify-end space-x-2">
+      <button
+        class="btn-sm border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300"
+        (click)="close()"
+      >
+        Cancel
+      </button>
+      <button (click)="apply()" class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">
+        Apply
+      </button>
+    </div>
+  </div>
+</mat-dialog-content>

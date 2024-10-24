@@ -1,0 +1,35 @@
+<mat-form-field
+  class="flex flex-col ord-form-field ord-date-range-picker"
+  color="accent"
+  appearance="outline"
+>
+  <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+    <input matStartDate formControlName="start" placeholder="Start date" />
+    <input matEndDate formControlName="end" placeholder="End date" />
+  </mat-date-range-input>
+  <mat-datepicker-toggle matPrefix [for]="picker">
+    <mat-icon
+      svgIcon="calendar"
+      aria-hidden="false"
+      class="ord-icon"
+      matDatepickerToggleIcon
+    ></mat-icon>
+  </mat-datepicker-toggle>
+  <mat-date-range-picker
+    #picker
+    [calendarHeaderComponent]="CustomHeaderComponent"
+  >
+    <mat-date-range-picker-actions class="flex">
+      <app-button variant="ghost" (btnClick)="cancel(picker)"
+        ><ng-template appButtonText>CANCEL</ng-template></app-button
+      >
+      <app-button
+        variant="ghost"
+        textColor="indigo"
+        (btnClick)="applySelectedDate(picker)"
+        [disabled]="(pickerService.applyDisabled | async) || false"
+        ><ng-template appButtonText>APPLY</ng-template></app-button
+      >
+    </mat-date-range-picker-actions>
+  </mat-date-range-picker>
+</mat-form-field>

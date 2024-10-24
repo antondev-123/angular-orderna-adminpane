@@ -1,0 +1,11 @@
+<section class="section dashboard">
+  <app-dashboard-header (filterChange)="filterUpdated($event)"></app-dashboard-header>
+  <div>
+    <app-dashboard-overview [dashboardFilter]="dashboardFilter"></app-dashboard-overview>
+    <app-dashboard-sales [dashboardFilter]="dashboardFilter"></app-dashboard-sales>
+    <app-dashboard-best-sellers [dashboardFilter]="dashboardFilter"></app-dashboard-best-sellers>
+    <app-dashboard-store-compare></app-dashboard-store-compare>
+    <app-dashboard-request></app-dashboard-request>
+  </div>
+
+</section>

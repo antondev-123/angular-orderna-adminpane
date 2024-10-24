@@ -1,0 +1,82 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "@angular/material" as mat;
+
+section > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  h1 {
+    margin-bottom: 1rem;
+  }
+}
+
+.card-wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+.card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 0;
+  .card-header {
+    margin-top: 4px;
+    padding: 20px;
+    padding-bottom: 0;
+    .shop-page-link {
+      color: mat.get-theme-color(theme.$admin-panel-theme, primary, 500);
+      &:hover {
+        color: mat.get-theme-color(theme.$admin-panel-theme, primary, 600);
+      }
+    }
+  }
+  .card-content {
+    margin-top: 0;
+    margin: 20px;
+  }
+  .card-actions {
+    margin-top: auto;
+    display: flex;
+    border-top: 1px solid
+      mat.get-theme-color(theme.$admin-panel-theme, accent, 200);
+    a {
+      flex: 1 1 0%;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 16px;
+      color: mat.get-theme-color(theme.$admin-panel-theme, accent, 600);
+      &:hover {
+        color: mat.get-theme-color(theme.$admin-panel-theme, accent, 800);
+      }
+    }
+    a:first-child {
+      border-right: 1px solid
+        mat.get-theme-color(theme.$admin-panel-theme, accent, 200);
+    }
+  }
+}
+
+.pagination-controls-wrapper {
+  margin-top: 32px;
+}
+
+.store-detail {
+  display: flex;
+  gap: 16px;
+  align-items: start;
+  .ord-icon {
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+  a {
+    color: mat.get-theme-color(theme.$admin-panel-theme, primary, 500);
+    text-decoration: underline;
+    &:hover {
+      color: mat.get-theme-color(theme.$admin-panel-theme, primary, 600);
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "@angular/material" as mat;
+
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .stats-title {
+    height: 24px;
+    width: 125px;
+    margin: 0 auto;
+  }
+
+  .stats-value {
+    height: 36px;
+    width: 100px;
+    margin: 0 auto;
+  }
+
+  .stats-additional {
+    height: 24px;
+    width: 90px;
+    margin: 0 auto;
+  }
+}

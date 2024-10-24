@@ -1,0 +1,14 @@
+.ord-skeleton.ord-body-1 {
+  height: 20px;
+  &:nth-child(1) {
+    max-width: 100px;
+  }
+  &:nth-child(2) {
+    max-width: 500px;
+  }
+}
+
+.ord-skeleton.ord-button {
+  height: 38px;
+  width: full;
+}

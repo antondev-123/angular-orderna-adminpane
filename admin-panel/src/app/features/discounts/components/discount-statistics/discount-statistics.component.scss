@@ -1,0 +1,22 @@
+@use "@orderna/admin-panel/src/css/material/custom-theme" as theme;
+@use "@angular/material" as mat;
+
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .stats-title {
+    font: mat.get-theme-typography(theme.$admin-panel-theme, subtitle-1);
+    color: mat.get-theme-color(theme.$admin-panel-theme, accent, 500);
+  }
+
+  .stats-value {
+    font: mat.get-theme-typography(theme.$admin-panel-theme, headline-3);
+  }
+
+  .stats-additional {
+    font: mat.get-theme-typography(theme.$admin-panel-theme, body-1);
+    color: mat.get-theme-color(theme.$admin-panel-theme, accent, 500);
+  }
+}

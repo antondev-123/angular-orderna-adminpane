@@ -1,0 +1,7 @@
+@if (pageLayout === 'shop') {
+<app-shop-layout />
+} @else if (pageLayout === 'onboarding') {
+<app-onboarding-layout />
+} @else{
+<router-outlet></router-outlet>
+}

@@ -1,0 +1,17 @@
+<div [class.hidden]="!show">
+  <div class="flex items-center">
+    <div class="xl:block text-sm italic mr-2 whitespace-nowrap">
+      <span>{{ numberOfSelectedRows }}</span> item{{
+        numberOfSelectedRows > 1 ? "s" : ""
+      }}
+      selected
+    </div>
+    <app-button
+      variant="subdued"
+      svgIcon="trash-mini"
+      (btnClick)="handleDelete()"
+    >
+      <ng-template appButtonText> Delete </ng-template>
+    </app-button>
+  </div>
+</div>

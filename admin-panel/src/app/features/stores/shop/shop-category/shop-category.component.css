@@ -1,0 +1,4 @@
+.text-base, .text-lg {
+    letter-spacing: -.01em;
+    line-height: 1.5;
+}

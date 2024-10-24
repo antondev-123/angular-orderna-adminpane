@@ -1,0 +1,12 @@
+@for(card of cards; track $index) {
+<div class="card mb-3 flex flex-col">
+  <div class="space-y-1 mb-8">
+    <app-skeleton class="ord-body-1" />
+    <app-skeleton class="ord-body-1" />
+  </div>
+  <div class="space-y-6">
+    <app-table-skeleton [rowsCount]="2" [hideHeader]="true" />
+    <app-skeleton class="ord-button" />
+  </div>
+</div>
+}

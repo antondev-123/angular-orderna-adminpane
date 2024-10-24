@@ -1,0 +1,36 @@
+<mat-form-field
+  appearance="outline"
+  color="accent"
+  class="ord-form-field ord-filter-immediate"
+>
+  <mat-icon
+    *ngIf="svgIcon"
+    [svgIcon]="svgIcon"
+    aria-hidden="false"
+    matIconPrefix
+    class="ord-icon"
+  ></mat-icon>
+  <mat-select
+    class="ord-select"
+    panelClass="ord-filter-immediate-select-panel"
+    [placeholder]="ariaLabel"
+    [ariaLabel]="ariaLabel"
+    [(value)]="filter"
+    (selectionChange)="handleFilterChange($event)"
+    [multiple]="multiple"
+  >
+    @if(multiple) {
+    <mat-select-trigger>
+      <span class="example-additional-selection">
+        {{ count || 0 }} store selected
+      </span>
+    </mat-select-trigger>
+    } @for (option of options; track $index) { @if(isGroup(option)) {
+    <!-- TODO: Add code if grouped options should be supported  -->
+    }@else {
+    <mat-option [value]="option.value" class="ord-option">{{
+      option.label
+    }}</mat-option>
+    } }
+  </mat-select>
+</mat-form-field>

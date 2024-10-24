@@ -1,0 +1,64 @@
+@tailwind components;
+
+@layer components {
+  .table-outer-wrapper {
+    @apply bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 relative;
+  }
+  .table-header {
+    @apply px-5 py-4 flex items-center justify-start gap-1;
+  }
+  .table-header-title {
+    @apply text-base font-semibold text-slate-800 dark:text-slate-100;
+  }
+  .table-header-total-row-count {
+    @apply text-base text-slate-400 dark:text-slate-500 font-medium;
+  }
+  .table-inner-wrapper {
+    @apply overflow-x-auto;
+  }
+  .table {
+    @apply table-auto w-full dark:text-slate-300;
+  }
+  .table thead {
+    @apply text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/20 border-t border-b border-slate-200 dark:border-slate-700;
+  }
+  .table th {
+    @apply px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px;
+  }
+  .table th div {
+    @apply font-semibold text-left;
+  }
+  .table tbody {
+    @apply text-sm divide-y divide-slate-200 dark:divide-slate-700;
+  }
+  .table td {
+    @apply px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px;
+  }
+  .table-cell-number {
+    @apply text-center;
+  }
+  .table-cell-id,
+  .table-cell-email,
+  .table-cell-string,
+  .table-cell-address {
+    @apply text-left;
+  }
+  .table-cell-link {
+    @apply text-left font-medium text-accent-500;
+  }
+  .table-cell-currency {
+    @apply text-left font-medium text-semantic-green-500;
+  }
+  .table-cell-checkbox,
+  .table-cell-round-img-plus-string,
+  .table-cell-square-img-plus-string {
+    @apply flex items-center gap-2;
+  }
+  .btn-table-action {
+    @apply rounded-full text-slate-400 hover:text-slate-500 dark:text-slate-500 dark:hover:text-slate-400;
+  }
+}
+
+.btn-table-action.btn-red {
+  @apply text-semantic-red-500 hover:text-semantic-red-600 rounded-full;
+}

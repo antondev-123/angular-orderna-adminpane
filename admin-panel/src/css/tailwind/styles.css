@@ -1,0 +1,73 @@
+/* You can add global styles to this file, and also import other style files */
+/* Additional styles */
+@import "additional-styles/flatpickr.css";
+@import "additional-styles/form-control.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    @apply h-full w-full overflow-x-clip;
+  }
+}
+
+@layer components {
+  .section {
+    @apply px-4 sm:px-6 lg:px-8 w-full max-w-screen-2xl mx-auto;
+  }
+  .card {
+    @apply p-4 shadow-lg rounded-md bg-white border border-slate-200;
+  }
+}
+
+.btn,
+.btn-lg,
+.btn-sm,
+.btn-xs {
+  --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  align-items: center;
+  border-color: transparent;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  display: inline-flex;
+  font-size: 0.875rem;
+  font-weight: 500;
+  justify-content: center;
+  line-height: 1.5715;
+  line-height: 1.25rem;
+  transition-duration: 0.15s;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+}
+.btn {
+  padding: 0.5rem 0.75rem;
+}
+
+button.time-picker-btn.btn {
+  border-color: #e6ebf2;
+}
+button.dropdown-item.selected {
+  color: #5563f8;
+}
+
+.ord-card {
+  @apply bg-white h-fit dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 overflow-hidden mb-5;
+}

@@ -1,0 +1,30 @@
+<div
+  class="flex flex-col md:flex-row gap-8 w-full justify-around text-center p-4"
+>
+  <div class="stats-container">
+    <span class="stats-title">Used</span>
+    @if (statistics.numberOfRedemptions) {
+    <span class="stats-value">{{ statistics.numberOfRedemptions }}</span>
+    } @else {
+    <span class="stats-value">N/A</span>
+    }
+  </div>
+  <div class="stats-container">
+    <span class="stats-title">Redeemed</span>
+    <span class="stats-value">{{
+      statistics.totalRedeemedAmount | currency : "PHP"
+    }}</span>
+  </div>
+  <div class="stats-container">
+    <span class="stats-title">Average transaction amount</span>
+    <span class="stats-value">{{
+      statistics.averageOrderAmount | currency : statistics.currencyCode
+    }}</span>
+  </div>
+  <div class="stats-container">
+    <span class="stats-title">Total transaction amount</span>
+    <span class="stats-value">{{
+      statistics.totalRevenue | currency : statistics.currencyCode
+    }}</span>
+  </div>
+</div>

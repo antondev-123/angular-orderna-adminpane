@@ -1,0 +1,26 @@
+@use "@angular/material" as mat;
+
+@use "tailwind-theme" as tailwind;
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$admin-panel-primary: mat.define-palette(tailwind.$indigo-palette);
+$admin-panel-accent: mat.define-palette(tailwind.$slate-palette);
+
+// The warn palette is optional (defaults to red).
+$admin-panel-warn: mat.define-palette(tailwind.$rose-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$admin-panel-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $admin-panel-primary,
+      accent: $admin-panel-accent,
+      warn: $admin-panel-warn,
+    ),
+    typography: tailwind.$typography-config,
+    density: 0,
+  )
+);

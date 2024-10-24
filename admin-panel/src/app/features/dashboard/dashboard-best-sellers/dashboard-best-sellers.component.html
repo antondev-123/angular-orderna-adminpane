@@ -1,0 +1,12 @@
+<div class="bg-white mt-10 pt-2 pb-8 px-5 drop-shadow-md rounded-md">
+  <h4 class="text-lg font-semibold my-4">Best Sellers</h4>
+  <app-table
+    [columns]="columns"
+    [dataSource]="topSoldProductDataSource"
+    [rowClickable]="false"
+    [actions]="[]"
+    [hasActions]="false"
+    (sort)="handleSort($event)"
+    [selectable]="false"
+  />
+</div>

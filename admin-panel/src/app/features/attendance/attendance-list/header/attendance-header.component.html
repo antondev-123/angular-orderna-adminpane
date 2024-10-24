@@ -1,0 +1,40 @@
+<div class="sm:flex sm:justify-between sm:items-start sm:gap-2 mb-8">
+  <div class="mb-4 sm:mb-0">
+    <h1
+      class="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold"
+    >
+      Attendances
+    </h1>
+  </div>
+  <div class="ml-auto flex justify-end items-start gap-2 flex-wrap">
+    <app-row-controls
+      class="w-full md:w-fit"
+      [numberOfSelectedRows]="selectedCount()"
+      (delete)="onConfirmDelete()"
+    />
+
+    <app-input-search
+      class="flex-1 md:flex-initial"
+      placeholder="Search users..."
+      (searchTermChange)="onSearchedUserChange($event)"
+      [initialValue]="filter().searchQuery"
+    />
+    <app-input-filter-immediate
+      svgIcon="calendar"
+      ariaLabel="Select date range"
+      [options]="dateFilterOptions"
+      [initialValue]="filter().dateFilter"
+      (filterChange)="onDateRangeChange($event)"
+    />
+    <app-input-filter-immediate
+      svgIcon="stores"
+      ariaLabel="Select store"
+      [options]="storeFilterOptions()"
+      [initialValue]="store()"
+      (filterChange)="onStoreChange($event)"
+    />
+    <app-button svgIcon="plus" (btnClick)="recordAttendance()">
+      <ng-template appButtonText>Record Attendance</ng-template>
+    </app-button>
+  </div>
+</div>

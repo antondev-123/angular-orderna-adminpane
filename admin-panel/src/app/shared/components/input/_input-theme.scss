@@ -1,0 +1,85 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@use "../../../../css/material/tailwind/shadows" as shadow;
+
+@mixin base($theme) {
+  .ord-form-field-label {
+    margin-bottom: 4px;
+  }
+  .ord-error {
+    margin-left: -16px;
+  }
+  .ord-prefix {
+    padding-left: 6px;
+  }
+  .ord-suffix {
+    padding-right: 6px;
+  }
+  .ord-form-field .ord-hint {
+    margin-left: -16px;
+    white-space: nowrap;
+  }
+  .ord-form-field--disabled,
+  .ord-form-field--disabled input {
+    cursor: not-allowed;
+  }
+  .ord-form-field--disabled input,
+  .ord-form-field-label--disabled {
+    opacity: 0.5;
+  }
+}
+
+@mixin color($theme) {
+  .ord-form-field {
+    color: mat.get-theme-color($theme, accent, 800);
+    background-color: white;
+    &::placeholder {
+      color: mat.get-theme-color($theme, accent, 400);
+    }
+  }
+  .ord-form-field-label {
+    color: mat.get-theme-color($theme, accent, 800);
+  }
+  .ord-form-field-required {
+    color: mat.get-theme-color($theme, warn, 500);
+  }
+  .ord-hint,
+  .ord-prefix,
+  .ord-suffix {
+    color: mat.get-theme-color($theme, accent, 500);
+  }
+}
+
+@mixin typography($theme) {
+  .ord-form-field-label {
+    font: mat.get-theme-typography($theme, subtitle-2);
+  }
+  .ord-hint,
+  .ord-error {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+  }
+}
+
+@mixin density($theme) {
+}
+
+@mixin theme($theme) {
+  @if mat.theme-has($theme, base) {
+    @include base($theme);
+  }
+
+  @if mat.theme-has($theme, color) {
+    @include color($theme);
+  }
+
+  @if mat.theme-has($theme, typography) {
+    @include typography($theme);
+  }
+
+  @if mat.theme-has($theme, density) {
+    @include density($theme);
+  }
+}

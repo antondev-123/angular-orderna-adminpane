@@ -1,0 +1,102 @@
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  [disabled]="loading"
+  (btnClick)="closeDialog()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">
+  {{ mode === "edit" ? "Edit" : "Add" }} User
+</h2>
+<mat-dialog-content class="ord-modal-content">
+  <p class="ord-form-help-text">Provide user details.</p>
+
+  <form
+    [formGroup]="formGroup"
+    (ngSubmit)="handleSubmit()"
+    class="grid grid-cols-2 gap-x-4"
+  >
+    <app-input-text
+      id="first-name"
+      label="First Name"
+      controlName="firstName"
+      [value]="user?.firstName"
+      [validators]="[Validators.required]"
+    />
+    <app-input-text
+      id="last-name"
+      label="Last Name"
+      controlName="lastName"
+      [value]="user?.lastName"
+      [validators]="[Validators.required]"
+    />
+    <app-input-email
+      id="email"
+      label="Email"
+      controlName="email"
+      [value]="user?.email"
+      [validators]="[Validators.required]"
+    />
+    <app-input-mobile
+      id="mobile-number"
+      label="Mobile number"
+      controlName="mobile"
+      [value]="{
+        countryCode: user?.mobile?.countryCode || '+63',
+        number: user?.mobile?.number || ''
+      }"
+      [validators]="[Validators.required]"
+    />
+    <app-input-text
+      id="job-title"
+      label="Job Title"
+      [value]="user?.jobTitle"
+      controlName="jobTitle"
+      [validators]="[Validators.required]"
+    />
+    <app-input-select
+      id="role"
+      label="Role"
+      controlName="role"
+      [options]="roleOptions"
+      [defaultOption]="defaultRoleOption"
+      [value]="user?.role"
+      [validators]="[Validators.required]"
+    />
+    @if(mode === 'edit') {
+    <app-input-select
+      id="status"
+      label="Status"
+      controlName="status"
+      [options]="statusOptions"
+      [defaultOption]="defaultStatusOption"
+      [value]="user?.status"
+      [validators]="[Validators.required]"
+    />
+    }
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="ord-modal-actions">
+  @if(errorMessage) {
+  <ul class="ord-modal-errors">
+    <li>{{ errorMessage }}</li>
+  </ul>
+  }
+  <app-button
+    variant="secondary"
+    (btnClick)="closeDialog()"
+    [disabled]="loading"
+  >
+    <ng-template appButtonText> Cancel </ng-template>
+  </app-button>
+  <app-button
+    (btnClick)="handleSubmit()"
+    [disabled]="formGroup.invalid || loading"
+    [svgIcon]="loading ? 'loading' : undefined"
+  >
+    <ng-template appButtonText>
+      {{ mode === "create" ? "Add" : "Save" }}
+    </ng-template>
+  </app-button>
+</mat-dialog-actions>

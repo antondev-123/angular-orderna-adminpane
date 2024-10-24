@@ -1,0 +1,42 @@
+<app-button
+  variant="ghost"
+  class="ord-modal-button-close"
+  svgIcon="close"
+  ariaLabel="Close"
+  (btnClick)="close()"
+/>
+<h2 mat-dialog-title class="ord-modal-title">{{ title }}</h2>
+
+<mat-dialog-content class="ord-modal-content">
+  <div class="flex flex-col justify-center items-center mt-2">
+    @if (error()) {
+
+    <div
+      class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+      role="alert"
+    >
+      <span class="font-medium">Access denied!</span> Please grant permission to
+      your camera and try again.
+    </div>
+
+    }
+
+    <div class="relative w-full pt-[75%]">
+      <div class="absolute top-0 left-0 w-full h-full">
+        <webcam
+          [allowCameraSwitch]="allowCameraSwitch"
+          [trigger]="trigger"
+          [videoOptions]="{ facingMode }"
+          (imageCapture)="onImageCapture($event)"
+          (initError)="onInitWebcamError($event)"
+        />
+      </div>
+    </div>
+
+    @if (!error()) {
+    <app-button (btnClick)="triggerSnapshot()" class="mt-2" variant="primary">
+      <ng-template appButtonText>Take Picture</ng-template>
+    </app-button>
+    }
+  </div>
+</mat-dialog-content>

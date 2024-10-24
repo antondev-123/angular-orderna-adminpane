@@ -1,0 +1,49 @@
+.ord-skeleton.ord-h2 {
+  height: 32px;
+  max-width: 125px;
+  margin-bottom: 25px;
+}
+
+.ord-skeleton.ord-h3 {
+  height: 28px;
+  max-width: 80px;
+  margin-bottom: 4px;
+}
+
+.ord-skeleton.ord-button {
+  height: 38px;
+}
+
+.ord-skeleton.ord-form-field {
+  height: 60px;
+}
+
+li {
+  height: 36px;
+}
+
+li .ord-skeleton.ord-subtitle-1 {
+  height: 20px;
+}
+
+.ord-skeleton.ord-body-1 {
+  height: 20px;
+}
+
+li:nth-child(1) .ord-skeleton.ord-skeleton.ord-subtitle-1 {
+  max-width: 110px;
+}
+li:nth-child(2) .ord-skeleton.ord-skeleton.ord-subtitle-1 {
+  max-width: 136px;
+}
+li:nth-child(3) .ord-skeleton.ord-skeleton.ord-subtitle-1 {
+  max-width: 70px;
+}
+li:nth-child(4) .ord-skeleton.ord-skeleton.ord-subtitle-1 {
+  max-width: 140px;
+}
+
+.ord-skeleton.ord-subtitle-2 {
+  height: 18px;
+  max-width: 125px;
+}
