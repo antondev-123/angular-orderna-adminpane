@@ -59,8 +59,6 @@ export class AppComponent extends SubscriptionManager {
   }
 
   loadingChanged() {
-    // Add/remove cursor-wait to Angular Material's CDK overlay container
-    // -- container inside which all overlays will render (e.g. dialog)
     if (this.loading) {
       this.overlayContainer.getContainerElement().classList.add('cursor-wait');
     } else {
